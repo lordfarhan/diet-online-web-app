@@ -17,58 +17,77 @@
         $(document).ready(function () {
             var auto_refresh = setInterval(
                 function () {
-                    $('#showdata').load('/diet-online-apps-web/public/admin/product').fadeIn("slow");
+                    $('#showdata').load('/admin/product').fadeIn("slow");
                 }, 100);
         })
 
     </script>
 
     <style>
-        table,
-        th,
-        td {
-            border: 1px solid black;
+        #main-content {
+            margin-top: 5rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            margin-top: 50px;
+            background-color: #F8F9FA;
+            height: 100%;
         }
 
     </style>
 </head>
 
 <body>
-    {{-- <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="height:50px;">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Admin Page</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        {{-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> --}}
         <ul class="navbar-nav px-3">
             Log Out
         </ul>
-    </nav> --}}
-
-    {{-- {{ url('admin/product') }} --}}
+    </nav>
 
     <div class="row">
         <div class="col-lg-3">
-            <table style="padding-top:100px;">
-                <thead>
-                    <tr>
-                        <th rowspan="2">ID</th>
-                        <th colspan="2">Product</th>
-                        <th colspan="3">User</th>
-                        <th rowspan="2">Invoice</th>
-                        <th rowspan="2">Receipt</th>
-                        <th rowspan="2">Times</th>
-                        <th rowspan="2">Status</th>
-                    </tr>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Product Price</th>
-                        <th>User Name</th>
-                        <th>User Phone</th>
-                        <th>User Address</th>
-                    <tr>
-                </thead>
-                <tbody id="showdata">
+            <aside class="sidebar">
+                <div class="container">
+                    <h4>Filter</h4>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
+                        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+                        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+                        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
 
-                </tbody>
-            </table>
+        <div class="col-lg-6" id="main-content">
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" scope="col">ID</th>
+                            <th colspan="2" scope="col">Product</th>
+                            <th colspan="3" scope="col">User</th>
+                            <th rowspan="2" scope="col">Invoice</th>
+                            <th rowspan="2" scope="col">Receipt</th>
+                            <th rowspan="2" scope="col">Times</th>
+                            <th rowspan="2" scope="col">Status</th>
+                        </tr>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>User Name</th>
+                            <th>User Phone</th>
+                            <th>User Address</th>
+                        <tr>
+                    </thead>
+                    <tbody id="showdata">
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

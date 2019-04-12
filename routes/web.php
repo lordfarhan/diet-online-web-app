@@ -15,6 +15,8 @@ Route::get('/admin', function () {
     return view('admin');
 });
 
-Route::view('/admin/product', 'transactions',[
-    'transactions' => Transaction::getTransaction()
-    ]);
+Route::get('/admin/product', 'DataController@GetAllData');
+
+Route::get('/admin/paid','DataController@UpdatePaid');
+
+Route::get('/admin/delivered','DataController@UpdateDelivered');
