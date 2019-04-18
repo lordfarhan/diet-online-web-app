@@ -1,5 +1,7 @@
 <?php
 use App\Transaction;
+use App\Http\Controllers\APIController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +22,5 @@ Route::get('/admin/product', 'DataController@GetAllData');
 Route::get('/admin/paid','DataController@UpdatePaid');
 
 Route::get('/admin/delivered','DataController@UpdateDelivered');
+
+
