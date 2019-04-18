@@ -52,12 +52,12 @@
             <aside class="sidebar">
                 <div class="container">
                     <h4>Filter</h4>
-                    <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action">Diet Harian</a>
-                        <a href="#" class="list-group-item list-group-item-action">Diet Khusus</a>
-                        <a href="#" class="list-group-item list-group-item-action">Single Lunch Box</a>
-                        <a href="#" class="list-group-item list-group-item-action">Diet Penurunan Berat Badan</a>
-                    </div>
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link" id="v-pills-diet-harian-tab" data-toggle="pill" href="#v-pills-diet-harian" role="tab" aria-controls="v-pills-diet-harian" aria-selected="false">Diet Harian</a>
+                        <a class="nav-link" id="v-pills-diet-khusus-tab" data-toggle="pill" href="#v-pills-diet-khusus" role="tab" aria-controls="v-pills-diet-khusus" aria-selected="false">Diet Khusus</a>
+                        <a class="nav-link" id="v-pills-diet-penurunan-berat-badan-tab" data-toggle="pill" href="#v-pills-diet-penurunan-berat-badan" role="tab" aria-controls="v-pills-diet-penurunan-berat-badan" aria-selected="false">Diet Penurunan Berat Badan</a>
+                        <a class="nav-link" id="v-pills-single-lunch-box-tab" data-toggle="pill" href="#v-pills-single-lunch-box" role="tab" aria-controls="v-pills-single-lunch-box" aria-selected="false">Single Lunch Box</a>
+                      </div>
                 </div>
             </aside>
         </div>
@@ -66,129 +66,545 @@
             <div class="container">
                 <h3>Today Batch</h3>
                 <h6>Kuota yang harus dikirim hari ini</h6>
-                <div class="changeable">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab"
-                                aria-controls="home" aria-selected="true">All</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#unpaid" role="tab"
-                                aria-controls="profile" aria-selected="false">Unpaid</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#paid" role="tab"
-                                aria-controls="contact" aria-selected="false">Paid</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#done" role="tab"
-                                aria-controls="contact" aria-selected="false">Done</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
-                            <br>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" scope="col">ID</th>
-                                        <th colspan="2" scope="col">Product</th>
-                                        <th colspan="3" scope="col">User</th>
-                                        <th rowspan="2" scope="col">Invoice</th>
-                                        <th rowspan="2" scope="col">Receipt</th>
-                                        <th rowspan="2" scope="col">Times</th>
-                                        <th rowspan="2" scope="col">Status</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Product Price</th>
-                                        <th>User Name</th>
-                                        <th>User Phone</th>
-                                        <th>User Address</th>
-                                    <tr>
-                                </thead>
-                                <tbody id="showdataall">
+                <table class="table table-bordered">
+                    <thead> 
+                        <tr>
+                            <th rowspan="2" scope="col">ID</th>
+                            <th colspan="2" scope="col">Product</th>
+                            <th colspan="3" scope="col">User</th>
+                            <th rowspan="2" scope="col">Invoice</th>
+                            <th rowspan="2" scope="col">Receipt</th>
+                            <th rowspan="2" scope="col">Times</th>
+                            <th rowspan="2" scope="col">Status</th>
+                        </tr>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>User Name</th>
+                            <th>User Phone</th>
+                            <th>User Address</th>
+                        <tr>
+                    </thead>
+                    <tbody id="showdataall">
 
-                                </tbody>
-                            </table>
+                    </tbody>
+                </table>
+                <br>
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-diet-harian" role="tabpanel" aria-labelledby="v-pills-diet-harian-tab">
+                        <h1>Diet Harian</h1>
+                        <div class="changeable">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab"
+                                        aria-controls="home" aria-selected="true">All</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profilex-tab" data-toggle="tab" href="#unpaid" role="tab"
+                                        aria-controls="profile" aria-selected="false">Unpaid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#paid" role="tab"
+                                        aria-controls="contact" aria-selected="false">Paid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#done" role="tab"
+                                        aria-controls="contact" aria-selected="false">Done</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataall">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="profile-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataunpaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatapaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatadone">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="profile-tab">
-                            <br>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" scope="col">ID</th>
-                                        <th colspan="2" scope="col">Product</th>
-                                        <th colspan="3" scope="col">User</th>
-                                        <th rowspan="2" scope="col">Invoice</th>
-                                        <th rowspan="2" scope="col">Receipt</th>
-                                        <th rowspan="2" scope="col">Times</th>
-                                        <th rowspan="2" scope="col">Status</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Product Price</th>
-                                        <th>User Name</th>
-                                        <th>User Phone</th>
-                                        <th>User Address</th>
-                                    <tr>
-                                </thead>
-                                <tbody id="showdataunpaid">
-
-                                </tbody>
-                            </table>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-diet-khusus" role="tabpanel" aria-labelledby="v-pills-diet-khusus-tab">
+                        <h1>Diet Khusus</h1>
+                        <div class="changeable">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab"
+                                        aria-controls="home" aria-selected="true">All</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profilex-tab" data-toggle="tab" href="#unpaid" role="tab"
+                                        aria-controls="profile" aria-selected="false">Unpaid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#paid" role="tab"
+                                        aria-controls="contact" aria-selected="false">Paid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#done" role="tab"
+                                        aria-controls="contact" aria-selected="false">Done</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataall">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="profile-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataunpaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatapaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatadone">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="contact-tab">
-                            <br>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" scope="col">ID</th>
-                                        <th colspan="2" scope="col">Product</th>
-                                        <th colspan="3" scope="col">User</th>
-                                        <th rowspan="2" scope="col">Invoice</th>
-                                        <th rowspan="2" scope="col">Receipt</th>
-                                        <th rowspan="2" scope="col">Times</th>
-                                        <th rowspan="2" scope="col">Status</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Product Price</th>
-                                        <th>User Name</th>
-                                        <th>User Phone</th>
-                                        <th>User Address</th>
-                                    <tr>
-                                </thead>
-                                <tbody id="showdatapaid">
-
-                                </tbody>
-                            </table>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-diet-penurunan-berat-badan" role="tabpanel" aria-labelledby="v-pills-diet-penurunan-berat-badan-tab">
+                        <h1>Diet Penurunan Berat Badan</h1>
+                        <div class="changeable">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab"
+                                        aria-controls="home" aria-selected="true">All</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profilex-tab" data-toggle="tab" href="#unpaid" role="tab"
+                                        aria-controls="profile" aria-selected="false">Unpaid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#paid" role="tab"
+                                        aria-controls="contact" aria-selected="false">Paid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#done" role="tab"
+                                        aria-controls="contact" aria-selected="false">Done</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataall">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="profile-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataunpaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatapaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatadone">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="contact-tab">
-                            <br>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th rowspan="2" scope="col">ID</th>
-                                        <th colspan="2" scope="col">Product</th>
-                                        <th colspan="3" scope="col">User</th>
-                                        <th rowspan="2" scope="col">Invoice</th>
-                                        <th rowspan="2" scope="col">Receipt</th>
-                                        <th rowspan="2" scope="col">Times</th>
-                                        <th rowspan="2" scope="col">Status</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Product Price</th>
-                                        <th>User Name</th>
-                                        <th>User Phone</th>
-                                        <th>User Address</th>
-                                    <tr>
-                                </thead>
-                                <tbody id="showdatadone">
-
-                                </tbody>
-                            </table>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-single-lunch-box" role="tabpanel" aria-labelledby="v-pills-single-lunch-box-tab">
+                        <h1>Single Lunch Box</h1>
+                        <div class="changeable">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab"
+                                        aria-controls="home" aria-selected="true">All</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profilex-tab" data-toggle="tab" href="#unpaid" role="tab"
+                                        aria-controls="profile" aria-selected="false">Unpaid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#paid" role="tab"
+                                        aria-controls="contact" aria-selected="false">Paid</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#done" role="tab"
+                                        aria-controls="contact" aria-selected="false">Done</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataall">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="unpaid" role="tabpanel" aria-labelledby="profile-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdataunpaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatapaid">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="contact-tab">
+                                    <br>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" scope="col">ID</th>
+                                                <th colspan="2" scope="col">Product</th>
+                                                <th colspan="3" scope="col">User</th>
+                                                <th rowspan="2" scope="col">Invoice</th>
+                                                <th rowspan="2" scope="col">Receipt</th>
+                                                <th rowspan="2" scope="col">Times</th>
+                                                <th rowspan="2" scope="col">Status</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Product Name</th>
+                                                <th>Product Price</th>
+                                                <th>User Name</th>
+                                                <th>User Phone</th>
+                                                <th>User Address</th>
+                                            <tr>
+                                        </thead>
+                                        <tbody id="showdatadone">
+        
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
