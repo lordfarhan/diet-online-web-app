@@ -17,10 +17,12 @@ Route::get('/admin', function () {
     return view('admin');
 });
 
-Route::get('/admin/product', 'DataController@GetAllData');
+Route::get('/admin/today-batch', 'DataController@GetTodayBatch');
+Route::get('/admin/harian-all', 'DataController@GetAllDietHarian');
+Route::get('/admin/harian-unpaid', 'DataController@GetUnpaidDietHarian');
+Route::get('/admin/harian-paid', 'DataController@GetPaidDietHarian');
+Route::get('/admin/harian-done', 'DataController@GetDoneDietHarian');
 
-Route::get('/admin/paid','DataController@UpdatePaid');
+Route::get('/admin/paid', 'DataController@UpdatePaid');
 
-Route::get('/admin/delivered','DataController@UpdateDelivered');
-
-
+Route::get('/admin/delivered', 'DataController@UpdateDelivered');
