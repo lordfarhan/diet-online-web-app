@@ -74,7 +74,6 @@ class TransactionFunction
                 if ($booleanhari[$i] == 1) {
                     $tanggalPesanan = $date + $i + ($pengali * 7);
                     if ($tanggalPesanan > (365 - date('z'))) {
-                        echo "masuk";
                         $tahunPesanan += 1;
                         $bulanPesanan = 1;
                         $tanggalPesanan -= 365 - date('z');
@@ -124,21 +123,29 @@ class TransactionFunction
                         $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                         $datenow = date("Y-m-d H:i:s");
                         $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
-
                         $status = 1;
                         $proof = " ";
-                        $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
-                        $result = $stmt->execute();
-                        $amount--;
-                        $stmt->close();
-                        if ($result) {
-                            $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE 'invoice' =? AND 'date'=? AND 'times'=?");
-                            $stmt->bind_param("sss", $invoice, $dateInput, $j);
+                        if ($stmt != FALSE) {
+                            $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                             $result = $stmt->execute();
-                            $transactions = $stmt->get_result()->fetch_assoc();
+                            $amount--;
                             $stmt->close();
-                            return $transactions;
+                            if ($result) {
+                                $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE 'invoice' =? AND 'date'=? AND 'times'=?");
+                                $stmt->bind_param("sss", $invoice, $dateInput, $j);
+                                $result = $stmt->execute();
+                                $stmt->close();
+                                return $invoice;
+                            } else {
+                                $response['error'] = true;
+                                $response['message'] = "Data not inserted";
+                                echo json_encode($response);
+                                return false;
+                            }
                         } else {
+                            $response['error'] = true;
+                            $response['message'] = "Post Error";
+                            echo json_encode($response);
                             return false;
                         }
                     }
@@ -160,28 +167,29 @@ class TransactionFunction
             } else {
                 $stmt = $this->conn->prepare("UPDATE `transactions` SET `status`=? , `proof_of_payment`=? WHERE `invoice`=? ");
                 $status = 2;
-                $stmt->bind_param("sss", $status, $proof, $invoice);
-                $result = $stmt->execute();
-                $stmt->close();
-                if ($result) {
-                    $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE `invoice`=?");
-                    $stmt->bind_param("s", $invoice);
+                if ($stmt != FALSE) {
+                    $stmt->bind_param("sss", $status, $proof, $invoice);
                     $result = $stmt->execute();
-                    $transactions = $stmt->get_result()->fetch_assoc();
                     $stmt->close();
-                    return $transactions;
+                    if ($result) {
+                        $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE `invoice`=?");
+                        $stmt->bind_param("s", $invoice);
+                        $result = $stmt->execute();
+                        $transactions = $stmt->get_result()->fetch_assoc();
+                        $stmt->close();
+                        return $transactions;
+                    } else {
+                        $response['error'] = true;
+                        $response['message'] = "Database not Updated";
+                        echo json_encode($response);
+                        return false;
+                    }
                 } else {
                     $response['error'] = true;
-                    $response['message'] = "Cant make Transaction";
+                    $response['message'] = "Update Error";
                     echo json_encode($response);
+                    return false;
                 }
-                // $sql = "UPDATE `transactions` SET `status`=2,`proof_of_payment`=".$proof." WHERE `invoice`=".$invoice;
-
-                // if($this->conn->query($sql)){
-                //     echo "Done";
-                // } else {
-                //     echo "gagal";
-                // }
             }
         } else {
             return false;
@@ -191,8 +199,15 @@ class TransactionFunction
     public function Delete($invoice)
     {
         $stmt = $this->conn->prepare("DELETE FROM `transactions` WHERE `invoice`=?");
-        $stmt->bind_param("s", $invoice);
-        $stmt->execute();
-        $stmt->close();
+        if ($stmt != false) {
+            $stmt->bind_param("s", $invoice);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            $response['error'] = true;
+            $response['message'] = "Delete Error";
+            echo json_encode($response);
+            return false;
+        }
     }
 }
