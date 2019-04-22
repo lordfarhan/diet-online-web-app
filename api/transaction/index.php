@@ -1,53 +1,72 @@
-<?php 
-if(isset($_POST['tag']) && $_POST['tag'] != '') {
-    $tag = $_POST['tag'];
-    define('root', $_SERVER['DOCUMENT_ROOT']); 
-    require_once(root.'\dion\api\function\TransactionFunctions.php'); 
-    $db = new TransactionFunctions();
-    // response Array
-    $response = array("tag" => $tag, "error" => FALSE);
-    if($tag == 'create') {
-        $response = array("error" => FALSE);
-        if(isset($_POST['product_id']) && isset($_POST['user_id'])) {
-            $product_id = $_POST['product_id'];
-            $user_id = $_POST['user_id'];
-            $notes = $_POST['notes'];
-            $times = $_POST['times'];
-            $status = $_POST['status'];
+<?php
+define('root', $_SERVER['DOCUMENT_ROOT']);
+require_once(root . '/api/transaction/TransactionFunction.php');
+$data = json_decode(file_get_contents("php://input"));
 
-            $transaction = $db->createTransaction($product_id, $user_id, $notes, $times, $status);
-            if($transaction) {
-                $response["error"] = FALSE;
-                $response['invoice'] = $transaction['invoice'];
-                $response['transaction']['product_id'] = $transaction['product_id'];
-                $response['transaction']['user_id'] = $transaction['user_id'];
-                $response['transaction']['notes'] = $transaction['notes'];
-                $response['transaction']['times'] = $transaction['times'];
-                $response['transaction']['status'] = $transaction['status'];
-                $response['transaction']['created_at'] = $transaction['created_at'];
-                echo json_encode($response);
-            } else {
-                // user failed to store
-                // jika gagal didaftarkan
-                $response["error"] = TRUE;
-                $response["error_msg"] = "Error in creating transaction!";
-                echo json_encode($response);
-            }
+if (isset($data->tag) && $data->tag != '') {
+    $tag = $data->tag;
+    $db = new TransactionFunction();
+    $response['error'] = false;
+    if ($tag == "post") {
+        $user_id = $data->user_id;
+        $product_id = $data->product_id;
+        $times = $data->times;
+        $days = $data->days;
+        $amount = $data->amount;
+        $notes = $data->notes;
+        if ($amount < 0) {
+            $response['error'] = true;
+            $response['message'] = "Jumlah harus lebih dari 1";
+        } else if ($notes == "") {
+            $notes = "-";
+            $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
+            $response['message'] = "Success Ordering";
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
+            echo json_encode($response);
         } else {
-            // jika ada kesalan dalam pendaftaran
-            $response["error"] = TRUE;
-            $response["error_msg"] = "Parameters is missing!";
+            $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
+            $response['message'] = "Success Ordering";
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
             echo json_encode($response);
         }
-    } else {
-        // user failed to store
-        $response["error"] = TRUE;
-        $response["error_msg"] = "Unknow 'tag' value. It should be either 'login' or 'register'";
-        echo json_encode($response);
+    } else if ($tag == "update-to-paid") {
+        $invoice = $data->invoice;
+        $proof = $data->proof;
+        $result = $db->UpdateToPaid($invoice, $proof);
+        if ($result != FALSE) {
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
+            $response['message'] = "Success Updating";
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
+            echo json_encode($response);
+        } else {
+            $response['error'] = TRUE;
+            $response['message'] = "Update Error";
+        }
+    } else if ($tag == "update-to-done") {
+        $uid = $data->uid;
+        $result = $db->UpdateToDone($uid);
+        if ($result != FALSE) {
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
+            $response['message'] = "Success Updating";
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
+            echo json_encode($response);
+        } else {
+            $response['error'] = TRUE;
+            $response['message'] = "Update Error";
+        }
     }
-} else {
-    $response["error"] = TRUE;
-    $response["error_msg"] = "Required parameter 'tag' is missing!";
-    echo json_encode($response);
 }
-?>
