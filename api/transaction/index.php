@@ -20,21 +20,49 @@ if (isset($data->tag) && $data->tag != '') {
         } else if ($notes == "") {
             $notes = "-";
             $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
             $response['message'] = "Success Ordering";
-            $response['invoice'] = $result;
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
             echo json_encode($response);
         } else {
             $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
             $response['message'] = "Success Ordering";
-            $response['invoice'] = $result;
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
             echo json_encode($response);
         }
-    } else if ($tag == "update") {
+    } else if ($tag == "update-to-paid") {
         $invoice = $data->invoice;
         $proof = $data->proof;
-        $transaction = $db->Update($invoice, $proof);
-        if ($transaction != FALSE) {
+        $result = $db->UpdateToPaid($invoice, $proof);
+        if ($result != FALSE) {
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
             $response['message'] = "Success Updating";
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
+            echo json_encode($response);
+        } else {
+            $response['error'] = TRUE;
+            $response['message'] = "Update Error";
+        }
+    } else if ($tag == "update-to-done") {
+        $uid = $data->uid;
+        $result = $db->UpdateToDone($uid);
+        if ($result != FALSE) {
+            $user = $db->GetUser($result['user_id']);
+            $package = $db->GetProduct($result['product_id']);
+            $response['message'] = "Success Updating";
+            $response['transactions'] = $result;
+            $response['user'] = $user;
+            $response['product'] = $package;
             echo json_encode($response);
         } else {
             $response['error'] = TRUE;

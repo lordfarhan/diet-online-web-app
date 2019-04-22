@@ -133,13 +133,13 @@ class TransactionFunction
                             $proof = " ";
                             if ($stmt != FALSE) {
                                 $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
-                                $result = $stmt->execute();
                                 $amount--;
-                                $stmt->close();
-                                if ($result != false) {
-                                    $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE 'invoice' =? AND 'date'=? AND 'times'=?");
-                                    $stmt->bind_param("sss", $invoice, $dateInput, $j);
-                                    $result = $stmt->execute();
+                                if ($stmt->execute()) {
+                                    $stmt->close();
+                                    $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice =? LIMIT 1");
+                                    $stmt->bind_param("s", $invoice);
+                                    $stmt->execute();
+                                    $transactions = $stmt->get_result()->fetch_assoc();
                                     $stmt->close();
                                     $check = true;
                                 } else {
@@ -157,67 +157,115 @@ class TransactionFunction
                 }
             }
         }
-        if($check){
-            return $invoice;
+        if ($check) {
+            return $transactions;
         } else {
             return false;
         }
     }
 
-    public function Update($invoice, $proof)
+    public function UpdateToPaid($invoice, $proof)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE `invoice`=?");
-        $stmt->bind_param("s", $invoice);
-        $result = $stmt->execute();
-        $stmt->close();
-        if ($result) {
-            $hours = (date('H') + 7) % 24;
-            if ($hours > 17) {
-                $this->Delete($invoice);
-            } else {
-                $stmt = $this->conn->prepare("UPDATE `transactions` SET `status`=? , `proof_of_payment`=? WHERE `invoice`=? ");
-                $status = 2;
-                if ($stmt != FALSE) {
-                    $stmt->bind_param("sss", $status, $proof, $invoice);
-                    $result = $stmt->execute();
+        $hours = (date('H') + 7) % 24;
+        $hours = 2;
+        if ($hours > 17) {
+            $this->Delete($invoice);
+            return false;
+        } else {
+            $stmt = $this->conn->prepare("UPDATE `transactions` SET `status`=? , `proof_of_payment`=? WHERE `invoice`=? ");
+            $status = 2;
+            if ($stmt != FALSE) {
+                $stmt->bind_param("sss", $status, $proof, $invoice);
+                if ($stmt->execute()) {
                     $stmt->close();
-                    if ($result) {
-                        $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE `invoice`=?");
-                        $stmt->bind_param("s", $invoice);
-                        $result = $stmt->execute();
-                        $transactions = $stmt->get_result()->fetch_assoc();
-                        $stmt->close();
-                        return $transactions;
-                    } else {
-                        $response['error'] = true;
-                        $response['message'] = "Database not Updated";
-                        echo json_encode($response);
-                        return false;
-                    }
+                    $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice=?");
+                    $stmt->bind_param("s", $invoice);
+                    $stmt->execute();
+                    $transactions = $stmt->get_result()->fetch_assoc();
+                    $stmt->close();
+                    return $transactions;
                 } else {
                     $response['error'] = true;
-                    $response['message'] = "Update Error";
+                    $response['message'] = "Database not Updated";
                     echo json_encode($response);
                     return false;
                 }
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Update Error";
+                echo json_encode($response);
+                return false;
             }
-        } else {
-            return false;
         }
-    }
+    } 
 
-    public function Delete($invoice)
-    {
-        $stmt = $this->conn->prepare("DELETE FROM `transactions` WHERE `invoice`=?");
-        if ($stmt != false) {
-            $stmt->bind_param("s", $invoice);
-            $stmt->execute();
+
+public function UpdateToDone($uid)
+{
+    $stmt = $this->conn->prepare("UPDATE transactions SET status=? WHERE id=? ");
+    $status = 3;
+    if ($stmt != false) {
+        $stmt->bind_param("ii", $status, $uid);
+        if ($stmt->execute()) {
             $stmt->close();
+            $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE id=?");
+            $stmt->bind_param("s", $uid);
+            $stmt->execute();
+            $transactions = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $transactions;
         } else {
             $response['error'] = true;
-            $response['message'] = "Delete Error";
+            $response['message'] = "Database not Updated";
             echo json_encode($response);
             return false;
         }
+    } else {
+        $response['error'] = true;
+        $response['message'] = "Update Query Error";
+        echo json_encode($response);
+        return false;
     }
+}
+
+public function Delete($invoice)
+{
+    $stmt = $this->conn->prepare("DELETE FROM `transactions` WHERE `invoice`=?");
+    if ($stmt != false) {
+        $stmt->bind_param("s", $invoice);
+        $stmt->execute();
+        $stmt->close();
+    } else {
+        $response['error'] = true;
+        $response['message'] = "Delete Error";
+        echo json_encode($response);
+        return false;
+    }
+}
+
+public function GetUser($unique_id)
+{
+    $stmt = $this->conn->prepare("SELECT * FROM users WHERE unique_id = ?");
+    $stmt->bind_param("s", $unique_id);
+    if ($stmt->execute()) {
+        $user = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $user;
+    } else {
+        return NULL;
+    }
+}
+
+public function GetProduct($unique_id)
+{
+    $stmt = $this->conn->prepare("SELECT * FROM packages WHERE unique_id = ?");
+    $stmt->bind_param("s", $unique_id);
+    if ($stmt->execute()) {
+        $package = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $package;
+    } else {
+        return NULL;
+    }
+}
 }
