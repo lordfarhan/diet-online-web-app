@@ -6,8 +6,8 @@ class TransactionFunction
 
     function __construct()
     {
-        require_once(root . '/api/config/connection.php');
-        $this->db = new connection;
+        require_once(root . '/api/config/DB_Connect.php');
+        $this->db = new DB_Connect;
         $this->conn = $this->db->connect();
     }
 
