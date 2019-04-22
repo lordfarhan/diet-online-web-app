@@ -69,7 +69,12 @@ class TransactionFunction
         $bulanPesanan = date('n');
         $tahunPesanan = date("Y");
         $date = $date - $hari;
-        while ($amount > 0) {
+        $temp = $amount;
+        $check = false;
+        for ($banyak = 0; $banyak < $temp;) {
+            if ($temp != $amount) {
+                $banyak++;
+            }
             for ($i = $kontrolsekali ? $startHari : 0; $i < 7; $i++) {
                 if ($booleanhari[$i] == 1) {
                     $tanggalPesanan = $date + $i + ($pengali * 7);
@@ -118,39 +123,44 @@ class TransactionFunction
                     if ($amount == 0) {
                         break;
                     }
-                    if ($booleanhari[$i] == 1 && $booleanwaktu[$j - 1] == 1 && $amount != 0) {
-                        $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
-                        $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
-                        $datenow = date("Y-m-d H:i:s");
-                        $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
-                        $status = 1;
-                        $proof = " ";
-                        if ($stmt != FALSE) {
-                            $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
-                            $result = $stmt->execute();
-                            $amount--;
-                            $stmt->close();
-                            if ($result) {
-                                $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE 'invoice' =? AND 'date'=? AND 'times'=?");
-                                $stmt->bind_param("sss", $invoice, $dateInput, $j);
+                    if ($booleanhari[$i] == 1 && $booleanwaktu[$j - 1] == 1) {
+                        if ($amount != 0) {
+                            $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
+                            $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
+                            $datenow = date("Y-m-d H:i:s");
+                            $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                            $status = 1;
+                            $proof = " ";
+                            if ($stmt != FALSE) {
+                                $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                                 $result = $stmt->execute();
+                                $amount--;
                                 $stmt->close();
-                                return $invoice;
+                                if ($result != false) {
+                                    $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE 'invoice' =? AND 'date'=? AND 'times'=?");
+                                    $stmt->bind_param("sss", $invoice, $dateInput, $j);
+                                    $result = $stmt->execute();
+                                    $stmt->close();
+                                    $check = true;
+                                } else {
+                                    $response['error'] = true;
+                                    $response['message'] = "Data not inserted";
+                                    echo json_encode($response);
+                                }
                             } else {
                                 $response['error'] = true;
-                                $response['message'] = "Data not inserted";
+                                $response['message'] = "Post Error";
                                 echo json_encode($response);
-                                return false;
                             }
-                        } else {
-                            $response['error'] = true;
-                            $response['message'] = "Post Error";
-                            echo json_encode($response);
-                            return false;
                         }
                     }
                 }
             }
+        }
+        if($check){
+            return $invoice;
+        } else {
+            return false;
         }
     }
 
@@ -166,7 +176,7 @@ class TransactionFunction
                 $this->Delete($invoice);
             } else {
                 $stmt = $this->conn->prepare("UPDATE `transactions` SET `status`=? , `proof_of_payment`=? WHERE `invoice`=? ");
-                $status = 3;
+                $status = 2;
                 if ($stmt != FALSE) {
                     $stmt->bind_param("sss", $status, $proof, $invoice);
                     $result = $stmt->execute();
