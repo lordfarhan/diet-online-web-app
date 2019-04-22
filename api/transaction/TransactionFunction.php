@@ -166,7 +166,7 @@ class TransactionFunction
                 $this->Delete($invoice);
             } else {
                 $stmt = $this->conn->prepare("UPDATE `transactions` SET `status`=? , `proof_of_payment`=? WHERE `invoice`=? ");
-                $status = 2;
+                $status = 3;
                 if ($stmt != FALSE) {
                     $stmt->bind_param("sss", $status, $proof, $invoice);
                     $result = $stmt->execute();
