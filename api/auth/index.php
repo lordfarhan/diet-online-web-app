@@ -2,17 +2,17 @@
 /**
  * File to handle all API requests
  * Accepts GET and POST
- * 
+ *
  * Each request will be identified by TAG
  * Response will be JSON data
- * check for POST request 
+ * check for POST request
  */
 if (isset($_POST['tag']) && $_POST['tag'] != '') {
     // get tag
     $tag = $_POST['tag'];
     // include db handler
-    define('root', $_SERVER['DOCUMENT_ROOT']); 
-    require_once(root.'\dion\api\function\AuthFunctions.php'); 
+    define('root', $_SERVER['DOCUMENT_ROOT']);
+    require_once(root.'/api/function/AuthFunctions.php');
     $db = new AuthFunctions();
     // response Array
     $response = array("tag" => $tag, "error" => FALSE);
@@ -47,11 +47,11 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 $response['user']['prohibition'] = $user['prohibition'];
                 $response["user"]["created_at"] = $user["created_at"];
                 $response["user"]["updated_at"] = $user["updated_at"];
-                // ditampilkan dalam bentuk json 
+                // ditampilkan dalam bentuk json
                 echo json_encode($response);
             } else {
                 // user is not found with the credentials
-                // jika user tidak ditemukan maka akan muncul pesan 
+                // jika user tidak ditemukan maka akan muncul pesan
                 $response["error"] = TRUE;
                 $response["error_msg"] = "Login not matched. Please try again!";
                 echo json_encode($response);
@@ -190,7 +190,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 $response['error_msg'] = "Your password is wrong";
                 echo json_encode($response);
             }
-            
+
         } else {
             // jika ada kesalan dalam pendaftaran
             $response["error"] = TRUE;
@@ -210,7 +210,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            
+
             if($db->getUserByUsernameAndPassword($old_username, $password)) {
                 if ($db->isUsernameExisted($username) == FALSE || $old_username == $username) {
                     if ($db->isEmailExisted($email) == FALSE || $old_email == $email) {
@@ -259,7 +259,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                     $response["error_msg"] = "Your password is wrong";
                     echo json_encode($response);
             }
-            
+
         } else {
             // jika ada kesalan dalam pendaftaran
             $response["error"] = TRUE;
@@ -316,7 +316,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
                 $response['error_msg'] = "Your password is wrong";
                 echo json_encode($response);
             }
-            
+
         } else {
             // jika ada kesalan dalam pendaftaran
             $response["error"] = TRUE;
