@@ -6,7 +6,7 @@ class AuthFunctions {
     // constructor
     function __construct() {
         
-        require_once(root.'\dion\api\config\DB_Connect.php'); 
+        require_once(root.'/api/config/DB_Connect.php'); 
         // connecting to database
         // mengkoneksikan ke
         $this->db = new DB_Connect();

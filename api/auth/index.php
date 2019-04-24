@@ -12,7 +12,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     $tag = $_POST['tag'];
     // include db handler
     define('root', $_SERVER['DOCUMENT_ROOT']); 
-    require_once(root.'\dion\api\function\AuthFunctions.php'); 
+    require_once(root.'/api/function/AuthFunctions.php'); 
     $db = new AuthFunctions();
     // response Array
     $response = array("tag" => $tag, "error" => FALSE);
