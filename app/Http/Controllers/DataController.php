@@ -34,7 +34,7 @@ class DataController extends Controller
             ->where('status','=',1)
             ->get();
 
-        return view('harian_unpaid')->with('transactions', $transactions);
+        return view('harian.unpaid')->with('transactions', $transactions);
     }
 
     public function GetPaidDietHarian()
@@ -49,7 +49,7 @@ class DataController extends Controller
             ->where('status','=',2)
             ->get();
 
-        return view('harian_paid')->with('transactions', $transactions);
+        return view('harian.paid')->with('transactions', $transactions);
      }
 
     public function GetDoneDietHarian()
@@ -64,7 +64,7 @@ class DataController extends Controller
             ->where('status','=',3)
             ->get();
 
-        return view('harian_done')->with('transactions', $transactions);
+        return view('harian.done')->with('transactions', $transactions);
      }
 
     public function GetAllDietHarian()
@@ -78,8 +78,173 @@ class DataController extends Controller
             ->where('product_id','=','DP003')
             ->get();
 
-        return view('harian_all')->with('transactions', $transactions);
+        return view('harian.all')->with('transactions', $transactions);
+    }
+
+    public function GetUnpaidDietKhusus()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SP001')
+            ->where('product_id','=','SP002')
+            ->where('product_id','=','SP003')
+            ->where('status','=',1)
+            ->get();
+
+        return view('khusus.unpaid')->with('transactions', $transactions);
+    }
+
+    public function GetPaidDietKhusus()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SP001')
+            ->where('product_id','=','SP002')
+            ->where('product_id','=','SP003')
+            ->where('status','=',2)
+            ->get();
+
+        return view('khusus.paid')->with('transactions', $transactions);
      }
+
+    public function GetDoneDietKhusus()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SP001')
+            ->where('product_id','=','SP002')
+            ->where('product_id','=','SP003')
+            ->where('status','=',3)
+            ->get();
+
+        return view('khusus.done')->with('transactions', $transactions);
+     }
+
+    public function GetAllDietKhusus()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SP001')
+            ->where('product_id','=','SP002')
+            ->where('product_id','=','SP003')
+            ->get();
+
+        return view('khusus.all')->with('transactions', $transactions);
+    }
+
+    public function GetUnpaidDietPenurunan()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','WL001')
+            ->where('status','=',1)
+            ->get();
+
+        return view('penurunan.unpaid')->with('transactions', $transactions);
+    }
+
+    public function GetPaidDietPenurunan()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','WL001')
+            ->where('status','=',2)
+            ->get();
+
+        return view('penurunan.paid')->with('transactions', $transactions);
+     }
+
+    public function GetDoneDietPenurunan()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','WL001')
+            ->where('status','=',3)
+            ->get();
+
+        return view('penurunan.done')->with('transactions', $transactions);
+     }
+
+    public function GetAllDietPenurunan()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','WL001')
+            ->get();
+
+        return view('penurunan.all')->with('transactions', $transactions);
+    }
+
+    public function GetUnpaidLunch()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SL001')
+            ->where('product_id','=','SL002')
+            ->where('status','=',1)
+            ->get();
+
+        return view('penurunan.unpaid')->with('transactions', $transactions);
+    }
+
+    public function GetPaidLunch()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SL001')
+            ->where('product_id','=','SL002')
+            ->where('status','=',2)
+            ->get();
+
+        return view('penurunan.paid')->with('transactions', $transactions);
+     }
+
+    public function GetDoneLunch()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SL001')
+            ->where('product_id','=','SL002')
+            ->where('status','=',3)
+            ->get();
+
+        return view('penurunan.done')->with('transactions', $transactions);
+     }
+
+    public function GetAllLunch()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('product_id','=','SL001')
+            ->where('product_id','=','SL002')
+            ->get();
+
+        return view('penurunan.all')->with('transactions', $transactions);
+    }
 
     public function UpdateDone($id)
     {
