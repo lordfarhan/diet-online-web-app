@@ -156,7 +156,7 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             $gender = $_POST['gender'];
 
             if($db->getUserByUsernameAndPassword($username, $password)) {
-                $user = $db->updatePersonalInfo($city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender);
+                $user = $db->updatePersonalInfo($username, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender);
                 if ($user != false) {
                     // user stored successfully
                     // jika sukses, maka akan ditampilkan hasil pendaftaran
