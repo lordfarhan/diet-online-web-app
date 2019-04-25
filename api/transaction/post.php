@@ -10,7 +10,7 @@ $times = $_REQUEST['times'];
 $days = $_REQUEST['days'];
 $amount = $_REQUEST['amount'];
 $notes = $_REQUEST['notes'];
-if ($amount <= 5) {
+if ($amount < 5) {
     $response['error'] = true;
     $response['message'] = "Jumlah harus lebih dari 1";
     echo json_encode($response);
