@@ -1,6 +1,6 @@
 <?php
 define('root', $_SERVER['DOCUMENT_ROOT']);
-require_once(root . '/diet-online-apps-web/api/function/TransactionFunction.php');
+require_once(root . '/api/function/TransactionFunction.php');
 
 $db = new TransactionFunction();
 $response['error'] = false;
