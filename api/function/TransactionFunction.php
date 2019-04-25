@@ -197,7 +197,7 @@ class TransactionFunction
                 return false;
             }
         }
-    } 
+    }
 
 
 public function UpdateToDone($uid)
