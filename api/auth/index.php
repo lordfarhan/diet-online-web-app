@@ -11,13 +11,8 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     // get tag
     $tag = $_POST['tag'];
     // include db handler
-<<<<<<< HEAD
-    define('root', $_SERVER['DOCUMENT_ROOT']); 
-    require_once(root.'/api/function/AuthFunctions.php'); 
-=======
     define('root', $_SERVER['DOCUMENT_ROOT']);
     require_once(root.'/api/function/AuthFunctions.php');
->>>>>>> 1daa99696576def09bbb240644c6fc538978bfa8
     $db = new AuthFunctions();
     // response Array
     $response = array("tag" => $tag, "error" => FALSE);
