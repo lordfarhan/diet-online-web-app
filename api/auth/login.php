@@ -16,8 +16,8 @@ if (isset($_REQUEST['username']) && isset($_REQUEST['password'])) {
     if ($user != false) {
         // use is found
         // jika user telah ditemukan dan cocok pada database, maka akan dimunculkan data user
-        $response["uid"] = $user["unique_id"];
         $response["error"] = FALSE;
+        $response["uid"] = $user["unique_id"];
         $response["user"]["username"] = $user["username"];
         $response["user"]["email"] = $user["email"];
         $response["user"]["city"] = $user["city"];

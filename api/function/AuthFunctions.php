@@ -5,7 +5,7 @@ class AuthFunctions {
     //put your code here
     // constructor
     function __construct() {
-        
+
         require_once(root.'/api/config/DB_Connect.php'); 
         // connecting to database
         // mengkoneksikan ke
@@ -14,18 +14,18 @@ class AuthFunctions {
     }
     // destructor
     function __destruct() {
-        
+
     }
     /**
      * Storing new user
      * returns user details
      */
     public function storeUser($username, $email, $password, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender) {
-        $uuid = uniqid('', true);
+        $uuid = uniqid();
         $hash = $this->hashSSHA($password);
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt untuk menggadakan keamanan
-        
+
         $date = date("Y-m-d H:i:s");
 
         $convert_birth_date = strtotime($birthdate);
@@ -45,7 +45,7 @@ class AuthFunctions {
             $stmt->execute();
             $user = $stmt->get_result()->fetch_assoc();
             $stmt->close();
-            return $user; 
+            return $user;
         } else {
             return false;
         }
@@ -54,9 +54,10 @@ class AuthFunctions {
     /**
      * Update user personal info
      */
-    public function updatePersonalInfo($city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender) {
-        
+    public function updatePersonalInfo($username, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender) {
+
         $date = date("Y-m-d H:i:s");
+
         $convert_birth_date = strtotime($birthdate);
         $birth_date = date('Y-m-d', $convert_birth_date);
         //perintah memsaukkan ke table users dan row
@@ -81,7 +82,7 @@ class AuthFunctions {
             $stmt->execute();
             $user = $stmt->get_result()->fetch_assoc();
             $stmt->close();
-            return $user; 
+            return $user;
         } else {
             return false;
         }
@@ -93,10 +94,10 @@ class AuthFunctions {
 
     public function updateAccountInfo($old_username, $username, $email, $password) {
         $date = date("Y-m-d H:i:s");
-        
+
         $stmt = $this->conn->prepare("UPDATE users SET username = ?, email = ?, updated_at = ? WHERE username = ?");
         $stmt->bind_param("ssss", $username, $email, $date, $old_username);
-        
+
         $result = $stmt->execute();
         $stmt->close();
         if($result) {
@@ -117,10 +118,10 @@ class AuthFunctions {
 
     public function updateMedicalInfo($username, $weight, $height, $prohibition) {
         $date = date("Y-m-d H:i:s");
-        
+
         $stmt = $this->conn->prepare("UPDATE users SET weight = ?, height = ?, prohibition = ?, updated_at = ? WHERE username = ?");
         $stmt->bind_param("sssss", $weight, $height, $prohibition, $date, $username);
-        
+
         $result = $stmt->execute();
         $stmt->close();
         if($result) {
@@ -142,22 +143,22 @@ class AuthFunctions {
         // memanggil data yang sesuai dengan username
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
-        if ($stmt->execute()){ 
+        if ($stmt->execute()){
             //menyiapkan data yg diambil, fetch data
-            $user = $stmt->get_result()->fetch_assoc();         
-            $stmt->close();                                     
-                                                              
-            // verifying user password                                  
-            // ferifikasi kecocokan password                            
-            $salt = $user['salt'];                              
-            $encrypted_password = $user['encrypted_password'];  
-            $hash = $this->checkhashSSHA($salt, $password);     
-                                                                      
-            // check for password equality                              
-            // jika password sesuai dengan database                     
-            if ($encrypted_password == $hash) {                 
-                // user authentication details are correct              
-                // maka dapat diambil dari database         
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            // verifying user password
+            // ferifikasi kecocokan password
+            $salt = $user['salt'];
+            $encrypted_password = $user['encrypted_password'];
+            $hash = $this->checkhashSSHA($salt, $password);
+
+            // check for password equality
+            // jika password sesuai dengan database
+            if ($encrypted_password == $hash) {
+                // user authentication details are correct
+                // maka dapat diambil dari database
                 return $user;
             }
         } else {
