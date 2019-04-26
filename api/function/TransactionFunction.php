@@ -200,72 +200,89 @@ class TransactionFunction
     }
 
 
-public function UpdateToDone($uid)
-{
-    $stmt = $this->conn->prepare("UPDATE transactions SET status=? WHERE id=? ");
-    $status = 3;
-    if ($stmt != false) {
-        $stmt->bind_param("ii", $status, $uid);
-        if ($stmt->execute()) {
-            $stmt->close();
-            $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE id=?");
-            $stmt->bind_param("s", $uid);
-            $stmt->execute();
-            $transactions = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
-            return $transactions;
+    public function UpdateToDone($uid)
+    {
+        $stmt = $this->conn->prepare("UPDATE transactions SET status=? WHERE id=? ");
+        $status = 3;
+        if ($stmt != false) {
+            $stmt->bind_param("ii", $status, $uid);
+            if ($stmt->execute()) {
+                $stmt->close();
+                $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE id=?");
+                $stmt->bind_param("s", $uid);
+                $stmt->execute();
+                $transactions = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                return $transactions;
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Database not Updated";
+                echo json_encode($response);
+                return false;
+            }
         } else {
             $response['error'] = true;
-            $response['message'] = "Database not Updated";
+            $response['message'] = "Update Query Error";
             echo json_encode($response);
             return false;
         }
-    } else {
-        $response['error'] = true;
-        $response['message'] = "Update Query Error";
-        echo json_encode($response);
-        return false;
     }
-}
 
-public function Delete($invoice)
-{
-    $stmt = $this->conn->prepare("DELETE FROM `transactions` WHERE `invoice`=?");
-    if ($stmt != false) {
-        $stmt->bind_param("s", $invoice);
-        $stmt->execute();
-        $stmt->close();
-    } else {
-        $response['error'] = true;
-        $response['message'] = "Delete Error";
-        echo json_encode($response);
-        return false;
+    public function Delete($invoice)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM `transactions` WHERE `invoice`=?");
+        if ($stmt != false) {
+            $stmt->bind_param("s", $invoice);
+            $stmt->execute();
+            $stmt->close();
+        } else {
+            $response['error'] = true;
+            $response['message'] = "Delete Error";
+            echo json_encode($response);
+            return false;
+        }
     }
-}
 
-public function GetUser($unique_id)
-{
-    $stmt = $this->conn->prepare("SELECT * FROM users WHERE unique_id = ?");
-    $stmt->bind_param("s", $unique_id);
-    if ($stmt->execute()) {
-        $user = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-        return $user;
-    } else {
-        return NULL;
+    public function GetUser($unique_id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE unique_id = ?");
+        $stmt->bind_param("s", $unique_id);
+        if ($stmt->execute()) {
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $user;
+        } else {
+            return NULL;
+        }
     }
-}
 
-public function GetProduct($unique_id)
-{
-    $stmt = $this->conn->prepare("SELECT * FROM packages WHERE unique_id = ?");
-    $stmt->bind_param("s", $unique_id);
-    if ($stmt->execute()) {
-        $package = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-        return $package;
-    } else {
-        return NULL;
+    public function GetProduct($unique_id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM packages WHERE unique_id = ?");
+        $stmt->bind_param("s", $unique_id);
+        if ($stmt->execute()) {
+            $package = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $package;
+        } else {
+            return NULL;
+        }
     }
-}
+
+    public function FetchData($user_id, $status)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id=? AND status=?");
+        if ($stmt != FALSE) {
+            $stmt->bind_param("si", $user_id, $status);
+            if($stmt->execute()){
+                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+                return $transactions;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

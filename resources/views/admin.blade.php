@@ -19,21 +19,73 @@
                 function () {
                     $('#today-batch').load('/admin/today-batch').fadeIn("slow");
                 }, 100);
-                var auto_refresh = setInterval(
+            //Harian
+            var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-all').load('/admin/harian-all').fadeIn("slow");
                 }, 100);
-                var auto_refresh = setInterval(
+            var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-unpaid').load('/admin/harian-unpaid').fadeIn("slow");
                 }, 100);
-                var auto_refresh = setInterval(
+            var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-paid').load('/admin/harian-paid').fadeIn("slow");
                 }, 100);
-                var auto_refresh = setInterval(
+            var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-done').load('/admin/harian-done').fadeIn("slow");
+                }, 100);
+            //Khusus
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-khusus-all').load('/admin/khusus-all').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-khusus-unpaid').load('/admin/khusus-unpaid').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-khusus-paid').load('/admin/khusus-paid').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-khusus-done').load('/admin/khusus-done').fadeIn("slow");
+                }, 100);
+            //Penurunan
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-penurunan-all').load('/admin/penurunan-all').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-penurunan-unpaid').load('/admin/penurunan-unpaid').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-penurunan-paid').load('/admin/penurunan-paid').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#diet-penurunan-done').load('/admin/penurunan-done').fadeIn("slow");
+                }, 100);
+            //Single Lunch Box
+            var auto_refresh = setInterval(
+                function () {
+                    $('#single-lunch-all').load('/admin/lunch-all').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#single-lunch-unpaid').load('/admin/lunch-unpaid').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#single-lunch-paid').load('/admin/lunch-paid').fadeIn("slow");
+                }, 100);
+            var auto_refresh = setInterval(
+                function () {
+                    $('#single-lunch-done').load('/admin/lunch-done').fadeIn("slow");
                 }, 100);
         })
 
@@ -57,7 +109,7 @@
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="height:50px;">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Admin Page</a>
-        {{-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> --}}
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" id="search-box">
         <ul class="navbar-nav px-3">
             Log Out
         </ul>
@@ -67,13 +119,21 @@
         <div class="col-lg-3">
             <aside class="sidebar">
                 <div class="container">
+                    <br>
                     <h4>Filter</h4>
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link" id="v-pills-diet-harian-tab" data-toggle="pill" href="#v-pills-diet-harian" role="tab" aria-controls="v-pills-diet-harian" aria-selected="false">Diet Harian</a>
-                        <a class="nav-link" id="v-pills-diet-khusus-tab" data-toggle="pill" href="#v-pills-diet-khusus" role="tab" aria-controls="v-pills-diet-khusus" aria-selected="false">Diet Khusus</a>
-                        <a class="nav-link" id="v-pills-diet-penurunan-berat-badan-tab" data-toggle="pill" href="#v-pills-diet-penurunan-berat-badan" role="tab" aria-controls="v-pills-diet-penurunan-berat-badan" aria-selected="false">Diet Penurunan Berat Badan</a>
-                        <a class="nav-link" id="v-pills-single-lunch-box-tab" data-toggle="pill" href="#v-pills-single-lunch-box" role="tab" aria-controls="v-pills-single-lunch-box" aria-selected="false">Single Lunch Box</a>
-                      </div>
+                        <a class="nav-link" id="v-pills-diet-harian-tab" data-toggle="pill" href="#v-pills-diet-harian"
+                            role="tab" aria-controls="v-pills-diet-harian" aria-selected="false">Diet Harian</a>
+                        <a class="nav-link" id="v-pills-diet-khusus-tab" data-toggle="pill" href="#v-pills-diet-khusus"
+                            role="tab" aria-controls="v-pills-diet-khusus" aria-selected="false">Diet Khusus</a>
+                        <a class="nav-link" id="v-pills-diet-penurunan-berat-badan-tab" data-toggle="pill"
+                            href="#v-pills-diet-penurunan-berat-badan" role="tab"
+                            aria-controls="v-pills-diet-penurunan-berat-badan" aria-selected="false">Diet Penurunan
+                            Berat Badan</a>
+                        <a class="nav-link" id="v-pills-single-lunch-box-tab" data-toggle="pill"
+                            href="#v-pills-single-lunch-box" role="tab" aria-controls="v-pills-single-lunch-box"
+                            aria-selected="false">Single Lunch Box</a>
+                    </div>
                 </div>
             </aside>
         </div>
@@ -86,7 +146,8 @@
                 </div>
                 <br>
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-diet-harian" role="tabpanel" aria-labelledby="v-pills-diet-harian-tab">
+                    <div class="tab-pane fade show active" id="v-pills-diet-harian" role="tabpanel"
+                        aria-labelledby="v-pills-diet-harian-tab">
                         <h1>Diet Harian</h1>
                         <div class="changeable">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -108,7 +169,8 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel"
+                                    aria-labelledby="home-tab">
                                     <br>
                                     <h2>All</h2>
                                     <div id="diet-harian-all"></div>
@@ -131,7 +193,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-diet-khusus" role="tabpanel" aria-labelledby="v-pills-diet-khusus-tab">
+                    <div class="tab-pane fade" id="v-pills-diet-khusus" role="tabpanel"
+                        aria-labelledby="v-pills-diet-khusus-tab">
                         <h1>Diet Khusus</h1>
                         <div class="changeable">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -153,7 +216,8 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel"
+                                    aria-labelledby="home-tab">
                                     <br>
                                     <h2>All</h2>
                                     <div id="diet-khusus-all"></div>
@@ -176,7 +240,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-diet-penurunan-berat-badan" role="tabpanel" aria-labelledby="v-pills-diet-penurunan-berat-badan-tab">
+                    <div class="tab-pane fade" id="v-pills-diet-penurunan-berat-badan" role="tabpanel"
+                        aria-labelledby="v-pills-diet-penurunan-berat-badan-tab">
                         <h1>Diet Penurunan Berat Badan</h1>
                         <div class="changeable">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -198,7 +263,8 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel"
+                                    aria-labelledby="home-tab">
                                     <br>
                                     <h2>All</h2>
                                     <div id="diet-penurunan-all"></div>
@@ -221,7 +287,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-single-lunch-box" role="tabpanel" aria-labelledby="v-pills-single-lunch-box-tab">
+                    <div class="tab-pane fade" id="v-pills-single-lunch-box" role="tabpanel"
+                        aria-labelledby="v-pills-single-lunch-box-tab">
                         <h1>Single Lunch Box</h1>
                         <div class="changeable">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -243,7 +310,8 @@
                                 </li>
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel"
+                                    aria-labelledby="home-tab">
                                     <br>
                                     <h2>All</h2>
                                     <div id="single-lunch-all"></div>
