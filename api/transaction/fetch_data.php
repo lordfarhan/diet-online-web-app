@@ -11,6 +11,9 @@ if($result!=FALSE){
     $response['message']= "Fetch Success";
     $response['transaction']=$result;
     echo json_encode($response);
+}else if($result==NULL){
+    $response['message']= "There is no data";
+    echo json_encode($response);
 } else {
     $response['error']= true;
     $response['message']="Fetching data Failed";

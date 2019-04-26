@@ -274,10 +274,14 @@ class TransactionFunction
         $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id=? AND status=?");
         if ($stmt != FALSE) {
             $stmt->bind_param("si", $user_id, $status);
-            if($stmt->execute()){
+            if ($stmt->execute()) {
                 $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 $stmt->close();
-                return $transactions;
+                if (!$transactions) {
+                    return NULL;
+                } else {
+                    return $transactions;
+                }
             } else {
                 return false;
             }
