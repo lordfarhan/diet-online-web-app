@@ -289,4 +289,36 @@ class TransactionFunction
             return false;
         }
     }
+
+    public function FetchAmount($user_id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id = ?");
+        $amount = [0, 0, 0, 0];
+        if ($stmt != FALSE) {
+            $stmt->bind_param("s", $user_id);
+            if ($stmt->execute()) {
+                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $amount[3] = count($transactions);
+                $stmt->close();
+                if (!$transactions) {
+                    return NULL;
+                } else {
+                    for ($i = 0; $i < $amount[3]; $i++) {
+                        if ($transactions[$i]['status'] == 1) {
+                            $amount[0]++;
+                        } else if ($transactions[$i]['status']==2) {
+                            $amount[1]++;
+                        } else {
+                            $amount[2]++;
+                        }
+                    }
+                    return $amount;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
