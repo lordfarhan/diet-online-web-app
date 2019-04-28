@@ -63,7 +63,12 @@ class TransactionFunction
         }
 
         $startHari = 0;
-        $startHari = ($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
+        if($startHari+1>=7){
+            $startHari=($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
+            $pengali=1;
+        } else {
+            $startHari = ($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
+        }
         $kontrolsekali = true;
         $pengali = 0;
         $bulanPesanan = date('n');
