@@ -10,13 +10,13 @@ class APIController extends Controller
 {
     public function InsertTransactions(request $request)
     {
-        $invoice = uniqid("INV", false);
         $user_id = $request->user_id;
         $product_id = $request->product_id;
         $pilihan_hari = $request->days;
         $pilihan_waktu = $request->times;
         $banyak_porsi = $request->jumlah;
         $notes = $request->notes;
+        $invoice = uniqid("INV", false);
         $date = date('d');
         $hari = date('N') - 1;
         $bulan = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -66,13 +66,13 @@ class APIController extends Controller
         }
 
         $startHari = 0;
-        $startHari = ($hari + 1) == 7 ? 7 : ($hari + 1) % 6;
+        $startHari = ($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
         $kontrolsekali = true;
         $pengali = 0;
         $bulanPesanan = date('n');
         $tahunPesanan = date("Y");
         $date = $date - $hari;
-        while ($banyak_porsi > 0) {
+        while ($banyak_porsi != 0) {
             for ($i = $kontrolsekali ? $startHari : 0; $i < 7; $i++) {
                 if ($booleanhari[$i] == 1) {
                     $tanggalPesanan = $date + $i + ($pengali * 7);
@@ -144,12 +144,12 @@ class APIController extends Controller
             }
         }
     }
+
     public function UpdateStatus(Request $request)
     {
         $invoice = $request->invoice;
         $proof = $request->proof_of_payment;
         $hours = (date('H') + 7) % 24;
-        $hours = 18;
         try {
             if ($hours > 17) {
                 $transactions = Transaction::where('invoice', $invoice)->get(['id']);
