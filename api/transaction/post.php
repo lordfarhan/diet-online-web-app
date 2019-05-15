@@ -13,7 +13,7 @@ $notes = $_REQUEST['notes'];
 if ($amount < 5) {
     $response['error'] = true;
     $response['message'] = "Jumlah harus lebih dari 5";
-    // echo json_encode($response);
+    echo json_encode($response);
 } else if ($notes == "") {
     $notes = "-";
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
@@ -23,7 +23,7 @@ if ($amount < 5) {
     $response['transactions'] = $result;
     $response['user'] = $user;
     $response['product'] = $package;
-    // echo json_encode($response);
+    echo json_encode($response);
 } else {
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
     $user = $db->GetUser($result['user_id']);
@@ -32,5 +32,5 @@ if ($amount < 5) {
     $response['transactions'] = $result;
     $response['user'] = $user;
     $response['product'] = $package;
-    // echo json_encode($response);
+    echo json_encode($response);
 }
