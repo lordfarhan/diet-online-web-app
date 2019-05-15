@@ -1,4 +1,5 @@
 <?php
+
 class TransactionFunction
 {
     private $db;
@@ -63,14 +64,21 @@ class TransactionFunction
         }
 
         $startHari = 0;
-        if($startHari+1>=7){
-            $startHari=($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
-            $pengali=1;
+        $jam = date('H') + 7 % 24;
+        $pengali = 0;
+        if ($jam > 17) {
+            if ($startHari + 1 > 7) {
+                $startHari = 0;
+                $pengali = 1;
+            }
+        }
+        if ($startHari + 1 >= 7) {
+            $startHari = ($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
+            $pengali = 1;
         } else {
             $startHari = ($hari + 1) == 7 ? 6 : ($hari + 1) % 6;
         }
         $kontrolsekali = true;
-        $pengali = 0;
         $bulanPesanan = date('n');
         $tahunPesanan = date("Y");
         $date = $date - $hari;
@@ -204,7 +212,6 @@ class TransactionFunction
         }
     }
 
-
     public function UpdateToDone($uid)
     {
         $stmt = $this->conn->prepare("UPDATE transactions SET status=? WHERE id=? ");
@@ -311,7 +318,7 @@ class TransactionFunction
                     for ($i = 0; $i < $amount[3]; $i++) {
                         if ($transactions[$i]['status'] == 1) {
                             $amount[0]++;
-                        } else if ($transactions[$i]['status']==2) {
+                        } else if ($transactions[$i]['status'] == 2) {
                             $amount[1]++;
                         } else {
                             $amount[2]++;
@@ -326,4 +333,102 @@ class TransactionFunction
             return false;
         }
     }
+
+    // public function CheckTransaction($user_id)
+    // {
+
+    // }
+
+    public function DietMayo($user_id, $notes)
+    {
+        $invoice = uniqid("INV", false);
+        $hariSekarang = date('N') - 1; //0 untuk senin 6 untuk minggu
+        $jamSekarang = date('H') + 7 % 24;
+        $date = date('d');
+        $bulan = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        $bulanSekarang = date('n');
+        $tahunSekarang = date('Y');
+        $check = false;
+
+        if ($hariSekarang == 6 || $hariSekarang == 5 && $jamSekarang > 17) {
+            $startTanggal = $date - $hariSekarang + 14;
+        } else {
+            $startTanggal = $date - $hariSekarang + 7;
+        }
+
+        $tanggalPesanan = $startTanggal;
+        $bulanPesanan = $bulanSekarang;
+        $tahunPesanan = $tahunSekarang;
+        for ($i = 0; $i < 13; $i++) {
+            $check = false;
+            if ($bulanSekarang == 11 && $tanggalPesanan + 1 > $bulan[$bulanSekarang-1]) {
+                $tahunPesanan++;
+                $bulanPesanan = 0;
+            } else if ($tanggalPesanan + 1 > $bulan[$bulanSekarang-1]) {
+                $bulanPesanan++;
+            }
+            $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
+            $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
+            $datenow = date("Y-m-d H:i:s");
+            for ($j = 2; $j < 4; $j++) {
+                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                $status = 1;
+                $proof = " ";
+                $product_id = "WL001";
+                if ($notes == "") {
+                    $notes = "-";
+                }
+                if ($stmt != false) {
+                    $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
+                    $stmt->execute();
+                    $stmt->close();
+                    $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice=? AND date=?");
+                    if ($stmt != false) {
+                        $stmt->bind_param("ss", $invoice, $datePesanan);
+                        $stmt->execute();
+                        $transaction = $stmt->get_result()->fetch_assoc();
+                        if ($transaction != NULL) {
+                            $check = true;
+                        }
+                    }
+                } else {
+                    $response['error'] = true;
+                    $response['message'] = "Terjadi kesalahan dalam input database";
+                    echo json_encode($response);
+                }
+            }
+            $tanggalPesanan++;
+        }
+
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice=?");
+        if ($stmt != false) {
+            $stmt->bind_param("s", $invoice);
+            if ($stmt->execute()) {
+                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+                if ($transactions != NULL) {
+                    $check = true;
+                } else {
+                    $check = false;
+                }
+            }
+        }
+        if ($check) {
+            return $transactions;
+        } else {
+            $response['error'] = true;
+            $response['message'] = "Terjadi kesalahan dalam input database";
+            echo json_encode($response);
+        }
+    }
+
+    public function DietKhusus($user_id, $product_id, $notes)
+    { }
+
+    public function UpdateNotes($uid)
+    { }
+
+    //Transaksi ada batas jam 5
+    //Realtime jam 5 dihapus semua yang unpaid
+    //Mail(Menyusul)
 }
