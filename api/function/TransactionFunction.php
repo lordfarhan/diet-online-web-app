@@ -628,6 +628,7 @@ class TransactionFunction
                                     $stmt->bind_param("s", $invoice);
                                     $stmt->execute();
                                     $stmt->close();
+                                    $notes="";
                                     $check = true;
                                 } else {
                                     $response['error'] = true;
