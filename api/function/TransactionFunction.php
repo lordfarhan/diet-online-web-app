@@ -15,6 +15,10 @@ class TransactionFunction
     public function InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes)
     {
         if ($this->CheckUserUnpaid($user_id)) {
+            $response['error'] = true;
+            $response['message'] = "Please finish your previous transaction";
+            echo json_encode($response);
+        } else {
             $invoice = uniqid("INV", false);
             $date = date('d');
             $hari = date('N') - 1;
@@ -176,8 +180,6 @@ class TransactionFunction
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
     }
 
@@ -346,6 +348,10 @@ class TransactionFunction
     public function DietMayo($user_id, $notes)
     {
         if ($this->CheckUserUnpaid($user_id)) {
+            $response['error'] = true;
+            $response['message'] = "Please finish your previous transaction";
+            echo json_encode($response);
+        } else {
             $invoice = uniqid("INV", false);
             $hariSekarang = date('N') - 1; //0 untuk senin 6 untuk minggu
             $jamSekarang = date('H') + 7 % 24;
@@ -425,15 +431,17 @@ class TransactionFunction
                 $response['message'] = "Terjadi kesalahan dalam input database";
                 echo json_encode($response);
             }
-        } else {
-            return false;
         }
     }
 
     public function DietKhusus($user_id, $product_id, $days, $times, $amount, $notes, $activity)
     {
         if ($this->CheckUserUnpaid($user_id)) {
-            //Activity 
+            $response['error'] = true;
+            $response['message'] = "Please finish your previous transaction";
+            echo json_encode($response);
+        } else {
+            //Activity
             //0= No exercise, 1=Light, 2=Moderate, 3= Heavy, 4=Very Heavy
             $invoice = uniqid("INV", false);
             $date = date('d');
@@ -676,26 +684,22 @@ class TransactionFunction
             } else {
                 return false;
             }
-        } else {
-            return false;
         }
     }
 
-    public function UpdateNotes($uid)
-    { }
-
-    public function CheckUserUnpaid($user_id)
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id=?");
+    public function CheckUserUnpaid($user_id) {
+        $check = true;
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id=? && status=?");
         if ($stmt != false) {
-            $stmt->bind_param("s", $user_id);
+            $status = 1;
+            $stmt->bind_param("si", $user_id, $status);
             if ($stmt->execute()) {
                 $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                 $stmt->close();
                 if ($transactions != NULL) {
-                    return false;
+                    return $check;
                 } else {
-                    return true;
+                    return $check = false;
                 }
             } else {
                 $response['error'] = true;
@@ -706,6 +710,34 @@ class TransactionFunction
             $response['error'] = true;
             $response['message'] = "SQL Statement Error";
             echo json_encode($response);
+        }
+        return $check;
+    }
+
+    public function UpdateNotes($id, $note)
+    {
+        $stmt = $this->conn->prepare("UPDATE transactions SET notes=? WHERE id=?");
+        if ($stmt != false) {
+            $stmt->bind_param("si", $note, $id);
+            if ($stmt->execute()) {
+                $stmt->close();
+                $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE id=?");
+                $stmt->bind_param("s", $id);
+                $stmt->execute();
+                $transactions = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                return $transactions;
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Database not Updated";
+                echo json_encode($response);
+                return false;
+            }
+        } else {
+            $response['error'] = true;
+            $response['message'] = "Update Query Error";
+            echo json_encode($response);
+            return false;
         }
     }
 
