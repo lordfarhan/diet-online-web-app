@@ -7,7 +7,7 @@ class TransactionFunction
 
     function __construct()
     {
-        require_once(root . '/api/config/DB_Connect.php');
+        require_once(root . '/diet-online-apps-web/api/config/DB_Connect.php');
         $this->db = new DB_Connect;
         $this->conn = $this->db->connect();
     }
@@ -454,14 +454,16 @@ class TransactionFunction
             $statusGizi = 4;
         }
         switch ($statusGizi) {
-            case 1 || 2:
+            case 1:
                 $adjustedWeight = $weight;
                 break;
+            case 2:
+                $adjustedWeight = $weight;
             case 3:
                 $adjustedWeight = ($height - 100) - (0.1 * ($height - 100));
                 break;
             case 4:
-                $adjustedWeight = $weight - (($height - 100) - (0.1 * ($height - 100)) * 0.25) + ($height - 100) - (0.1 * ($height - 100));
+                $adjustedWeight = ($weight - (($height - 100) - (0.1 * ($height - 100)))) * 0.25 + ($height - 100) - (0.1 * ($height - 100));
                 break;
         }
         //BMR
@@ -617,7 +619,7 @@ class TransactionFunction
                             $status = 1;
                             $proof = " ";
                             $temp = $notes;
-                            $notes = "Daily Calorie : ".$dailyCalories."\r\n";
+                            $notes = "Daily Calorie : " . $dailyCalories . " calorie \r\n";
                             $notes .= $temp;
                             if ($stmt != FALSE) {
                                 $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
@@ -628,7 +630,7 @@ class TransactionFunction
                                     $stmt->bind_param("s", $invoice);
                                     $stmt->execute();
                                     $stmt->close();
-                                    $notes="";
+                                    $notes = $temp;
                                     $check = true;
                                 } else {
                                     $response['error'] = true;
