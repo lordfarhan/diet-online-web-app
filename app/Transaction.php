@@ -25,4 +25,5 @@ class Transaction extends Model
         ->where('times','',$time)
         ->update($data);
     }
+
 }

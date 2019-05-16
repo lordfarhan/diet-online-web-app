@@ -12,7 +12,7 @@ $amount = $_REQUEST['amount'];
 $notes = $_REQUEST['notes'];
 if ($amount < 5) {
     $response['error'] = true;
-    $response['message'] = "Jumlah harus lebih dari 1";
+    $response['message'] = "Jumlah harus lebih dari 5";
     echo json_encode($response);
 } else if ($notes == "") {
     $notes = "-";
