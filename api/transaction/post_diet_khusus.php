@@ -21,8 +21,12 @@ if ($transactions != false || $transactions != NULL) {
     $response['user'] = $user;
     $response['product'] = $package;
     echo json_encode($response);
+} else if ($transactions == false) { 
+    $response['error'] = true;
+    $response['message'] = "Please pay your previous transaction";
+    echo json_encode($response);
 } else {
     $response['error'] = true;
-    $response['message'] = "Terjadi kesalahan dalam input database";
+    $response['message'] = "Error in creating database";
     echo json_encode($response);
 }
