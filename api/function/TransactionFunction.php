@@ -631,9 +631,9 @@ class TransactionFunction
                                 $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
                                 $proof = " ";
-                                $temp = $notes;
+                                $tempNotes = $notes;
                                 $notes = "Daily Calorie : " . $dailyCalories . " calorie \r\n";
-                                $notes .= $temp;
+                                $notes .= $tempNotes;
                                 if ($stmt != FALSE) {
                                     $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
@@ -643,7 +643,7 @@ class TransactionFunction
                                         $stmt->bind_param("s", $invoice);
                                         $stmt->execute();
                                         $stmt->close();
-                                        $notes = $temp;
+                                        $notes = $tempNotes;
                                         $check = true;
                                     } else {
                                         $response['error'] = true;
