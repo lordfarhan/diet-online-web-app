@@ -340,11 +340,6 @@ class TransactionFunction
         }
     }
 
-    // public function CheckTransaction($user_id)
-    // {
-
-    // }
-
     public function DietMayo($user_id, $notes)
     {
         if ($this->CheckUserUnpaid($user_id)) {
@@ -372,11 +367,12 @@ class TransactionFunction
             $tahunPesanan = $tahunSekarang;
             for ($i = 0; $i < 13; $i++) {
                 $check = false;
-                if ($bulanSekarang == 11 && $tanggalPesanan + 1 > $bulan[$bulanSekarang - 1]) {
+                if ($bulanSekarang == 11 && $tanggalPesanan + 1 > $bulan[$bulanPesanan - 1]) {
                     $tahunPesanan++;
                     $bulanPesanan = 0;
-                } else if ($tanggalPesanan + 1 > $bulan[$bulanSekarang - 1]) {
+                } else if ($tanggalPesanan + 1 > $bulan[$bulanPesanan - 1]) {
                     $bulanPesanan++;
+                    $tanggalPesanan =1;
                 }
                 $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
@@ -635,9 +631,9 @@ class TransactionFunction
                                 $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
                                 $proof = " ";
-                                $temp = $notes;
+                                $tempNotes = $notes;
                                 $notes = "Daily Calorie : " . $dailyCalories . " calorie \r\n";
-                                $notes .= $temp;
+                                $notes .= $tempNotes;
                                 if ($stmt != FALSE) {
                                     $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
@@ -647,7 +643,7 @@ class TransactionFunction
                                         $stmt->bind_param("s", $invoice);
                                         $stmt->execute();
                                         $stmt->close();
-                                        $notes = $temp;
+                                        $notes = $tempNotes;
                                         $check = true;
                                     } else {
                                         $response['error'] = true;
