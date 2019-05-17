@@ -13,20 +13,12 @@ $notes = $_REQUEST['notes'];
 $activity = $_REQUEST['activity'];
 
 $transactions = $db->DietKhusus($user_id, $product_id, $days, $times, $amount, $notes, $activity);
-if ($transactions != false || $transactions != NULL) {
+if ($transactions) {
     $user = $db->GetUser($transactions[0]['user_id']);
     $package = $db->GetProduct($transactions[0]['product_id']);
     $response['message'] = "Success Ordering";
     $response['transactions'] = $transactions;
     $response['user'] = $user;
     $response['product'] = $package;
-    echo json_encode($response);
-} else if ($transactions == false) { 
-    $response['error'] = true;
-    $response['message'] = "Please pay your previous transaction";
-    echo json_encode($response);
-} else {
-    $response['error'] = true;
-    $response['message'] = "Error in creating database";
     echo json_encode($response);
 }

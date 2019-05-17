@@ -17,25 +17,26 @@ if ($amount < 5) {
 } else if ($notes == "") {
     $notes = "-";
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
-    $user = $db->GetUser($result['user_id']);
-    $package = $db->GetProduct($result['product_id']);
-    $response['message'] = "Success Ordering";
-    $response['transactions'] = $result;
-    $response['user'] = $user;
-    $response['product'] = $package;
-    echo json_encode($response);
-} else if($notes!="") {
+    if ($result) {
+        $user = $db->GetUser($result['user_id']);
+        $package = $db->GetProduct($result['product_id']);
+        $response['message'] = "Success Ordering";
+        $response['transactions'] = $result;
+        $response['amount'] = $amount;
+        $response['user'] = $user;
+        $response['product'] = $package;
+        echo json_encode($response);
+    }
+} else if($notes != "") {
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
-    $user = $db->GetUser($result['user_id']);
-    $package = $db->GetProduct($result['product_id']);
-    $response['message'] = "Success Ordering";
-    $response['transactions'] = $result;
-    $response['user'] = $user;
-    $response['product'] = $package;
-    echo json_encode($response);
-} else {
-    $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
-    $response['error'] = true;
-    $response['message'] = "Please pay your previous transaction";
-    echo json_encode($response);
+    if ($result) {
+        $user = $db->GetUser($result['user_id']);
+        $package = $db->GetProduct($result['product_id']);
+        $response['message'] = "Success Ordering";
+        $response['transactions'] = $result;
+        $response['amount'] = $amount;
+        $response['user'] = $user;
+        $response['product'] = $package;
+        echo json_encode($response);
+    }
 }
