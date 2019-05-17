@@ -737,6 +737,37 @@ class TransactionFunction
         }
     }
 
+    public function getByInvoice($invoice) {
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice = ?");
+        if ($stmt) {
+            $stmt->bind_param("s", $invoice);
+            if ($stmt->execute()) {
+                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+                if (!$transactions) {
+                    return NULL;
+                } else {
+                    return $transactions;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function getPackagePrice($invoice) {
+        $transactions = $this->getByInvoice($invoice);
+        $product_id = $transactions[0]['product_id'];
+        $stmt = $this->conn->prepare("SELECT * FROM packages WHERE unique_id = ?");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $package = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $package;
+    }
+
     //Transaksi ada batas jam 5
     //Realtime jam 5 dihapus semua yang unpaid
     //Mail(Menyusul)
