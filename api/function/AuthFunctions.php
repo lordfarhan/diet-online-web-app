@@ -27,14 +27,18 @@ class AuthFunctions {
         $salt = $hash["salt"]; // salt untuk menggadakan keamanan
 
         $date = date("Y-m-d H:i:s");
+        $weight = 0;
+        $height = 0;
+        $prohibition = "-";
+        $updated_at = $date;
 
         $convert_birth_date = strtotime($birthdate);
         $birth_date = date('Y-m-d', $convert_birth_date);
         //perintah memsaukkan ke table users dan row
-        $stmt = $this->conn->prepare("INSERT INTO users(unique_id, username, email, encrypted_password, salt, city, subdistrict, name, nickname, address, phone, birth_date, gender, created_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO users(unique_id, username, email, encrypted_password, salt, city, subdistrict, name, nickname, address, phone, birth_date, gender, weight, height, prohibition, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         //isi data dari variabel yang akan dimasukkan ke database
         // varibel -> ke symbol 's' -> ke symbol '?' (banyak symbol 's' sesuai dengan banyak variabel dan symbol '?')
-        $stmt->bind_param("ssssssssssssss", $uuid, $username, $email, $encrypted_password, $salt, $city, $subdistrict, $name, $nickname, $address, $phone, $birth_date, $gender, $date);
+        $stmt->bind_param("ssssssssssssssssss", $uuid, $username, $email, $encrypted_password, $salt, $city, $subdistrict, $name, $nickname, $address, $phone, $birth_date, $gender, $weight, $height, $prohibition, $date, $updated_at);
         $result = $stmt->execute();
         $stmt->close();
         // check for successful store
