@@ -35,7 +35,14 @@ if ($amount < 5) {
     echo json_encode($response);
 } else {
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
-    $response['error'] = true;
-    $response['message'] = "Please pay your previous transaction";
-    echo json_encode($response);
+    if ($result) {
+        $user = $db->GetUser($result[0]['user_id']);
+        $package = $db->GetProduct($result[0]['product_id']);
+        $response['message'] = "Success Ordering";
+        $response['transactions'] = $result;
+        $response['amount'] = $amount;
+        $response['user'] = $user;
+        $response['product'] = $package;
+        echo json_encode($response);
+    }
 }
