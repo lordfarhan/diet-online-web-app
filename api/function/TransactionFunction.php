@@ -712,7 +712,7 @@ class TransactionFunction
 
     public function UpdateNotes($id, $note)
     {
-        $stmt = $this->conn->prepare("UPDATE transactions SET notes=? WHERE id=? ");
+        $stmt = $this->conn->prepare("UPDATE transactions SET notes=? WHERE id=?");
         if ($stmt != false) {
             $stmt->bind_param("si", $note, $id);
             if ($stmt->execute()) {
