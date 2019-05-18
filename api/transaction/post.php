@@ -1,6 +1,6 @@
 <?php
 define('root', $_SERVER['DOCUMENT_ROOT']);
-require_once(root . '/api/function/TransactionFunction.php');
+require_once(root . '/diet-online-apps-web/api/function/TransactionFunction.php');
 
 $db = new TransactionFunction();
 $response['error'] = false;
@@ -17,8 +17,8 @@ if ($amount < 5) {
 } else if ($notes == "") {
     $notes = "-";
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
-    $user = $db->GetUser($result['user_id']);
-    $package = $db->GetProduct($result['product_id']);
+    $user = $db->GetUser($result[0]['user_id']);
+    $package = $db->GetProduct($result[0]['product_id']);
     $response['message'] = "Success Ordering";
     $response['transactions'] = $result;
     $response['user'] = $user;
@@ -26,8 +26,8 @@ if ($amount < 5) {
     echo json_encode($response);
 } else if($notes!="") {
     $result = $db->InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes);
-    $user = $db->GetUser($result['user_id']);
-    $package = $db->GetProduct($result['product_id']);
+    $user = $db->GetUser($result[0]['user_id']);
+    $package = $db->GetProduct($result[0]['product_id']);
     $response['message'] = "Success Ordering";
     $response['transactions'] = $result;
     $response['user'] = $user;
