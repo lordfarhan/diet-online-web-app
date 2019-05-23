@@ -41,7 +41,15 @@
             Sore                
             @endif     
         </td>
-            <td>{{$transaction->status}}</td>
+            <td>@if ($transaction->status==1)
+                Unpaid
+                @endif
+                @if ($transaction->status==2)
+                Paid
+                @endif
+                @if ($transaction->status==3)
+                Done
+                @endif</td>
         </tr>
         @endforeach
     </tbody>

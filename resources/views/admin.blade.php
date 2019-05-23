@@ -18,75 +18,129 @@
             var auto_refresh = setInterval(
                 function () {
                     $('#today-batch').load('/admin/today-batch').fadeIn("slow");
-                }, 100);
+                }, 500);
             //Harian
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-all').load('/admin/harian-all').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-unpaid').load('/admin/harian-unpaid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-paid').load('/admin/harian-paid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-harian-done').load('/admin/harian-done').fadeIn("slow");
-                }, 100);
+                }, 500);
             //Khusus
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-khusus-all').load('/admin/khusus-all').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-khusus-unpaid').load('/admin/khusus-unpaid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-khusus-paid').load('/admin/khusus-paid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-khusus-done').load('/admin/khusus-done').fadeIn("slow");
-                }, 100);
+                }, 500);
             //Penurunan
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-penurunan-all').load('/admin/penurunan-all').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-penurunan-unpaid').load('/admin/penurunan-unpaid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-penurunan-paid').load('/admin/penurunan-paid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#diet-penurunan-done').load('/admin/penurunan-done').fadeIn("slow");
-                }, 100);
+                }, 500);
             //Single Lunch Box
             var auto_refresh = setInterval(
                 function () {
                     $('#single-lunch-all').load('/admin/lunch-all').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#single-lunch-unpaid').load('/admin/lunch-unpaid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#single-lunch-paid').load('/admin/lunch-paid').fadeIn("slow");
-                }, 100);
+                }, 500);
             var auto_refresh = setInterval(
                 function () {
                     $('#single-lunch-done').load('/admin/lunch-done').fadeIn("slow");
-                }, 100);
+                }, 500);
+
+            fetch_customer_data();
+
+            function fetch_customer_data(query = '') {
+                $.ajax({
+                    url: "{{ route('search.action') }}",
+                    method: 'GET',
+                    data: {
+                        query
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        function buildHtmlTable(selector) {
+                            var columns = addAllColumnHeaders(data, selector);
+
+                            for (var i = 0; i < data.length; i++) {
+                                var row$ = $('<tr/>');
+                                for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                                    var cellValue = data[i][columns[colIndex]];
+                                    if (cellValue == null) cellValue = "";
+                                    row$.append($('<td/>').html(cellValue));
+                                }
+                                $(selector).append(row$);
+                            }
+                        }
+
+                        // Adds a header row to the table and returns the set of columns.
+                        // Need to do union of keys from all records as some records may not contain
+                        // all records.
+                        function addAllColumnHeaders(data, selector) {
+                            var columnSet = [];
+                            var headerTr$ = $('<tr/>');
+
+                            for (var i = 0; i < data.length; i++) {
+                                var rowHash = data[i];
+                                for (var key in rowHash) {
+                                    if ($.inArray(key, columnSet) == -1) {
+                                        columnSet.push(key);
+                                        headerTr$.append($('<th/>').html(key));
+                                    }
+                                }
+                            }
+                            $(selector).append(headerTr$);
+
+                            return columnSet;
+                        }
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#search-box', function () {
+                var query = $(this).val();
+                fetch_customer_data(query);
+            });
         })
 
     </script>
@@ -109,7 +163,8 @@
 <body>
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="height:50px;">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Admin Page</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search" id="search-box">
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"
+            id="search-box">
         <ul class="navbar-nav px-3">
             Log Out
         </ul>
@@ -140,6 +195,12 @@
 
         <div class="col-lg-6" id="main-content">
             <div class="container">
+                <section id="search_result">
+
+                    <body onLoad="buildHtmlTable('#excelDataTable')">
+                        <table id="excelDataTable" border="1">
+                        </table>
+                </section>
                 <h3>Today Batch</h3>
                 <h6>Kuota yang harus dikirim hari ini</h6>
                 <div id="today-batch">

@@ -1,3 +1,4 @@
+{{var_dump($transactions)}}
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -31,16 +32,16 @@
             <td>{{$transaction->proof_of_payment}}</td>
             <td>{{$transaction->notes}}</td>
             <td>
-                @if ($transaction->times==1)
-                Pagi
-                @endif
-                @if ($transaction->times==2)
-                Siang
-                @endif
-                @if ($transaction->times==3)
-                Sore
-                @endif
-            </td>
+            @if ($transaction->times==1)
+            Pagi
+            @endif
+            @if ($transaction->times==2)
+            Siang
+            @endif   
+            @if ($transaction->times==3)
+            Sore                
+            @endif     
+        </td>
             <td>@if ($transaction->status==1)
                 Unpaid
                 @endif
@@ -49,7 +50,7 @@
                 @endif
                 @if ($transaction->status==3)
                 Done
-                @endif </td>
+                @endif</td>
         </tr>
         @endforeach
     </tbody>
