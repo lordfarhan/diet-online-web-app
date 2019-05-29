@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro&display=swap');
+
+/* Warna
+1 : #FFA701
+2 : #FFE700
+3 : #CCFF01
+4 : #79E000 */
+
+body {
+    background: #f5f5f5;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.highlight {
+    font-family: 'Roboto', sans-serif;
+    color: #79E000;
+}
+
+#showcase{
+    padding-top: 5rem;
+    min-height: 500px;
+}
+
+#showcase .isi-button{
+    color: white;
+    font-size: 14px;
+    text-align: left;
+}
+
+#showcase .showcase-img{
+    min-width: 300px;
+    max-width: 600px;
+    padding-top: 0;
+}
+
+#description{
+    min-height: 300px;
+
+}
+
+#tentukan-paket{
+    min-height: 400px;
+}
+
+#mitra{
+    min-height: 300px;
+}
+
+#tim-kami{
+    min-height: 500px;
+}
+
+#hubungi-kami{
+    min-height: 500px;
+}
+
+#hubungi-kami .col-lg-5{
+    background-color: white;
+    padding: 10px 10px 10px 10px;
+    border-radius: 5px;
+}
+
+footer{
+    min-height: 60px;
+}

@@ -15,6 +15,10 @@
 </head>
 
 <style>
+    #message {
+        margin-top: 3.5rem;
+    }
+
     #main {
         margin-top: 2.5rem;
         margin-bottom: 3rem;
@@ -34,7 +38,7 @@
         max-height: 400px;
     }
 
-    .pagination{
+    .pagination {
         margin: auto;
         margin-bottom: 1rem;
     }
@@ -180,6 +184,12 @@
         </ul>
     </nav>
 
+    <section id="message">
+        <div class="container">
+            @include('message')
+        </div>
+    </section>
+
     {{-- CONTENT --}}
     <section id="latest">
         <div class="container">
@@ -285,10 +295,10 @@
                                         if (!confirm("Are you sure ?")) {
                                             var link = document.getElementById("delete");
 
-                                            window.open(
-                                                link.href,
-                                                '_blank'
-                                            );
+                                            // window.open(
+                                            //     link.href,
+                                            //     '_blank'
+                                            // );
 
                                             link.setAttribute('href', "/admin");
                                             return false;

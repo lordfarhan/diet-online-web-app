@@ -24,6 +24,23 @@ Route::get('/admin/action','DashboardController@EditAndDelete');
 Route::get('/admin/edit/{id}','DashboardController@Update');
 
 Route::get('/admin/delete/{id}','DashboardController@Delete');
+
+Route::get('/admin/login',function(){
+    return view('login');
+});
+
+Route::post('/admin/login/check','DashboardController@Login');
+
+Route::get('/admin/search','DataController@Search')->name('search.action');
+
+Route::get('/',function(){
+    return view('home');
+});
+
+// Route::get('/admin/paid', 'DataController@UpdatePaid');
+
+// Route::get('/admin/delivered', 'DataController@UpdateDelivered');
+
 // Route::get('/admin/diet-harian', function () {
 //     return view('pages.harian');
 // });
@@ -66,9 +83,3 @@ Route::get('/admin/delete/{id}','DashboardController@Delete');
 // Route::get('/admin/lunch-unpaid', 'DataController@GetUnpaidLunch');
 // Route::get('/admin/lunch-paid', 'DataController@GetPaidLunch');
 // Route::get('/admin/lunch-done', 'DataController@GetDoneLunch');
-
-Route::get('/admin/search','DataController@Search')->name('search.action');
-
-Route::get('/admin/paid', 'DataController@UpdatePaid');
-
-Route::get('/admin/delivered', 'DataController@UpdateDelivered');
