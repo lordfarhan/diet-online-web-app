@@ -31,7 +31,7 @@ Route::get('/admin/login',function(){
 
 Route::post('/admin/login/check','DashboardController@Login');
 
-Route::get('/admin/search','DataController@Search')->name('search.action');
+Route::get('/admin/search','DashboardController@Search')->name('search.action');
 
 Route::get('/',function(){
     return view('home');

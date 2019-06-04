@@ -151,6 +151,28 @@
         var auto_refresh = setInterval(function () {
             $('#latest-table').load('/admin/latest').fadeIn("slow");
         }, 500);
+
+        fetch_customer_data();
+
+            function fetch_customer_data(query = '') {
+                $.ajax({
+                    url: "{{ route('search.action') }}",
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#search-result').html(data.table_data);
+                    }
+                })
+            }
+
+            $(document).on('keyup', '#search-box', function () {
+                var query = $(this).val();
+                fetch_customer_data(query);
+            });
+
     })
 
 </script>
@@ -187,6 +209,35 @@
     <section id="message">
         <div class="container">
             @include('message')
+        </div>
+    </section>
+
+    <section id="search">
+        <div class="container">
+            <h1>Search Result</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th rowspan="2" scope="col">ID</th>
+                        <th colspan="2" scope="col">Product</th>
+                        <th colspan="3" scope="col">User</th>
+                        <th rowspan="2" scope="col">Invoice</th>
+                        <th rowspan="2" scope="col">Receipt</th>
+                        <th rowspan="2" scope="col">Notes</th>
+                        <th rowspan="2" scope="col">Times</th>
+                        <th rowspan="2" scope="col">Status</th>
+                    </tr>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Product Price</th>
+                        <th>User Name</th>
+                        <th>User Phone</th>
+                        <th>User Address</th>
+                    <tr>
+                </thead>
+                <tbody id="search-result">
+                </tbody>
+            </table>
         </div>
     </section>
 
