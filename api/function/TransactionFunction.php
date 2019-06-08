@@ -523,11 +523,11 @@ class TransactionFunction
 
     public function DietKhusus($user_id, $product_id, $days, $times, $notes, $activity, $sickness, $foodTypes, $diagnose)
     {
-        // if ($this->CheckUserUnpaid($user_id)) {
-        //     $response['error'] = true;
-        //     $response['message'] = "Please finish your previous transaction";
-        //     echo json_encode($response);
-        // } else {
+        if ($this->CheckUserUnpaid($user_id)) {
+            $response['error'] = true;
+            $response['message'] = "Please finish your previous transaction";
+            echo json_encode($response);
+        } else {
             //Activity
             //0= No exercise, 1=Light, 2=Moderate, 3= Heavy, 4=Very Heavy
             $user = $this->GetUser($user_id);
@@ -867,7 +867,7 @@ class TransactionFunction
                 return false;
             }
         }
-    // }
+    }
 
 
 
