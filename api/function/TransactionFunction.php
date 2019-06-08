@@ -339,6 +339,94 @@ class TransactionFunction
         }
     }
 
+    public function CheckUserUnpaid($user_id)
+    {
+        $check = true;
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id=? && status=?");
+        if ($stmt != false) {
+            $status = 1;
+            $stmt->bind_param("si", $user_id, $status);
+            if ($stmt->execute()) {
+                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+                if ($transactions != NULL) {
+                    return $check;
+                } else {
+                    return $check = false;
+                }
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Error in executing";
+                echo json_encode($response);
+            }
+        } else {
+            $response['error'] = true;
+            $response['message'] = "SQL Statement Error";
+            echo json_encode($response);
+        }
+        return $check;
+    }
+
+    public function UpdateNotes($id, $note)
+    {
+        $stmt = $this->conn->prepare("UPDATE transactions SET notes=? WHERE id=?");
+        if ($stmt != false) {
+            $stmt->bind_param("si", $note, $id);
+            if ($stmt->execute()) {
+                $stmt->close();
+                $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE id=?");
+                $stmt->bind_param("s", $id);
+                $stmt->execute();
+                $transactions = $stmt->get_result()->fetch_assoc();
+                $stmt->close();
+                return $transactions;
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Database not Updated";
+                echo json_encode($response);
+                return false;
+            }
+        } else {
+            $response['error'] = true;
+            $response['message'] = "Update Query Error";
+            echo json_encode($response);
+            return false;
+        }
+    }
+
+    public function getByInvoice($invoice)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice = ?");
+        if ($stmt) {
+            $stmt->bind_param("s", $invoice);
+            if ($stmt->execute()) {
+                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                $stmt->close();
+                if (!$transactions) {
+                    return NULL;
+                } else {
+                    return $transactions;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function getPackagePrice($invoice)
+    {
+        $transactions = $this->getByInvoice($invoice);
+        $product_id = $transactions[0]['product_id'];
+        $stmt = $this->conn->prepare("SELECT * FROM packages WHERE unique_id = ?");
+        $stmt->bind_param("s", $product_id);
+        $stmt->execute();
+        $package = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+        return $package;
+    }
+
     public function DietMayo($user_id, $notes)
     {
         if ($this->CheckUserUnpaid($user_id)) {
@@ -433,13 +521,13 @@ class TransactionFunction
         }
     }
 
-    public function DietKhusus($user_id, $product_id, $days, $times, $notes, $activity)
+    public function DietKhusus($user_id, $product_id, $days, $times, $notes, $activity, $sickness, $foodTypes, $diagnose)
     {
-        if ($this->CheckUserUnpaid($user_id)) {
-            $response['error'] = true;
-            $response['message'] = "Please finish your previous transaction";
-            echo json_encode($response);
-        } else {
+        // if ($this->CheckUserUnpaid($user_id)) {
+        //     $response['error'] = true;
+        //     $response['message'] = "Please finish your previous transaction";
+        //     echo json_encode($response);
+        // } else {
             //Activity
             //0= No exercise, 1=Light, 2=Moderate, 3= Heavy, 4=Very Heavy
             $user = $this->GetUser($user_id);
@@ -503,6 +591,102 @@ class TransactionFunction
                 case 4:
                     $dailyCalories = $bmr * 1.9;
                     break;
+            }
+            //Kebutuhan Penyakit Tertentu
+            //0 : Diabetes Mellitus, 
+            //1 : Hipertensi, 
+            //2 : Asam Urat, 
+            //3 : Stroke, 
+            //4 : Jantung
+            //5 : Hati
+            //6 : Kolesterol
+            //7 : Cuci Darah
+            //8 : Tinggi Energi
+            //9 : Tinggi Protein
+            //10 : Tinggi Serat
+            //11 : Ginjal
+            // 12 : Rendah Energi
+            // 13 : Rendah Protein
+            // 14 : Rendah Serat
+            // 15 : Kanker
+            $kebutuhanPenyakit = "";
+            switch($sickness){
+               case 0:
+               $kebutuhanPenyakit = "Diabetes Mellitus";
+               break; 
+               case 1:
+               $kebutuhanPenyakit = "Hipertensi";
+               break; 
+               case 2:
+               $kebutuhanPenyakit = "Asam Urat";
+               break; 
+               case 3:
+               $kebutuhanPenyakit = "Stroke";
+               break; 
+               case 4:
+               $kebutuhanPenyakit = "Jantung";
+               break; 
+               case 5:
+               $kebutuhanPenyakit = "Hati";
+               break; 
+               case 6:
+               $kebutuhanPenyakit = "Kolesterol";
+               break; 
+               case 7:
+               $kebutuhanPenyakit = "Cuci Darah";
+               break; 
+               case 8:
+               $kebutuhanPenyakit = "Tinggi Energi";
+               break; 
+               case 9:
+               $kebutuhanPenyakit = "Tinggi Protein";
+               break; 
+               case 10:
+               $kebutuhanPenyakit = "Tinggi Serat";
+               break; 
+               case 11:
+               $kebutuhanPenyakit = "Ginjal";
+               break; 
+               case 12:
+               $kebutuhanPenyakit = "Rendah Energi";
+               break; 
+               case 13:
+               $kebutuhanPenyakit = "Rendah Protein";
+               break; 
+               case 14:
+               $kebutuhanPenyakit = "Rendah Serat";
+               break; 
+               case 15:
+               $kebutuhanPenyakit = "Kanker";
+               break;
+               default:
+               $kebutuhanPenyakit = "-";
+               break; 
+            }
+
+            //Bentuk Makanan
+            //0 : Makanan Biasa, 1 : Makanan Lunak, 2 : Makanan Cincang,
+            //3 : Makanan Cair, 4 : Makanan Sonde
+            $foodForm = "";
+            switch($foodTypes){
+                case 0:
+                $foodForm = "Makanan Biasa";
+                break;
+                case 1:
+                $foodForm = "Makanan Lunak";
+                break;
+                case 2:
+                $foodForm = "Makanan Cincang";
+                break;
+                case 3:
+                $foodForm = "Makanan Cair";
+                break;
+                case 4:
+                $foodForm = "Makanan Sonde";
+                break;
+                default:
+                $foodForm = "Makanan Biasa";
+                break;
             }
 
             if ($product_id == "SP001") {
@@ -583,7 +767,14 @@ class TransactionFunction
             $date = $date - $hari;
             $temp = $amount;
             $check = false;
-            // echo $date;
+
+            $tempNotes = $notes;
+            $notes = "Kebutuhan Kalori Per Hari : ". $dailyCalories ." Kal \r\n";
+            $notes .= "Kebutuhan Penyakit : ". $kebutuhanPenyakit ."\r\n";
+            $notes .= "Bentuk Makanan : ". $foodForm ."\r\n";
+            $notes .= "Diagnosa : ". $diagnose ."\r\n";
+            $notes .= $tempNotes;
+
             for ($banyak = 0; $banyak < $temp;) {
                 if ($temp != $amount) {
                     $banyak++;
@@ -643,17 +834,12 @@ class TransactionFunction
                                 $datenow = date("Y-m-d H:i:s");
                                 $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
-
                                 $proof = " ";
                                 if ($stmt != FALSE) {
                                     $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
-                                    $tempNotes = $notes;
-                                    $notes = "Daily Calorie : " . $dailyCalories . "\r\n";
-                                    $notes.= $tempNotes;
                                     if ($stmt->execute()) {
                                         $stmt->close();
-                                        $notes = $tempNotes;
                                         $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice =?");
                                         $stmt->bind_param("s", $invoice);
                                         $stmt->execute();
@@ -681,95 +867,16 @@ class TransactionFunction
                 return false;
             }
         }
-    }
+    // }
 
-    public function CheckUserUnpaid($user_id)
-    {
-        $check = true;
-        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id=? && status=?");
-        if ($stmt != false) {
-            $status = 1;
-            $stmt->bind_param("si", $user_id, $status);
-            if ($stmt->execute()) {
-                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-                $stmt->close();
-                if ($transactions != NULL) {
-                    return $check;
-                } else {
-                    return $check = false;
-                }
-            } else {
-                $response['error'] = true;
-                $response['message'] = "Error in executing";
-                echo json_encode($response);
-            }
-        } else {
-            $response['error'] = true;
-            $response['message'] = "SQL Statement Error";
-            echo json_encode($response);
-        }
-        return $check;
-    }
 
-    public function UpdateNotes($id, $note)
-    {
-        $stmt = $this->conn->prepare("UPDATE transactions SET notes=? WHERE id=?");
-        if ($stmt != false) {
-            $stmt->bind_param("si", $note, $id);
-            if ($stmt->execute()) {
-                $stmt->close();
-                $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE id=?");
-                $stmt->bind_param("s", $id);
-                $stmt->execute();
-                $transactions = $stmt->get_result()->fetch_assoc();
-                $stmt->close();
-                return $transactions;
-            } else {
-                $response['error'] = true;
-                $response['message'] = "Database not Updated";
-                echo json_encode($response);
-                return false;
-            }
-        } else {
-            $response['error'] = true;
-            $response['message'] = "Update Query Error";
-            echo json_encode($response);
-            return false;
-        }
-    }
-
-    public function getByInvoice($invoice) {
-        $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice = ?");
-        if ($stmt) {
-            $stmt->bind_param("s", $invoice);
-            if ($stmt->execute()) {
-                $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-                $stmt->close();
-                if (!$transactions) {
-                    return NULL;
-                } else {
-                    return $transactions;
-                }
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public function getPackagePrice($invoice) {
-        $transactions = $this->getByInvoice($invoice);
-        $product_id = $transactions[0]['product_id'];
-        $stmt = $this->conn->prepare("SELECT * FROM packages WHERE unique_id = ?");
-        $stmt->bind_param("s", $product_id);
-        $stmt->execute();
-        $package = $stmt->get_result()->fetch_assoc();
-        $stmt->close();
-        return $package;
-    }
 
     //Transaksi ada batas jam 5
     //Realtime jam 5 dihapus semua yang unpaid
     //Mail(Menyusul)
+    //Diet Khusus
+    //Tambahan Checklist Kebutuhan Penyakit Tertentu
+    // Yang berisi Diabetes Mellitus, dkk
+    //Tambahan bentuk makanan
+    //Ditambahkan meminta hasil lab
 }
