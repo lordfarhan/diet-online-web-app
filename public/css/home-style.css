@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro&display=swap');
 
 /* Warna
-1 : #FFA701
-2 : #FFE700
-3 : #CCFF01
-4 : #79E000 */
+1 : #FFA701 Orange
+2 : #FFE700 Kuning
+3 : #CCFF01 Hijau Muda
+4 : #79E000 Hijau Tua 
+*/
 
 body {
     background: #f5f5f5;
     font-family: 'Source Sans Pro', sans-serif;
+    position: relative;
+    
 }
 
 .highlight {
@@ -16,9 +19,42 @@ body {
     color: #79E000;
 }
 
+#fixednav{
+    position:fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+#navbar a:active{
+    border-bottom: 5px solid #79E000;
+    border-radius: 3px;
+}
+
+
 #showcase{
-    padding-top: 5rem;
+    padding-top: 5.5rem;
     min-height: 500px;
+    background-color: white;
+}
+
+#logo-circle{
+    width: 50px;
+    margin-bottom: 1rem;
+}
+
+#gambar-showcase{
+    padding-left: -15px;
+}
+
+#art-showcase{
+background-image: url(../img/website/art.png);
+height: 200px;
+object-fit: scale-down;
+background-size: cover;
+}
+
+#isi{
+    padding-top: 5rem;
 }
 
 #showcase .isi-button{
@@ -34,32 +70,85 @@ body {
 }
 
 #description{
-    min-height: 300px;
-
+    min-height: 305px;
+    padding-top: 6.5rem;
+    padding-bottom: 5rem;
 }
 
 #tentukan-paket{
-    min-height: 400px;
+    min-height: 425px;
+    padding-top: 2.5rem;
+    background-color: #79E000;
+    color: white;
+}
+
+#tentukan-paket .container{
+    padding-top: 3rem;
+}
+
+#tentukan-paket .col{
+    padding-left:5px;
+    padding-right: 5px;
+}
+
+.foto-menu{
+    width:10rem;
+    border-radius: 5px;
+}
+
+#tentukan-paket .content{
+    margin-top: 5rem;
+}
+
+#tentukan-paket .highlight{
+    color: white;
 }
 
 #mitra{
     min-height: 300px;
+    padding-top: 6.5rem;
 }
 
 #tim-kami{
     min-height: 500px;
+    padding-top: 6.5rem;
+}
+
+.foto{
+    width: 10rem;
+    margin:auto;
 }
 
 #hubungi-kami{
     min-height: 500px;
+    padding-top: 6.5rem;
+    background-color: #FFE700;
 }
 
-#hubungi-kami .col-lg-5{
+#hubungi{
     background-color: white;
     padding: 10px 10px 10px 10px;
     border-radius: 5px;
 }
 
 footer{
-    min-height: 60px;
+    min-height: 50px;
+
+}
+
+footer .container{
+    margin-top: 1.25rem;
+    margin-right: 0px;
+    padding-right: 0px;
+}
+
+.footer-logo{
+    margin-right: 1rem;
+    font-size: 20px;
+}
+
+.footer-text{
+    font-size: 20px;
+    margin-left: 0.5rem;
+    margin-right: 13rem;
 }
