@@ -23,6 +23,12 @@ Tambah scrolling animasi
     </script>
 
     <link rel="stylesheet" href="{{asset('css/home-style.css')}}">
+
+    <style>
+    body{
+        font-weight: bold;
+    }
+    </style>
 </head>
 {{-- NAVBAR --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="fixednav">
@@ -69,7 +75,7 @@ Tambah scrolling animasi
                     <span class="highlight text-nowrap">
                         <h4>Solusi Obesitas dan Diet Zaman Now</h4>
                     </span>
-                    <h6 class="text-nowrap">Mulai paket dietmu sekarang secara online melalui aplikasi DION</h6>
+                    <h5 class="text-nowrap"><span class="tulisan">Mulai paket dietmu sekarang secara online melalui aplikasi DION</span></h5>
                     <a href="#" class="btn bg-dark">
                         <table style="border:0px;color:white;">
                             <tr>
@@ -84,8 +90,8 @@ Tambah scrolling animasi
                 </div>
             </div>
         </div>
-        <div id="art-showcase">
-        </div>
+        {{-- <div id="art-showcase">
+        </div> --}}
         {{-- Gambar --}}
     </section>
 
@@ -97,9 +103,9 @@ Tambah scrolling animasi
                 </div>
                 <div class="col-lg-5">
                     <h3><span class="highlight">Tentang DION</span></h3><br>
-                    <h6>DION merupakan layanan katering online yang menyediakan makanan sehat sesuai dengan kebutuhan
+                    <h6><span class="tulisan">DION merupakan layanan katering online yang menyediakan makanan sehat sesuai dengan kebutuhan
                         kamu. Tanpa harus mengunjungi ahli gizi, kamu dapat memesan makanan sesuai dengan keperluan
-                        dietmu.</h6>
+                        dietmu.</span></h6>
                 </div>
             </div>
         </div>
@@ -112,25 +118,26 @@ Tambah scrolling animasi
                     <h3><span class="highlight">Pilih dari 4 Paket Berbeda</span></h3>
                     <div class="row">
                         <div class="col">
-                            <img src="{{asset('img/website/harian.png')}}" class="foto-menu shadow">
+                            <img src="{{asset('img/website/harian.png')}}" class="foto-menu img-fluid">
                         </div>
                         <div class="col">
-                            <img src="{{asset('img/website/khusus.png')}}" class="foto-menu shadow-sm">
+                            <img src="{{asset('img/website/khusus.png')}}" class="foto-menu img-fluid">
                         </div>
                         <div class="col">
-                            <img src="{{asset('img/website/mayo.png')}}" class="foto-menu shadow-sm">
+                            <img src="{{asset('img/website/mayo.png')}}" class="foto-menu img-fluid">
                         </div>
                         <div class="col">
-                            <img src="{{asset('img/website/lunch.png')}}" class="foto-menu shadow-sm">
+                            <img src="{{asset('img/website/lunch.png')}}" class="foto-menu img-fluid">
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="content">Ikuti survei singkat untuk menentukan
-                        paket yang cocok buat kamu
+                    <div class="content text-center">
+                        <h3><span class="tulisan">Ikuti survei singkat untuk menentukan
+                        paket yang cocok buat kamu</span></h3>
+                        <br>
+                        <a href="#" class="btn btn-warning tulisan" style="color:black;">Pilih Paket yang Sesuai</a>
                     </div>
-                    <br>
-                    <a href="#" class="btn btn-warning">Pilih Paket yang Sesuai</a>
                 </div>
             </div>
         </div>
@@ -155,31 +162,31 @@ Tambah scrolling animasi
 
     <section id="tim-kami">
         <div class="container">
-            <h1><span class="highlight">Tim Kami</span></h1>
+            <h1><span class="highlight text-center">Tim Kami</span></h1>
             <div class="row justify-content-around d-flex">
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Akbar.png')}}" class="foto img-fluid"><br>
-                    <h4>Akbar Satya Nugraha</h4>
+                    <h5><span class="tulisan">Akbar Satya Nugraha</span></h4>
                 </div>
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Ical.png')}}" class="foto img-fluid"><br>
-                    <h4>Faisal Mohammad Rifqi Aqil</h4>
+                    <h5><span class="tulisan">Faisal Mohammad Rifqi Aqil</span></h4>
                 </div>
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Farhan.png')}}" class="foto img-fluid"><br>
-                    <h4>Muhammad Farhan Abdur Rosyid</h4>
+                    <h5><span class="tulisan">Muhammad Farhan Abdur Rosyid</span></h4>
                 </div>
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Melina.png')}}" class="foto img-fluid"><br>
-                    <h4>Melina Suhartono</h4>
+                    <h5><span class="tulisan">Melina Suhartono</span></h4>
                 </div>
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Ayu.png')}}" class="foto img-fluid"><br>
-                    <h4>Ayu Lestari</h4>
+                    <h5><span class="tulisan">Ayu Lestari</span></h4>
                 </div>
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Bu-Inggita.png')}}" class="foto img-fluid"><br>
-                    <h4>Inggita Kusumastuty, S.Gz, M.Biomed.</h4>
+                    <h5><span class="tulisan">Inggita Kusumastuty, S.Gz, M.Biomed.</span></h4>
                 </div>
             </div>
         </div>
@@ -203,25 +210,25 @@ Tambah scrolling animasi
                 </div>
                 <div class="col-lg-5">
                     <h4><span class="highlight">Mitra DION</span></h4><br>
-                    <p>DION merupakan wadah bagi mitra katering sehat untuk menyalurkan paket mereka. Penyedia makanan
+                    <p><span class="tulisan">DION merupakan wadah bagi mitra katering sehat untuk menyalurkan paket mereka. Penyedia makanan
                         dari DION yang pertama adalah PT.DIETINDO. Sementara ini, DION hanya dapat beroperasi di Kota
                         Malang.<br>
-                        Untuk Info lebih lanjut mengenai DIETINDO dapat mengunjungi:
+                        Untuk Info lebih lanjut mengenai DIETINDO dapat mengunjungi:</span>
                     </p><br>
-                    <img><a href="http://www.dietindo.com/">http://www.dietindo.com/</a>
+                <img src="{{asset('img/website/dietindo.png')}}" style="margin-right:3rem;"><a href="http://www.dietindo.com/">http://www.dietindo.com/</a>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
+        <div class="footer">
             <span class="footer-logo"><i class="fab fa-facebook"></i></span>
             <span class="footer-logo"><i class="fab fa-twitter"></i></span>
             <span class="footer-logo"><i class="fab fa-youtube"></i></span>
             <span class="footer-logo"><i class="fab fa-instagram"></i></span>
             <span class="footer-text">&copy; 2019 DION - Diet Online</span>
-            <span class="footer-text">Solusi Diet & Obesitas Zaman Now</span>
+            <span class="float-right footer-text" style="margin-right:3rem;">Solusi Diet & Obesitas Zaman Now</span>
         </div>
     </footer>
 </body>
