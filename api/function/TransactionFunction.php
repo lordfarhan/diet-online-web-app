@@ -427,6 +427,79 @@ class TransactionFunction
         return $package;
     }
 
+    public function HitungKalori($height, $weight, $activity, $user_id)
+    {
+        $user = $this->GetUser($user_id);
+        $weight = $user['weight'];
+        $height = $user['height'];
+        if ($weight <= 0 || $height <= 0 || $weight == "" || $height == "") {
+            $response['error'] = true;
+            $response['message']="Tinggi dan Berat Badan kosong atau belum terisi";
+            echo json_encode($response);
+         } else {
+            $gender = $user['gender']; //0 = Laki Laki, 1 = Perempuan
+            $birth_date = $user['birth_date'];
+            $tahunSekarang = date('Y');
+            $splitBirthDate = explode('-', $birth_date);
+            $age = $tahunSekarang - $splitBirthDate[0];
+            $statusGizi = 0; //1=Kurus, 2=Normal, 3=Overweight, 4=Obesitas
+            $bmi = $weight / (($height / 100.0) * ($height / 100.0));
+            $adjustedWeight = 0;
+            $bmr = 0;
+            $dailyCalories = 0;
+            if ($bmi < 18.5) {
+                $statusGizi = 1;
+            } else if ($bmi < 25.1) {
+                $statusGizi = 2;
+            } else if ($bmi < 27.1) {
+                $statusGizi = 3;
+            } else {
+                $statusGizi = 4;
+            }
+            switch ($statusGizi) {
+                case 1:
+                    $adjustedWeight = $weight;
+                    break;
+                case 2:
+                    $adjustedWeight = $weight;
+                case 3:
+                    $adjustedWeight = ($height - 100) - (0.1 * ($height - 100));
+                    break;
+                case 4:
+                    $adjustedWeight = ($weight - (($height - 100) - (0.1 * ($height - 100)))) * 0.25 + ($height - 100) - (0.1 * ($height - 100));
+                    break;
+            }
+            //BMR
+            switch ($gender) {
+                case 0:
+                    $bmr = 66 + (13.7 * $adjustedWeight) + (5 * $height) - (6.76 * $age);
+                    break;
+                case 1:
+                    $bmr = 655 + (9.6 * $adjustedWeight) + (1.8 * $height) - (4.7 * $age);
+                    break;
+            }
+
+            switch ($activity) {
+                case 0:
+                    $dailyCalories = $bmr * 1.2;
+                    break;
+                case 1:
+                    $dailyCalories = $bmr * 1.375;
+                    break;
+                case 2:
+                    $dailyCalories = $bmr * 1.55;
+                    break;
+                case 3:
+                    $dailyCalories = $bmr * 1.725;
+                    break;
+                case 4:
+                    $dailyCalories = $bmr * 1.9;
+                    break;
+            }
+        }
+        return $dailyCalories;
+    }
+
     public function DietMayo($user_id, $notes)
     {
         if ($this->CheckUserUnpaid($user_id)) {
@@ -610,83 +683,83 @@ class TransactionFunction
             // 14 : Rendah Serat
             // 15 : Kanker
             $kebutuhanPenyakit = "";
-            switch($sickness){
-               case 0:
-               $kebutuhanPenyakit = "Diabetes Mellitus";
-               break; 
-               case 1:
-               $kebutuhanPenyakit = "Hipertensi";
-               break; 
-               case 2:
-               $kebutuhanPenyakit = "Asam Urat";
-               break; 
-               case 3:
-               $kebutuhanPenyakit = "Stroke";
-               break; 
-               case 4:
-               $kebutuhanPenyakit = "Jantung";
-               break; 
-               case 5:
-               $kebutuhanPenyakit = "Hati";
-               break; 
-               case 6:
-               $kebutuhanPenyakit = "Kolesterol";
-               break; 
-               case 7:
-               $kebutuhanPenyakit = "Cuci Darah";
-               break; 
-               case 8:
-               $kebutuhanPenyakit = "Tinggi Energi";
-               break; 
-               case 9:
-               $kebutuhanPenyakit = "Tinggi Protein";
-               break; 
-               case 10:
-               $kebutuhanPenyakit = "Tinggi Serat";
-               break; 
-               case 11:
-               $kebutuhanPenyakit = "Ginjal";
-               break; 
-               case 12:
-               $kebutuhanPenyakit = "Rendah Energi";
-               break; 
-               case 13:
-               $kebutuhanPenyakit = "Rendah Protein";
-               break; 
-               case 14:
-               $kebutuhanPenyakit = "Rendah Serat";
-               break; 
-               case 15:
-               $kebutuhanPenyakit = "Kanker";
-               break;
-               default:
-               $kebutuhanPenyakit = "-";
-               break; 
+            switch ($sickness) {
+                case 0:
+                    $kebutuhanPenyakit = "Diabetes Mellitus";
+                    break;
+                case 1:
+                    $kebutuhanPenyakit = "Hipertensi";
+                    break;
+                case 2:
+                    $kebutuhanPenyakit = "Asam Urat";
+                    break;
+                case 3:
+                    $kebutuhanPenyakit = "Stroke";
+                    break;
+                case 4:
+                    $kebutuhanPenyakit = "Jantung";
+                    break;
+                case 5:
+                    $kebutuhanPenyakit = "Hati";
+                    break;
+                case 6:
+                    $kebutuhanPenyakit = "Kolesterol";
+                    break;
+                case 7:
+                    $kebutuhanPenyakit = "Cuci Darah";
+                    break;
+                case 8:
+                    $kebutuhanPenyakit = "Tinggi Energi";
+                    break;
+                case 9:
+                    $kebutuhanPenyakit = "Tinggi Protein";
+                    break;
+                case 10:
+                    $kebutuhanPenyakit = "Tinggi Serat";
+                    break;
+                case 11:
+                    $kebutuhanPenyakit = "Ginjal";
+                    break;
+                case 12:
+                    $kebutuhanPenyakit = "Rendah Energi";
+                    break;
+                case 13:
+                    $kebutuhanPenyakit = "Rendah Protein";
+                    break;
+                case 14:
+                    $kebutuhanPenyakit = "Rendah Serat";
+                    break;
+                case 15:
+                    $kebutuhanPenyakit = "Kanker";
+                    break;
+                default:
+                    $kebutuhanPenyakit = "-";
+                    break;
             }
 
             //Bentuk Makanan
             //0 : Makanan Biasa, 1 : Makanan Lunak, 2 : Makanan Cincang,
             //3 : Makanan Cair, 4 : Makanan Sonde
             $foodForm = "";
-            switch($foodTypes){
+            switch ($foodTypes) {
                 case 0:
-                $foodForm = "Makanan Biasa";
-                break;
+                    $foodForm = "Makanan Biasa";
+                    break;
                 case 1:
-                $foodForm = "Makanan Lunak";
-                break;
+                    $foodForm = "Makanan Lunak";
+                    break;
                 case 2:
-                $foodForm = "Makanan Cincang";
-                break;
+                    $foodForm = "Makanan Cincang";
+                    break;
                 case 3:
-                $foodForm = "Makanan Cair";
-                break;
+                    $foodForm = "Makanan Cair";
+                    break;
                 case 4:
-                $foodForm = "Makanan Sonde";
-                break;
+                    $foodForm = "Makanan Sonde";
+                    break;
                 default:
-                $foodForm = "Makanan Biasa";
-                break;
+                    $foodForm = "Makanan Biasa";
+                    break;
             }
 
             if ($product_id == "SP001") {
@@ -769,10 +842,10 @@ class TransactionFunction
             $check = false;
 
             $tempNotes = $notes;
-            $notes = "Kebutuhan Kalori Per Hari : ". $dailyCalories ." Kal \r\n";
-            $notes .= "Kebutuhan Penyakit : ". $kebutuhanPenyakit ."\r\n";
-            $notes .= "Bentuk Makanan : ". $foodForm ."\r\n";
-            $notes .= "Diagnosa : ". $diagnose ."\r\n";
+            $notes = "Kebutuhan Kalori Per Hari : " . $dailyCalories . " Kal \r\n";
+            $notes .= "Kebutuhan Penyakit : " . $kebutuhanPenyakit . "\r\n";
+            $notes .= "Bentuk Makanan : " . $foodForm . "\r\n";
+            $notes .= "Diagnosa : " . $diagnose . "\r\n";
             $notes .= $tempNotes;
 
             for ($banyak = 0; $banyak < $temp;) {
