@@ -28,9 +28,6 @@ class DashboardController extends Controller
             }
             $total_row = $data->count();
             if ($total_row > 0) {
-                $output = '
-            <tbody>
-                ';
                 foreach ($data as $row) {
                     if ($row->times == 1) {
                         $times = 'Pagi';
@@ -62,7 +59,6 @@ class DashboardController extends Controller
                         </tr>
                         ';
                 }
-                $output .= '</tbody>';
             } else {
                 $output = '
        <tr>
@@ -79,42 +75,42 @@ class DashboardController extends Controller
         }
     }
 
-    public function Login(Request $request){
+    public function Login(Request $request)
+    {
         $request->validate([
-            'username'=>'required',
-            'password'=>'required',
+            'username' => 'required',
+            'password' => 'required',
         ]);
 
         $username = $request->input('username');
         $password = $request->input('password');
 
-        if($username != "Admin" || $password != "!@#DION$%^"){
-            if($username=="Admin"){
-                return redirect('/admin/login')->with('error','Wrong Password');
-            } else if($password == "!@#DION$%^") {
-                return redirect('/admin/login')->with('error','Wrong Username');
+        if ($username != "Admin" || $password != "!@#DION$%^") {
+            if ($username == "Admin") {
+                return redirect('/admin/login')->with('error', 'Wrong Password');
+            } else if ($password == "!@#DION$%^") {
+                return redirect('/admin/login')->with('error', 'Wrong Username');
             } else {
-                return redirect('/admin/login')->with('error','Wrong Username and Password');
+                return redirect('/admin/login')->with('error', 'Wrong Username and Password');
             }
         } else {
-            $request->session()->put('login',true);
-            return redirect('/admin')->with('success','Success Login');
+            $request->session()->put('login', true);
+            return redirect('/admin')->with('success', 'Success Login');
         }
     }
 
     public function ViewAdmin(Request $request)
     {
-        if($request->session()->get('login')){
+        if ($request->session()->get('login')) {
             $transactions = DB::table('transactions')
                 ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                ->where('status', '=', '2')
                 ->paginate(20);
-                // ->all();
-    
-            return view('layouts.admin',['transactions'=>$transactions]);
+            return view('layouts.admin', ['transactions' => $transactions]);
         } else {
-            return redirect('/admin/login')->with('error','You must Login First');
+            return redirect('/admin/login')->with('error', 'You must Login First');
         }
     }
 
@@ -124,50 +120,50 @@ class DashboardController extends Controller
         $filter2 = $request->input('filter2');
         if ($filter1 == 0) {
             if ($filter2 == 1) {
-                        $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
-                            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
-                            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('product_id', '=', 'DP001')
-                            ->orWhere('product_id', '=', 'DP002')
-                            ->orWhere('product_id', '=', 'DP003')
-                            ->paginate(20);
-                            // ->get();
-                    } else if ($filter2 == 2) {
-                        $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
-                            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
-                            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->orWhere('product_id', '=', 'SP001')
-                            ->orWhere('product_id', '=', 'SP002')
-                            ->orWhere('product_id', '=', 'SP003')
-                            ->paginate(20);
-                            // ->get();
-                    } else if ($filter2 == 3) {
-                        $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
-                            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
-                            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('product_id', '=', 'SL001')
-                            ->orWhere('product_id', '=', 'SL002')
-                            ->paginate(20);
-                            // ->get();
-                    } else if ($filter2 == 4) {
-                        $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
-                            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
-                            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('product_id', '=', 'WL001')
-                            ->paginate(20);
-                            // ->get();
-                    } else {
-                        $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
-                            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
-                            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->paginate(20);
-                            // ->get();
-                    }
+                $transactions = DB::table('transactions')
+                    ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                    ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                    ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                    ->where('product_id', '=', 'DP001')
+                    ->orWhere('product_id', '=', 'DP002')
+                    ->orWhere('product_id', '=', 'DP003')
+                    ->paginate(20);
+                // ->get();
+            } else if ($filter2 == 2) {
+                $transactions = DB::table('transactions')
+                    ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                    ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                    ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                    ->orWhere('product_id', '=', 'SP001')
+                    ->orWhere('product_id', '=', 'SP002')
+                    ->orWhere('product_id', '=', 'SP003')
+                    ->paginate(20);
+                // ->get();
+            } else if ($filter2 == 3) {
+                $transactions = DB::table('transactions')
+                    ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                    ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                    ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                    ->where('product_id', '=', 'SL001')
+                    ->orWhere('product_id', '=', 'SL002')
+                    ->paginate(20);
+                // ->get();
+            } else if ($filter2 == 4) {
+                $transactions = DB::table('transactions')
+                    ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                    ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                    ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                    ->where('product_id', '=', 'WL001')
+                    ->paginate(20);
+                // ->get();
+            } else {
+                $transactions = DB::table('transactions')
+                    ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                    ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                    ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                    ->paginate(20);
+                // ->get();
+            }
         } else {
             switch ($filter1) {
                 case 1: //All
@@ -180,7 +176,7 @@ class DashboardController extends Controller
                             ->orWhere('product_id', '=', 'DP002')
                             ->orWhere('product_id', '=', 'DP003')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 2) {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -190,7 +186,7 @@ class DashboardController extends Controller
                             ->orWhere('product_id', '=', 'SP002')
                             ->orWhere('product_id', '=', 'SP003')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 3) {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -199,7 +195,7 @@ class DashboardController extends Controller
                             ->where('product_id', '=', 'SL001')
                             ->orWhere('product_id', '=', 'SL002')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 4) {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -207,14 +203,14 @@ class DashboardController extends Controller
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('product_id', '=', 'WL001')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     }
                     break;
                 case 2: //Today Batch
@@ -232,7 +228,7 @@ class DashboardController extends Controller
                                     ->orWhere('product_id', '=', 'DP003');
                             })
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 2) { //Khusus
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -245,7 +241,7 @@ class DashboardController extends Controller
                                     ->orWhere('product_id', '=', 'SP003');
                             })
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 3) { //Single Lunch
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -257,7 +253,7 @@ class DashboardController extends Controller
                                     ->orWhere('product_id', '=', 'SL002');
                             })
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 4) { //Mayo
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -266,7 +262,7 @@ class DashboardController extends Controller
                             ->where('date', '=', $dateNow)
                             ->where('product_id', '=', 'WL001')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -274,7 +270,7 @@ class DashboardController extends Controller
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('date', '=', $dateNow)
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     }
                     break;
                 case 3: //Archived
@@ -290,7 +286,7 @@ class DashboardController extends Controller
                                     ->orWhere('product_id', '=', 'DP003');
                             })
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 2) {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -303,7 +299,7 @@ class DashboardController extends Controller
                                     ->orWhere('product_id', '=', 'SP003');
                             })
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 3) {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -315,7 +311,7 @@ class DashboardController extends Controller
                                     ->orWhere('product_id', '=', 'SL002');
                             })
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else if ($filter2 == 4) {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -324,7 +320,7 @@ class DashboardController extends Controller
                             ->where('status', '=', '3')
                             ->where('product_id', '=', 'WL001')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     } else {
                         $transactions = DB::table('transactions')
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
@@ -332,7 +328,7 @@ class DashboardController extends Controller
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
                             ->paginate(20);
-                            // ->get();
+                        // ->get();
                     }
                     break;
             }
@@ -349,7 +345,7 @@ class DashboardController extends Controller
             ->where('status', '=', '2')
             ->orderBy('transactions.created_at', 'desc')
             ->paginate(20);
-            // ->all();
+        // ->all();
 
         return view('latest_table')->with('transactions', $transactions);
     }
@@ -364,14 +360,57 @@ class DashboardController extends Controller
         }
         return redirect("/admin");
     }
-    
-    public function Update($id){
-        Transaction::where('id',$id)->update(['status' => 3]);
+
+    public function Update($id)
+    {
+        Transaction::where('id', $id)->update(['status' => 3]);
         return redirect("/admin");
     }
-    
-    public function Delete($id){
-        Transaction::where('id',$id)->delete();
+
+    public function Delete($id)
+    {
+        Transaction::where('id', $id)->delete();
         return redirect("/admin");
+    }
+
+    public function ViewPembayaran(Request $request)
+    {
+        if ($request->session()->get('login')) {
+            $transaction = array();
+
+            $transactions = DB::table('transactions')
+                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                ->where('status', '=', '1')
+                ->get();
+            $invoice = "";
+            $index = 0;
+            foreach ($transactions as $t) {
+                if ($invoice == $t->invoice) {
+                    continue;
+                } else {
+                    $transaction[$index] = $t;
+                    $index++;
+                }
+                $invoice = $t->invoice;
+            }
+
+            return view('pembayarantable', ['transaction' => $transaction]);
+        } else {
+            return redirect('/admin/login')->with('error', 'You must Login First');
+        }
+    }
+
+    public function ApproveTransaction($invoice)
+    {
+        Transaction::where('invoice', $invoice)->update(['status' => 2]);
+        return redirect("/admin/pembayaran");
+    }
+
+    public function DisapproveTransaction($invoice)
+    {
+        Transaction::whereIn('invoice', $invoice)->delete();
+        return redirect("/admin/pembayaran");
     }
 }

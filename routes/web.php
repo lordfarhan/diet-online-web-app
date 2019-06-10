@@ -15,6 +15,18 @@ use App\Http\Controllers\APIController;
 
 Route::get('/admin', 'DashboardController@ViewAdmin');
 
+Route::get('/admin/pembayaran',function(){
+    return view('layouts.pembayaran');
+});
+
+Route::get('/admin/pembayaran/check','DashboardController@CheckTransaction');
+
+Route::get('/admin/pembayaran/approve/{invoice}','DashboardController@ApproveTransaction');
+
+Route::get('/admin/pembayaran/disapprove/{invoice}','DashboardController@DisapproveTransaction');
+
+Route::get('/admin/pembayaran-table','DashboardController@ViewPembayaran');
+
 Route::get('/admin/filter', 'DashboardController@FilterTable');
 
 Route::get('/admin/latest','DashboardController@LatestTable');
