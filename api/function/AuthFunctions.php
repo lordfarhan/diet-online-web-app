@@ -232,5 +232,24 @@ class AuthFunctions {
         $hash = base64_encode(sha1($password . $salt, true) . $salt);
         return $hash;
     }
+
+    public function DeleteAccount($user_id){
+        $stmt = $this->conn->prepare("DELETE FROM `users` WHERE `unique_id`=?");
+        $stmt->bind_param("s",$user_id);
+        if($stmt != FALSE){
+            if($stmt->execute()){
+                $stmt->close();
+                return true;
+            } else {
+                $response['error']=true;
+                $response['message'] = "Terjadi kesalahan dalam menghapus akun";
+                echo json_encode($response);
+            }
+        } else {
+            $response['error']=true;
+            $response['message'] = "Terjadi kesalahan dalam menghapus akun";
+            echo json_encode($response);
+        }
+    }
 }
 ?>
