@@ -842,10 +842,10 @@ class TransactionFunction
             $check = false;
 
             $tempNotes = $notes;
-            $notes = "Kebutuhan Kalori Per Hari : " . $dailyCalories . " Kal \r\n";
-            $notes .= "Kebutuhan Penyakit : " . $kebutuhanPenyakit . "\r\n";
-            $notes .= "Bentuk Makanan : " . $foodForm . "\r\n";
-            $notes .= "Diagnosa : " . $diagnose . "\r\n";
+            $notes = "Kebutuhan Kalori Per Hari : " . $dailyCalories . " Kal <br>";
+            $notes .= "Kebutuhan Penyakit : " . $kebutuhanPenyakit . "<br>";
+            $notes .= "Bentuk Makanan : " . $foodForm . "<br>";
+            $notes .= "Diagnosa : " . $diagnose . "<br>";
             $notes .= $tempNotes;
 
             for ($banyak = 0; $banyak < $temp;) {
