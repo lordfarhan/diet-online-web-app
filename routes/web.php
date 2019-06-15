@@ -15,8 +15,10 @@ use App\Http\Controllers\APIController;
 
 Route::get('/admin', 'DashboardController@ViewAdmin');
 
-Route::get('/admin/pembayaran',function(){
-    return view('layouts.pembayaran');
+Route::get('/admin/pembayaran','DashboardController@ViewPembayaran');
+
+Route::get('/admin/latest',function(){
+    return view('layouts.latest');
 });
 
 Route::get('/admin/pembayaran/check','DashboardController@CheckTransaction');
@@ -25,11 +27,9 @@ Route::get('/admin/pembayaran/approve/{invoice}','DashboardController@ApproveTra
 
 Route::get('/admin/pembayaran/disapprove/{invoice}','DashboardController@DisapproveTransaction');
 
-Route::get('/admin/pembayaran-table','DashboardController@ViewPembayaran');
-
 Route::get('/admin/filter', 'DashboardController@FilterTable');
 
-Route::get('/admin/latest','DashboardController@LatestTable');
+Route::get('/admin/latest-table','DashboardController@LatestTable');
 
 Route::get('/admin/action','DashboardController@EditAndDelete');
 

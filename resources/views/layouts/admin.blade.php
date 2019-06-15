@@ -29,7 +29,6 @@ Note
     }
 
     #main {
-        margin-top: 2.5rem;
         margin-bottom: 3rem;
     }
 
@@ -218,7 +217,7 @@ Note
         color: white;
         padding: 10px 15px;
         border: none;
-        position :fixed;
+        position: fixed;
         margin-top: 15rem;
     }
 
@@ -240,8 +239,9 @@ Note
         var auto_refresh = setInterval(function () {
             $('#latest-table').load('/admin/latest').fadeIn("slow");
         }, 500);
+    })
 
-        fetch_customer_data();
+    fetch_customer_data();
 
         function fetch_customer_data(query = '') {
             $.ajax({
@@ -269,42 +269,34 @@ Note
             fetch_customer_data(query);
         });
 
-
-
-    })
-
-</script>
-
-<script>
-    var modal = document.getElementById("myModal");
-
-    var img = document.getElementById("proof");
-    var modalImg = document.getElementById("img01");
-    img.onclick = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-    }
-    var span = document.getElementsByClassName("close")[0];
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
-</script>
-
-<script>
     let sidebarOpen = false;
 
-    function clickNav() {
-        if (sidebarOpen) {
-            document.getElementById("mySidebar").style.width = "0";
-            document.getElementById("main").style.marginLeft = "0";
-            sidebarOpen = false;
-        } else {
-            document.getElementById("mySidebar").style.width = "250px";
-            document.getElementById("main").style.marginLeft = "250px";
-            sidebarOpen = true;
+        function clickNav() {
+            if (sidebarOpen) {
+                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("main").style.marginLeft = "0";
+                sidebarOpen = false;
+            } else {
+                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+                sidebarOpen = true;
+            }
         }
-    }
+
+        
+        var modal = document.getElementById("myModal");
+
+        var img = document.getElementById("proof");
+        var modalImg = document.getElementById("img01");
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
 </script>
 
 <body>
@@ -329,6 +321,7 @@ Note
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
         <a href="/admin">Home</a>
+        <a href="/admin/latest">Latest</a>
         <a href="/admin/pembayaran">Pembayaran</a>
     </div>
 
@@ -366,14 +359,6 @@ Note
         </section>
 
         {{-- CONTENT --}}
-        <section id="latest">
-            <div class="container">
-                <h1>Latest Transactions</h1>
-                <div id="latest-table">
-
-                </div>
-            </div>
-        </section>
 
         <section id="main">
             <div class="container">

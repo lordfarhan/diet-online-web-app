@@ -1,4 +1,10 @@
 <html>
+{{-- 
+Note
+- Tambah 1 kolom untuk prohibition
+- Rubah Date menjadi Tanggal Pengiriman
+- Semua yang terlihat di dashboard Admin adalah transaksi paid    
+    --}}
 
 <head>
     <title>Dashboard Admin for DION</title>
@@ -23,7 +29,6 @@
     }
 
     #main {
-        margin-top: 2.5rem;
         margin-bottom: 3rem;
     }
 
@@ -49,6 +54,112 @@
     #table {
         overflow-y: scroll;
         max-height: 400px;
+    }
+
+    .pagination {
+        margin: auto;
+        margin-bottom: 1rem;
+    }
+
+    #proof {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #proof:hover {
+        opacity: 0.7;
+    }
+
+    /* The Modal (background) */
+    .modal-img {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    /* Caption of Modal Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content,
+    #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+        from {
+            -webkit-transform: scale(0)
+        }
+
+        to {
+            -webkit-transform: scale(1)
+        }
+    }
+
+    @keyframes zoom {
+        from {
+            transform: scale(0)
+        }
+
+        to {
+            transform: scale(1)
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
     }
 
     /* The sidebar menu */
@@ -124,6 +235,12 @@
 </style>
 
 <script>
+    $(document).ready(function () {
+        var auto_refresh = setInterval(function () {
+            $('#latest-table').load('/admin/latest-table').fadeIn("slow");
+        }, 500);
+    })
+
     fetch_customer_data();
 
     function fetch_customer_data(query = '') {
@@ -166,23 +283,6 @@
         }
     }
 
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementById("myImg");
-    var modalImg = document.getElementById("img01");
-    img.onclick = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-    }
-
-    var span = document.getElementsByClassName("close")[0];
-
-    span.onclick = function () {
-        modal.style.display = "none";
-    }
-
 </script>
 
 <body>
@@ -205,14 +305,15 @@
     </section>
 
     <div id="mySidebar" class="sidebar">
-            <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
-            <a href="/admin">Home</a>
-            <a href="/admin/latest">Latest</a>
-            <a href="/admin/pembayaran">Pembayaran</a>
-        </div>
+        <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
+        <a href="/admin">Home</a>
+        <a href="/admin/latest">Latest</a>
+        <a href="/admin/pembayaran">Pembayaran</a>
+    </div>
 
     <div id="main">
         <button class="openbtn" onclick="clickNav()"><i class="fas fa-angle-right"></i></button>
+        
         <section id="search">
             <div class="container">
                 <h1>Search Result</h1>
@@ -246,49 +347,10 @@
 
         <section id="main">
             <div class="container">
-                <h1>Pembayaran</h1>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" scope="col"></th>
-                            <th rowspan="2" scope="col">ID</th>
-                            <th colspan="2" scope="col">Product</th>
-                            <th colspan="3" scope="col">User</th>
-                            <th rowspan="2" scope="col">Invoice</th>
-                            <th rowspan="2" scope="col">Bukti Pembayaran</th>
-                            <th rowspan="2" scope="col"></th>
-                        </tr>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Product Price</th>
-                            <th>User Name</th>
-                            <th>User Phone</th>
-                            <th>User Address</th>
-                        <tr>
-                    </thead>
-                    <tbody>
-                        @if (count($transaction)>0)
-                        @foreach ($transaction as $t)
-                        <tr>
-                            <td>{{$t->id}}</td>
-                            <td>{{$t->product_name}}</td>
-                            <td>{{$t->price}}</td>
-                            <td>{{$t->name}}</td>
-                            <td>{{$t->phone}}</td>
-                            <td>{{$t->address}}</td>
-                            <td>{{$t->invoice}}</td>
-                            <td><img src="{{$t->proof_of_payment}}" class="img-thumbnail"></td>
-                            <td><a href="/admin/pembayaran/approve/{{$t->invoice}}"
-                                    class="btn btn-primary">Approve</a><br><br>
-                                <a href="/admin/pembayaran/disapprove/{{$t->invoice}}"
-                                    class="btn btn-danger">Disapprove</a></td>
-                        </tr>
-                        @endforeach
-                        @else
-                        <h3>No Data</h3>
-                        @endif
-                    </tbody>
-                </table>
+                <h1>Latest Transactions</h1>
+                <div id="latest-table">
+
+                </div>
             </div>
         </section>
     </div>

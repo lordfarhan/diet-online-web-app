@@ -3,16 +3,13 @@
         <thead>
             <tr>
                 <th rowspan="2" scope="col">ID</th>
-                <th colspan="2" scope="col">Product</th>
+                <th rowspan="2" scope="col">Product Name</th>
                 <th colspan="3" scope="col">User</th>
-                <th rowspan="2" scope="col">Invoice</th>
                 <th rowspan="2" scope="col">Notes</th>
-                <th rowspan="2" scope="col">Time</th>
+                <th rowspan="2" scope="col">Tanggal Pengiriman</th>
                 <th rowspan="2" scope="col">Status</th>
             </tr>
             <tr>
-                <th>Product Name</th>
-                <th>Product Price</th>
                 <th>User Name</th>
                 <th>User Phone</th>
                 <th>User Address</th>
@@ -23,12 +20,10 @@
             <tr>
                 <td>{{$transaction->id}}</td>
                 <td>{{$transaction->product_name}}</td>
-                <td>{{$transaction->price}}</td>
                 <td>{{$transaction->name}}</td>
                 <td>{{$transaction->phone}}</td>
                 <td>{{$transaction->address}}</td>
-                <td>{{$transaction->invoice}}</td>
-                <td>{{$transaction->notes}}</td>
+                <td>{!!$transaction->notes!!}</td>
                 <td>
                     @if ($transaction->times==1)
                     Pagi
