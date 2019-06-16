@@ -23,6 +23,7 @@ class DashboardController extends Controller
                     ->orWhere('address', 'like', '%' . $query . '%')
                     ->orWhere('invoice', 'like', '%' . $query . '%')
                     ->orWhere('product_id', 'like', '%' . $query . '%')
+                    ->orWhere('product_name', 'like', '%' . $query . '%')
                     ->orderBy('id', 'desc')
                     ->get();
             }
@@ -343,7 +344,7 @@ class DashboardController extends Controller
             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
             ->where('status', '=', '2')
-            ->orderBy('transactions.created_at', 'desc')
+            ->orderBy('transactions.updated_at', 'desc')
             ->paginate(20);
         // ->all();
 
@@ -353,12 +354,16 @@ class DashboardController extends Controller
     public function EditAndDelete(Request $request)
     {
         $uid = $request->input('uid');
-        if ($request->has('update-btn')) {
-            Transaction::whereIn('id', $uid)->update(['status' => 3]);
+        if($uid==""){
+            return redirect("/admin")->with('error','Tidak ada transaksi yang dipilih');
         } else {
-            Transaction::whereIn('id', $uid)->delete();
+            if ($request->has('update-btn')) {
+                Transaction::whereIn('id', $uid)->update(['status' => 3]);
+            } else {
+                Transaction::whereIn('id', $uid)->delete();
+            }
+            return redirect("/admin");
         }
-        return redirect("/admin");
     }
 
     public function Update($id)
@@ -396,7 +401,7 @@ class DashboardController extends Controller
                 $invoice = $t->invoice;
             }
 
-            return view('pembayarantable', ['transaction' => $transaction]);
+            return view('layouts.pembayaran', ['transaction' => $transaction]);
         } else {
             return redirect('/admin/login')->with('error', 'You must Login First');
         }
