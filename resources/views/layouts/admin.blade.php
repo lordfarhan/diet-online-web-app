@@ -32,6 +32,10 @@ Note
         margin-bottom: 3rem;
     }
 
+    .kanan{
+        margin-left: 80%;
+    }
+
     #search {
         display: none;
         visibility: hidden;
@@ -243,59 +247,59 @@ Note
 
     fetch_customer_data();
 
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('search.action') }}",
-                method: 'GET',
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function (data) {
-                    $('#search').css("visibility", "visible");
-                    $('#search').css("display", "block");
-                    $('#search-result').html(data.table_data);
-                }
-            })
-        }
-
-        $(document).on('keyup', '#search-box', function () {
-            let search = $('#search-box').val();
-            if (search == "") {
-                $('#search').css("display", "none");
-                $('#search').css("visibility", "hidden");
+    function fetch_customer_data(query = '') {
+        $.ajax({
+            url: "{{ route('search.action') }}",
+            method: 'GET',
+            data: {
+                query: query
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('#search').css("visibility", "visible");
+                $('#search').css("display", "block");
+                $('#search-result').html(data.table_data);
             }
-            var query = $(this).val();
-            fetch_customer_data(query);
-        });
+        })
+    }
+
+    $(document).on('keyup', '#search-box', function () {
+        let search = $('#search-box').val();
+        if (search == "") {
+            $('#search').css("display", "none");
+            $('#search').css("visibility", "hidden");
+        }
+        var query = $(this).val();
+        fetch_customer_data(query);
+    });
 
     let sidebarOpen = false;
 
-        function clickNav() {
-            if (sidebarOpen) {
-                document.getElementById("mySidebar").style.width = "0";
-                document.getElementById("main").style.marginLeft = "0";
-                sidebarOpen = false;
-            } else {
-                document.getElementById("mySidebar").style.width = "250px";
-                document.getElementById("main").style.marginLeft = "250px";
-                sidebarOpen = true;
-            }
+    function clickNav() {
+        if (sidebarOpen) {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+            sidebarOpen = false;
+        } else {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            sidebarOpen = true;
         }
+    }
 
-        
-        var modal = document.getElementById("myModal");
 
-        var img = document.getElementById("proof");
-        var modalImg = document.getElementById("img01");
-        img.onclick = function () {
-            modal.style.display = "block";
-            modalImg.src = this.src;
-        }
-        var span = document.getElementsByClassName("close")[0];
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
+    var modal = document.getElementById("myModal");
+
+    var img = document.getElementById("proof");
+    var modalImg = document.getElementById("img01");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+    }
+    var span = document.getElementsByClassName("close")[0];
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
 
 </script>
 
@@ -361,169 +365,179 @@ Note
         {{-- CONTENT --}}
 
         <section id="main">
-            <div class="container">
-                <h1>Transactions</h1>
-                <form action="/admin/filter" method="GET">
-                    <select name="filter1">
-                        <option value="0"></option>
-                        <option value="1">All</option>
-                        <option value="2">Today Batch</option>
-                        <option value="3">Archived</option>
-                    </select>
-                    <select name="filter2">
-                        <option value="0"></option>
-                        <option value="1">Diet Harian</option>
-                        <option value="2">Diet Khusus</option>
-                        <option value="3">Single Lunch Box</option>
-                        <option value="4">Diet Mayo</option>
-                    </select>
-                    <input type="submit" name="filter" value="Filter">
-                </form>
+                
 
                 @if (count($transactions)>0)
                 <form action="/admin/action" method="GET">
-                    <input type="submit" class="btn btn-primary" value="Update" name="update-btn">
-                    <input type="submit" class="btn btn-danger" value="Delete" name="delete-btn">
-                    <div id="table">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" scope="col"></th>
-                                    <th rowspan="2" scope="col">ID</th>
-                                    <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
-                                    <th colspan="2" scope="col">Product</th>
-                                    <th colspan="3" scope="col">User</th>
-                                    <th rowspan="2" scope="col">Invoice</th>
-                                    <th rowspan="2" scope="col">Notes</th>
-                                    <th rowspan="2" scope="col">Waktu Pengiriman</th>
-                                    <th rowspan="2" scope="col">Status</th>
-                                    <th colspan="3" rowspan="2" scope="col"></th>
-                                </tr>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Product Price</th>
-                                    <th>User Name</th>
-                                    <th>User Phone</th>
-                                    <th>User Address</th>
-                                <tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td><input type="checkbox" name="uid[]" value="{{$transaction->id}}"></td>
-                                    <td>{{$transaction->id}}</td>
-                                    <td>{{$transaction->date}}</td>
-                                    <td>{{$transaction->product_name}}</td>
-                                    <td>{{$transaction->price}}</td>
-                                    <td>{{$transaction->name}}</td>
-                                    <td>{{$transaction->phone}}</td>
-                                    <td>{{$transaction->address}}</td>
-                                    <td>{{$transaction->invoice}}</td>
-                                    <td>{{$transaction->notes}}</td>
-                                    <td>
-                                        @if ($transaction->times==1)
-                                        Pagi
-                                        @endif
-                                        @if ($transaction->times==2)
-                                        Siang
-                                        @endif
-                                        @if ($transaction->times==3)
-                                        Sore
-                                        @endif
-                                    </td>
-                                    <td>@if ($transaction->status==1)
-                                        Unpaid
-                                        @endif
-                                        @if ($transaction->status==2)
-                                        Paid
-                                        @endif
-                                        @if ($transaction->status==3)
-                                        Done
-                                        @endif
-                                    </td>
-                                    <input type="hidden" id="idfordelete" value="{{$transaction->id}}">
-                                    <td>
-                                        <a href="/admin/edit/{{$transaction->id}}" class="btn btn-primary">Update</a>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/delete/{{$transaction->id}}" class="btn btn-danger"
-                                            onclick="AlertDelete()" id="delete">Delete</a>
-                                        <p id="demo"></p>
-                                    </td>
-                                    <script>
-                                        function AlertDelete() {
-                                            if (!confirm("Are you sure ?")) {
-                                                var link = document.getElementById("delete");
+                    <div class="container">
+                            <h1>Transactions</h1><br>
+                        <div class="float-left">
+                            <form action="/admin/filter" method="GET">
+                                <select name="filter1">
+                                    <option value="0">Choose Filter . . . .</option>
+                                    <option value="1">All</option>
+                                    <option value="2">Today Batch</option>
+                                    <option value="3">Archived</option>
+                                </select>
+                                <select name="filter2">
+                                    <option value="0">Choose Filter . . . .</option>
+                                    <option value="1">Diet Harian</option>
+                                    <option value="2">Diet Khusus</option>
+                                    <option value="3">Single Lunch Box</option>
+                                    <option value="4">Diet Mayo</option>
+                                </select>
+                                <input type="submit" name="filter" value="Filter">
+                            </form>
+                        </div>
+                        <div class="kanan">
+                            <input type="submit" class="btn btn-primary" value="Update" name="update-btn">
+                            <input type="submit" class="btn btn-danger" value="Delete" name="delete-btn">
+                        </div>
+                    </div>
+                    <div></div>
+                    <div class="container float-none">
+                        <div id="table">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" scope="col"></th>
+                                        <th rowspan="2" scope="col">ID</th>
+                                        <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
+                                        <th colspan="2" scope="col">Product</th>
+                                        <th colspan="3" scope="col">User</th>
+                                        <th rowspan="2" scope="col">Invoice</th>
+                                        <th rowspan="2" scope="col">Notes</th>
+                                        <th rowspan="2" scope="col">Waktu Pengiriman</th>
+                                        <th rowspan="2" scope="col">Status</th>
+                                        <th colspan="3" rowspan="2" scope="col"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Product Price</th>
+                                        <th>User Name</th>
+                                        <th>User Phone</th>
+                                        <th>User Address</th>
+                                    <tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($transactions as $transaction)
+                                    <tr>
+                                        <td><input type="checkbox" name="uid[]" value="{{$transaction->id}}"></td>
+                                        <td>{{$transaction->id}}</td>
+                                        <td>{{$transaction->date}}</td>
+                                        <td>{{$transaction->product_name}}</td>
+                                        <td>{{$transaction->price}}</td>
+                                        <td>{{$transaction->name}}</td>
+                                        <td>{{$transaction->phone}}</td>
+                                        <td>{{$transaction->address}}</td>
+                                        <td>{{$transaction->invoice}}</td>
+                                        <td>{{$transaction->notes}}</td>
+                                        <td>
+                                            @if ($transaction->times==1)
+                                            Pagi
+                                            @endif
+                                            @if ($transaction->times==2)
+                                            Siang
+                                            @endif
+                                            @if ($transaction->times==3)
+                                            Sore
+                                            @endif
+                                        </td>
+                                        <td>@if ($transaction->status==1)
+                                            Unpaid
+                                            @endif
+                                            @if ($transaction->status==2)
+                                            Paid
+                                            @endif
+                                            @if ($transaction->status==3)
+                                            Done
+                                            @endif
+                                        </td>
+                                        {{-- <input type="hidden" id="idfordelete" value="{{$transaction->id}}"> --}}
+                                        <td>
+                                            <a href="/admin/edit/{{$transaction->id}}"
+                                                class="btn btn-primary">Update</a>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/delete/{{$transaction->id}}" class="btn btn-danger"
+                                                onclick="AlertDelete()" id="delete">Delete</a>
+                                            <p id="demo"></p>
+                                        </td>
+                                        <script>
+                                            function AlertDelete() {
+                                                if (!confirm("Are you sure ?")) {
+                                                    var link = document.getElementById("delete");
 
-                                                // window.open(
-                                                //     link.href,
-                                                //     '_blank'
-                                                // );
+                                                    // window.open(
+                                                    //     link.href,
+                                                    //     '_blank'
+                                                    // );
 
-                                                link.setAttribute('href', "/admin");
-                                                return false;
+                                                    link.setAttribute('href', "/admin");
+                                                    return false;
+                                                }
                                             }
-                                        }
 
-                                    </script>
-                                    <td>
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#modal{{$transaction->id}}">Detail</button>
-                                    </td>
-                                </tr>
+                                        </script>
+                                        <td>
+                                            <button type="button" class="btn btn-info" data-toggle="modal"
+                                                data-target="#modal{{$transaction->id}}">Detail</button>
+                                        </td>
+                                    </tr>
 
-                                <div class="modal fade" id="modal{{$transaction->id}}" tabindex="-1" role="dialog"
-                                    aria-labelledby="label" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="label">Detail</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Transaction : <br>
-                                                Invoice : {{$transaction->invoice}}<br>
-                                                UID : {{$transaction->id}}<br>
-                                                Receipt : <br><img id="proof"
-                                                    src="{{asset("img/".$transaction->proof_of_payment)}}"
-                                                    style="max-height:300px;max-width:300px"><br>
-                                                Date : {{$transaction->date}}<br>
-                                                Notes : {{$transaction->notes}}<br>
-                                                <br>
-                                                User : <br>
-                                                Name : {{$transaction->name}}<br>
-                                                Address : {{$transaction->address}}<br>
-                                                Phone Number : {{$transaction->phone}}<br>
-                                                Prohibition : {{$transaction->prohibition}}<br>
-                                                <br>
-                                                Product : <br>
-                                                Product Name : {{$transaction->product_name}}<br>
-                                                Product Price : {{$transaction->price}}<br>
-                                                Unique ID : {{$transaction->product_id}}<br>
-                                                <br>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
+                                    <div class="modal fade" id="modal{{$transaction->id}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="label" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="label">Detail</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Transaction : <br>
+                                                    Invoice : {{$transaction->invoice}}<br>
+                                                    UID : {{$transaction->id}}<br>
+                                                    Receipt : <br><img id="proof"
+                                                        src="{{asset("img/".$transaction->proof_of_payment)}}"
+                                                        style="max-height:300px;max-width:300px"><br>
+                                                    Date : {{$transaction->date}}<br>
+                                                    Notes : {{$transaction->notes}}<br>
+                                                    <br>
+                                                    User : <br>
+                                                    Name : {{$transaction->name}}<br>
+                                                    Address : {{$transaction->address}}<br>
+                                                    Phone Number : {{$transaction->phone}}<br>
+                                                    Prohibition : {{$transaction->prohibition}}<br>
+                                                    <br>
+                                                    Product : <br>
+                                                    Product Name : {{$transaction->product_name}}<br>
+                                                    Product Price : {{$transaction->price}}<br>
+                                                    Unique ID : {{$transaction->product_id}}<br>
+                                                    <br>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    {{-- Modal for Image --}}
-                                    <div id="myModal" class="modal-img">
-                                        <!-- The Close Button -->
-                                        <span class="close">&times;</span>
-                                        <!-- Modal Content (The Image) -->
-                                        <img class="modal-content" id="img01">
+                                        {{-- Modal for Image --}}
+                                        <div id="myModal" class="modal-img">
+                                            <!-- The Close Button -->
+                                            <span class="close">&times;</span>
+                                            <!-- Modal Content (The Image) -->
+                                            <img class="modal-content" id="img01">
+                                        </div>
                                     </div>
-                                </div>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="pagination">{{ $transactions->links() }}</div>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="pagination">{{ $transactions->links() }}</div>
+                        </div>
                     </div>
                 </form>
                 @else
