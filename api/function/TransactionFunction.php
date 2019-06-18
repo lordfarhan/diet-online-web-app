@@ -68,20 +68,33 @@ class TransactionFunction
                 }
             }
             $startHari = $hari;
-            $jam = date('H') + 7 % 24;
+            $jam = date('H') + 5 % 24;
             $pengali = 0;
-            if ($jam > 17) {
-                if ($startHari + 1 > 7) {
+            if ($jam >= 17) {
+                if ($startHari + 2 > 7) {
+                    $startHari = ($startHari + 2) % 7;
+                    $pengali = 1;
+                } else if ($startHari + 2 == 7) {
                     $startHari = 0;
                     $pengali = 1;
+                } else {
+                    $startHari += 2;
+                }
+            } else {
+                if ($startHari + 1 > 7) {
+                    $startHari = ($startHari + 1) % 7;
+                    $pengali = 1;
+                } else if ($startHari + 1 == 7) {
+                    $startHari = 0;
+                    $pengali = 1;
+                } else {
+                    $startHari += 1;
                 }
             }
-            if ($startHari + 1 >= 7) {
-                $startHari = 1;
-                $pengali = 1;
-            } else {
-                $startHari = ($hari + 1);
-            }
+
+            // echo $hari;
+            // echo $startHari;
+            // return 0;
             $kontrolsekali = true;
             $bulanPesanan = date('n');
             $tahunPesanan = date("Y");
@@ -434,9 +447,9 @@ class TransactionFunction
         $height = $user['height'];
         if ($weight <= 0 || $height <= 0 || $weight == "" || $height == "") {
             $response['error'] = true;
-            $response['message']="Tinggi dan Berat Badan kosong atau belum terisi";
+            $response['message'] = "Tinggi dan Berat Badan kosong atau belum terisi";
             echo json_encode($response);
-         } else {
+        } else {
             $gender = $user['gender']; //0 = Laki Laki, 1 = Perempuan
             $birth_date = $user['birth_date'];
             $tahunSekarang = date('Y');
@@ -820,19 +833,28 @@ class TransactionFunction
             }
 
             $startHari = $hari;
-            $jam = date('H') + 7 % 24;
+            $jam = date('H') + 5 % 24;
             $pengali = 0;
-            if ($jam > 17) {
-                if ($startHari + 1 > 7) {
+            if ($jam >= 17) {
+                if ($startHari + 2 > 7) {
+                    $startHari = ($startHari + 2) % 7;
+                    $pengali = 1;
+                } else if ($startHari + 2 == 7) {
                     $startHari = 0;
                     $pengali = 1;
+                } else {
+                    $startHari += 2;
                 }
-            }
-            if ($startHari + 1 >= 7) {
-                $startHari = 1;
-                $pengali = 1;
             } else {
-                $startHari = ($hari + 1);
+                if ($startHari + 1 > 7) {
+                    $startHari = ($startHari + 1) % 7;
+                    $pengali = 1;
+                } else if ($startHari + 1 == 7) {
+                    $startHari = 0;
+                    $pengali = 1;
+                } else {
+                    $startHari += 1;
+                }
             }
             $kontrolsekali = true;
             $bulanPesanan = date('n');
