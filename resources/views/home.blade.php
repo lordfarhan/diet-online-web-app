@@ -24,11 +24,13 @@ Tambah scrolling animasi
 
     <link rel="stylesheet" href="{{asset('css/home-style.css')}}">
 
-    <style>
-    body{
-        font-weight: bold;
-    }
-    </style>
+    <link rel="shortcut icon" type="image/png" href="{{asset('img/website/bullet.png')}}" />
+
+<style>
+body{
+    overflow-x: hidden;
+}
+</style>
 </head>
 {{-- NAVBAR --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="fixednav">
@@ -39,7 +41,7 @@ Tambah scrolling animasi
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav justify-content-end">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="#showcase">Home</a>
             </li>
             <li class="nav-item">
@@ -50,6 +52,9 @@ Tambah scrolling animasi
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#tim-kami">Tim Kami</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Panduan Aplikasi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#hubungi-kami">Hubungi Kami</a>
@@ -75,7 +80,8 @@ Tambah scrolling animasi
                     <span class="highlight text-nowrap">
                         <h4>Solusi Obesitas dan Diet Zaman Now</h4>
                     </span>
-                    <h5 class="text-nowrap"><span class="tulisan">Mulai paket dietmu sekarang secara online melalui aplikasi DION</span></h5>
+                    <h6 class="text-nowrap"><span class="tulisan">Mulai paket dietmu sekarang secara online melalui
+                            aplikasi DION</span></h6>
                     <a href="#" class="btn bg-dark">
                         <table style="border:0px;color:white;">
                             <tr>
@@ -103,9 +109,10 @@ Tambah scrolling animasi
                 </div>
                 <div class="col-lg-5">
                     <h3><span class="highlight">Tentang DION</span></h3><br>
-                    <h6><span class="tulisan">DION merupakan layanan katering online yang menyediakan makanan sehat sesuai dengan kebutuhan
-                        kamu. Tanpa harus mengunjungi ahli gizi, kamu dapat memesan makanan sesuai dengan keperluan
-                        dietmu.</span></h6>
+                    <h6><span class="tulisan">DION merupakan layanan katering online yang menyediakan makanan sehat
+                            sesuai dengan kebutuhan
+                            kamu. Tanpa harus mengunjungi ahli gizi, kamu dapat memesan makanan sesuai dengan keperluan
+                            dietmu.</span></h6>
                 </div>
             </div>
         </div>
@@ -134,7 +141,7 @@ Tambah scrolling animasi
                 <div class="col-lg-4">
                     <div class="content text-center">
                         <h3><span class="tulisan">Ikuti survei singkat untuk menentukan
-                        paket yang cocok buat kamu</span></h3>
+                                paket yang cocok buat kamu</span></h3>
                         <br>
                         <a href="#" class="btn btn-warning tulisan" style="color:black;">Pilih Paket yang Sesuai</a>
                     </div>
@@ -142,23 +149,6 @@ Tambah scrolling animasi
             </div>
         </div>
     </section>
-
-    {{-- <section id="mitra">
-        <div class="container">
-            <div class="row justify-content-around">
-                <div class="col-lg-5">
-                    <img>
-                </div>
-                <div class="col-lg-5">
-                    <h3><span class="highlight">Mitra Kami</span></h3><br>
-                    <h4><span class="highlight">DIETINDO</span></h4><br>
-                    <h6>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia aliquam perspiciatis, dolorum
-                        quos pariatur cumque itaque incidunt culpa minima fuga eum, optio, minus aliquid doloribus sit
-                        autem. Voluptatibus, quaerat illo.</h6>
-                </div>
-            </div>
-        </div>
-    </section> --}}
 
     <section id="tim-kami">
         <div class="container">
@@ -210,25 +200,45 @@ Tambah scrolling animasi
                 </div>
                 <div class="col-lg-5">
                     <h4><span class="highlight">Mitra DION</span></h4><br>
-                    <p><span class="tulisan">DION merupakan wadah bagi mitra katering sehat untuk menyalurkan paket mereka. Penyedia makanan
-                        dari DION yang pertama adalah PT.DIETINDO. Sementara ini, DION hanya dapat beroperasi di Kota
-                        Malang.<br>
-                        Untuk Info lebih lanjut mengenai DIETINDO dapat mengunjungi:</span>
+                    <p><span class="tulisan">DION merupakan wadah bagi mitra katering sehat untuk menyalurkan paket
+                            mereka. Penyedia makanan
+                            dari DION yang pertama adalah PT.DIETINDO. Sementara ini, DION hanya dapat beroperasi di
+                            Kota
+                            Malang.<br>
+                            Untuk Info lebih lanjut mengenai DIETINDO dapat mengunjungi:</span>
                     </p><br>
-                <img src="{{asset('img/website/dietindo.png')}}" style="margin-right:3rem;"><a href="http://www.dietindo.com/">http://www.dietindo.com/</a>
+                    <img src="{{asset('img/website/dietindo.png')}}" style="margin-right:3rem;"><a
+                        href="http://www.dietindo.com/">http://www.dietindo.com/</a>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer">
+        {{-- <div class="footer">
             <span class="footer-logo"><i class="fab fa-facebook"></i></span>
             <span class="footer-logo"><i class="fab fa-twitter"></i></span>
             <span class="footer-logo"><i class="fab fa-youtube"></i></span>
             <span class="footer-logo"><i class="fab fa-instagram"></i></span>
             <span class="footer-text">&copy; 2019 DION - Diet Online</span>
             <span class="float-right footer-text" style="margin-right:3rem;">Solusi Diet & Obesitas Zaman Now</span>
+        </div> --}}
+        <div class="footer">
+            <div class="row justify-content-between">
+                <div class="col-lg-6 footer-left">
+                    <ul>
+                        <li><span class="footer-logo"><i class="fab fa-facebook"></i></span> dietonlinemasakini</li>
+                        <li><span class="footer-logo"><i class="fab fa-twitter"></i></span> @dietonlinemasakini</li>
+                        <li><span class="footer-logo"><i class="fab fa-youtube"></i></span> DION - Diet Online</li>
+                        <li><span class="footer-logo"><i class="fab fa-instagram"></i></span> @dietonlinemasakini</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 footer-right">
+                    <h5 id="atas">Solusi Diet & Obesitas Zaman Now</h5>
+                    <h5 id="tengah"><span id="kiri"><a href="http://dion.co.id/docs/Term%20and%20Condition%20DION.pdf" class="btn btn-info">Term & Condition</a></span> <span id="kanan"><a href="http://dion.co.id/docs/Privacy%20Policies%20DION.pdf" class="btn btn-info">Privacy Policies</a></span></h5>
+                </div>
+            </div>
+            <h6 class="text-center">&copy; 2019 DION - Diet Online</h6>
         </div>
     </footer>
 </body>
