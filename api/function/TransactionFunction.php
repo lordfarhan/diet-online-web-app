@@ -233,7 +233,7 @@ class TransactionFunction
     public function UpdateToDone($uid)
     {
         $stmt = $this->conn->prepare("UPDATE transactions SET status=? WHERE id=? ");
-        $status = 3;
+        $status = 4;
         if ($stmt != false) {
             $stmt->bind_param("ii", $status, $uid);
             if ($stmt->execute()) {
@@ -863,13 +863,6 @@ class TransactionFunction
             $temp = $amount;
             $check = false;
 
-            $tempNotes = $notes;
-            $notes = "Kebutuhan Kalori Per Hari : " . $dailyCalories . " Kal <br>";
-            $notes .= "Kebutuhan Penyakit : " . $kebutuhanPenyakit . "<br>";
-            $notes .= "Bentuk Makanan : " . $foodForm . "<br>";
-            $notes .= "Diagnosa : " . $diagnose . "<br>";
-            $notes .= $tempNotes;
-
             for ($banyak = 0; $banyak < $temp;) {
                 if ($temp != $amount) {
                     $banyak++;
@@ -956,6 +949,15 @@ class TransactionFunction
                     }
                 }
             }
+            $stmt = $this->conn->prepare("INSERT INTO `special`(`unique_id`, `sickness`, `daily_calorie`, `food_type`, `diagnose`) VALUES (?,?,?,?,?)");
+            $stmt->bind_param("sssss", $invoice, $kebutuhanPenyakit, $dailyCalories, $foodForm, $diagnose);
+            if ($stmt->execute()) {
+                $stmt->close();
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Data not inserted";
+                echo json_encode($response);
+            }
             if ($check) {
                 return $transactions;
             } else {
@@ -969,9 +971,4 @@ class TransactionFunction
     //Transaksi ada batas jam 5
     //Realtime jam 5 dihapus semua yang unpaid
     //Mail(Menyusul)
-    //Diet Khusus
-    //Tambahan Checklist Kebutuhan Penyakit Tertentu
-    // Yang berisi Diabetes Mellitus, dkk
-    //Tambahan bentuk makanan
-    //Ditambahkan meminta hasil lab
 }
