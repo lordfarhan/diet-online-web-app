@@ -107,7 +107,7 @@ class DashboardController extends Controller
                 ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                ->where('status', '=', '2')
+                ->where('status', '=', '3')
                 ->paginate(20);
             return view('layouts.admin', ['transactions' => $transactions]);
         } else {
@@ -280,7 +280,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('status', '=', '3')
+                            ->where('status', '=', '4')
                             ->where(function ($q) {
                                 $q->where('product_id', '=', 'DP001')
                                     ->orWhere('product_id', '=', 'DP002')
@@ -293,7 +293,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('status', '=', '3')
+                            ->where('status', '=', '4')
                             ->where(function ($q) {
                                 $q->where('product_id', '=', 'SP001')
                                     ->orWhere('product_id', '=', 'SP002')
@@ -306,7 +306,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('status', '=', '3')
+                            ->where('status', '=', '4')
                             ->where(function ($q) {
                                 $q->where('product_id', '=', 'SL001')
                                     ->orWhere('product_id', '=', 'SL002');
@@ -318,7 +318,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('status', '=', '3')
+                            ->where('status', '=', '4')
                             ->where('product_id', '=', 'WL001')
                             ->paginate(20);
                         // ->get();
@@ -327,7 +327,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                            ->where('status', '=', '3')
+                            ->where('status', '=', '4')
                             ->paginate(20);
                         // ->get();
                     }
@@ -358,7 +358,7 @@ class DashboardController extends Controller
             return redirect("/admin")->with('error','Tidak ada transaksi yang dipilih');
         } else {
             if ($request->has('update-btn')) {
-                Transaction::whereIn('id', $uid)->update(['status' => 3]);
+                Transaction::whereIn('id', $uid)->update(['status' => 4]);
             } else {
                 Transaction::whereIn('id', $uid)->delete();
             }
@@ -368,7 +368,7 @@ class DashboardController extends Controller
 
     public function Update($id)
     {
-        Transaction::where('id', $id)->update(['status' => 3]);
+        Transaction::where('id', $id)->update(['status' => 4]);
         return redirect("/admin");
     }
 
@@ -387,7 +387,7 @@ class DashboardController extends Controller
                 ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                ->where('status', '=', '1')
+                ->where('status', '=', '2')
                 ->get();
             $invoice = "";
             $index = 0;
@@ -409,7 +409,7 @@ class DashboardController extends Controller
 
     public function ApproveTransaction($invoice)
     {
-        Transaction::where('invoice', $invoice)->update(['status' => 2]);
+        Transaction::where('invoice', $invoice)->update(['status' => 3]);
         return redirect("/admin/pembayaran");
     }
 
@@ -417,5 +417,10 @@ class DashboardController extends Controller
     {
         Transaction::whereIn('invoice', $invoice)->delete();
         return redirect("/admin/pembayaran");
+    }
+
+    public static function GetSpecialNotes($invoice){
+        $specialNotes = DB::table('special')->select()->where('unique_id',$invoice)->get();
+        return $specialNotes;
     }
 }

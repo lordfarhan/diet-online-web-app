@@ -192,9 +192,6 @@
         <input class="form-control form-control-light w-100" type="text" placeholder="Search" aria-label="Search"
             id="search-box">
         <ul class="navbar-nav px-3">
-            {{-- <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
-          </li> --}}
         </ul>
     </nav>
 
