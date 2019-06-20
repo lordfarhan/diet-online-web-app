@@ -950,12 +950,18 @@ class TransactionFunction
                 }
             }
             $stmt = $this->conn->prepare("INSERT INTO `special`(`unique_id`, `sickness`, `daily_calorie`, `food_type`, `diagnose`) VALUES (?,?,?,?,?)");
-            $stmt->bind_param("sssss", $invoice, $kebutuhanPenyakit, $dailyCalories, $foodForm, $diagnose);
-            if ($stmt->execute()) {
-                $stmt->close();
+            if($stmt!= false){
+                $stmt->bind_param("sssss", $invoice, $kebutuhanPenyakit, $dailyCalories, $foodForm, $diagnose);
+                if ($stmt->execute()) {
+                    $stmt->close();
+                } else {
+                    $response['error'] = true;
+                    $response['message'] = "Special notes not inserted";
+                    echo json_encode($response);
+                }
             } else {
                 $response['error'] = true;
-                $response['message'] = "Data not inserted";
+                $response['message'] = "False query";
                 echo json_encode($response);
             }
             if ($check) {
