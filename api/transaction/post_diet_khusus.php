@@ -14,14 +14,11 @@ if(isset($_FILES['diagnose'])){
     $fileInfo = pathinfo($_FILES['diagnose']['name']);
     $extension = $fileInfo['extension'];
     
-    $file_url = $uploadUrl . $user_id . '.' . $extension;
-    $file_path = $uploadPath . $user_id . '.' . $extension;
     $checkFile = true;
 } else {
     $checkFile = false;
     $diagnose = "-";
 }
-
 
 $user_id = $_REQUEST['user_id'];
 $product_id = $_REQUEST['product_id'];
@@ -34,6 +31,8 @@ $foodType = $_REQUEST['foodType'];
 
 try {
     if($checkFile){
+        $file_url = $uploadUrl . $user_id . '.' . $extension;
+        $file_path = $uploadPath . $user_id . '.' . $extension;
         move_uploaded_file($_FILES['diagnose']['tmp_name'], $file_path);
         $transactions = $db->DietKhusus($user_id, $product_id, $days, $times, $notes, $activity, $sickness, $foodType, $file_url);
     } else {
