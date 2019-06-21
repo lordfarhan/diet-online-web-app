@@ -171,7 +171,7 @@ class DashboardController extends Controller
                 case 1: //All
                     if ($filter2 == 1) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -182,7 +182,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 2) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -193,7 +193,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 3) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -203,7 +203,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 4) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -212,7 +212,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -225,7 +225,7 @@ class DashboardController extends Controller
                     $dateNow = date('Y-m-d');
                     if ($filter2 == 1) { //Harian
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -239,7 +239,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 2) { //Khusus
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -253,7 +253,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 3) { //Single Lunch
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -266,7 +266,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 4) { //Mayo
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -276,7 +276,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '3')
@@ -288,7 +288,7 @@ class DashboardController extends Controller
                 case 3: //Archived
                     if ($filter2 == 1) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '4')
@@ -301,7 +301,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 2) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '4')
@@ -314,7 +314,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 3) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '4')
@@ -326,7 +326,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else if ($filter2 == 4) {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '4')
@@ -335,7 +335,7 @@ class DashboardController extends Controller
                         // ->get();
                     } else {
                         $transactions = DB::table('transactions')
-                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                             ->where('status', '=', '4')
@@ -351,7 +351,7 @@ class DashboardController extends Controller
     public function LatestTable()
     {
         $transactions = DB::table('transactions')
-            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
             ->where('status', '=', '3')
@@ -395,7 +395,7 @@ class DashboardController extends Controller
             $transaction = array();
 
             $transactions = DB::table('transactions')
-                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id' , 'users.gender')
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('status', '=', '2')
