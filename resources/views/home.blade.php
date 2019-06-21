@@ -82,7 +82,7 @@ body{
                     </span>
                     <h6 class="text-nowrap"><span class="tulisan">Mulai paket dietmu sekarang secara online melalui
                             aplikasi DION</span></h6>
-                    <a href="#" class="btn bg-dark">
+                    <a href="https://play.google.com/store/apps/details?id=id.havanah.app.dietonline" class="btn bg-dark">
                         <table style="border:0px;color:white;">
                             <tr>
                                 <th rowspan="2"><i class="fab fa-google-play" style="font-size:28px;"></i></th>
