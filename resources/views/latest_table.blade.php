@@ -39,11 +39,15 @@
                     Unpaid
                     @endif
                     @if ($transaction->status==2)
+                    Pending
+                    @endif
+                    @if ($transaction->status==3)
                     Paid
                     @endif
                     @if ($transaction->status==3)
                     Done
-                    @endif </td>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>

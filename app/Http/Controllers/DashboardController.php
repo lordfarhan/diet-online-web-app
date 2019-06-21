@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Transaction;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class DashboardController extends Controller
 {
@@ -86,7 +87,7 @@ class DashboardController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        if ($username != "Admin" || $password != "!@#DION$%^") {
+        if ($username != "admin" || $password != "dietindo1") {
             if ($username == "Admin") {
                 return redirect('/admin/login')->with('error', 'Wrong Password');
             } else if ($password == "!@#DION$%^") {
@@ -104,7 +105,7 @@ class DashboardController extends Controller
     {
         if ($request->session()->get('login')) {
             $transactions = DB::table('transactions')
-                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender')
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('status', '=', '3')
@@ -173,6 +174,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('product_id', '=', 'DP001')
                             ->orWhere('product_id', '=', 'DP002')
                             ->orWhere('product_id', '=', 'DP003')
@@ -183,6 +185,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->orWhere('product_id', '=', 'SP001')
                             ->orWhere('product_id', '=', 'SP002')
                             ->orWhere('product_id', '=', 'SP003')
@@ -193,6 +196,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('product_id', '=', 'SL001')
                             ->orWhere('product_id', '=', 'SL002')
                             ->paginate(20);
@@ -202,6 +206,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('product_id', '=', 'WL001')
                             ->paginate(20);
                         // ->get();
@@ -210,6 +215,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->paginate(20);
                         // ->get();
                     }
@@ -222,6 +228,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('date', '=', $dateNow)
                             ->where(function ($q) {
                                 $q->where('product_id', '=', 'DP001')
@@ -235,6 +242,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('date', '=', $dateNow)
                             ->where(function ($q) {
                                 $q->where('product_id', '=', 'SP001')
@@ -248,6 +256,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('date', '=', $dateNow)
                             ->where(function ($q) {
                                 $q->where('product_id', '=', 'SL001')
@@ -260,6 +269,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('date', '=', $dateNow)
                             ->where('product_id', '=', 'WL001')
                             ->paginate(20);
@@ -269,6 +279,7 @@ class DashboardController extends Controller
                             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
                             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                            ->where('status', '=', '3')
                             ->where('date', '=', $dateNow)
                             ->paginate(20);
                         // ->get();
@@ -343,7 +354,7 @@ class DashboardController extends Controller
             ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
             ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
             ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-            ->where('status', '=', '2')
+            ->where('status', '=', '3')
             ->orderBy('transactions.updated_at', 'desc')
             ->paginate(20);
         // ->all();
@@ -354,8 +365,8 @@ class DashboardController extends Controller
     public function EditAndDelete(Request $request)
     {
         $uid = $request->input('uid');
-        if($uid==""){
-            return redirect("/admin")->with('error','Tidak ada transaksi yang dipilih');
+        if ($uid == "") {
+            return redirect("/admin")->with('error', 'Tidak ada transaksi yang dipilih');
         } else {
             if ($request->has('update-btn')) {
                 Transaction::whereIn('id', $uid)->update(['status' => 4]);
@@ -415,12 +426,84 @@ class DashboardController extends Controller
 
     public function DisapproveTransaction($invoice)
     {
-        Transaction::whereIn('invoice', $invoice)->delete();
+        Transaction::where('invoice', $invoice)->delete();
         return redirect("/admin/pembayaran");
     }
 
-    public static function GetSpecialNotes($invoice){
-        $specialNotes = DB::table('special')->select()->where('unique_id',$invoice)->get();
+    public static function GetSpecialNotes($invoice)
+    {
+        $specialNotes = DB::table('special')->select()->where('unique_id', $invoice)->get();
         return $specialNotes;
+    }
+
+    public function PrintAll(Request $request)
+    {
+        if ($request->session()->get('login')) {
+            $transactions = DB::table('transactions')
+                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+                ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                ->where('status', '=', '3')
+                ->orderBy('transactions.updated_at', 'desc')
+                ->paginate(20);
+
+            $pdf = PDF::loadview('cetak_all', ['transactions' => $transactions]);
+            $pdf->setPaper('A4', 'landscape');
+            return $pdf->stream();
+        } else {
+            return redirect('/admin/login')->with('error', 'You must Login First');
+        }
+    }
+
+    public function ShowCetak()
+    {
+        $transactions = DB::table('transactions')
+            ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id')
+            ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+            ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+            ->where('status', '=', '3')
+            ->orderBy('transactions.updated_at', 'desc')
+            ->paginate(20);
+
+        return view('cetak_all')->with('transactions', $transactions);
+    }
+
+    public function PrintLabel($id, Request $request)
+    {
+        if ($request->session()->get('login')) {
+            $transactions = DB::table('transactions')
+                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender')
+                ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                ->where('transactions.id', '=', $id)
+                ->get();
+
+            $pdf = PDF::loadview('cetak_label', ['transactions' => $transactions]);
+            $pdf->setPaper('A4', 'landscape');
+            return $pdf->stream();
+        } else {
+            return redirect('/admin/login')->with('error', 'You must Login First');
+        }
+    }
+
+    public function PrintLabelToday(Request $request)
+    {
+        if ($request->session()->get('login')) {
+            date_default_timezone_set('UTC');
+            $dateNow = date('Y-m-d');
+
+            $transactions = DB::table('transactions')
+                ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender')
+                ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+                ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+                ->where('date', '=', $dateNow)
+                ->paginate(20);
+
+            $pdf = PDF::loadview('cetak_label_all', ['transactions' => $transactions]);
+            $pdf->setPaper('A4', 'landscape');
+            return $pdf->stream();
+        } else {
+            return redirect('/admin/login')->with('error', 'You must Login First');
+        }
     }
 }

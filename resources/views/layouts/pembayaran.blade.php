@@ -121,6 +121,103 @@
         padding: 20px;
     }
 
+    /* Modal Image */
+    .img {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .img:hover {
+        opacity: 0.7;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.9);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content (Image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    /* Caption of Modal Image (Image Text) - Same Width as the Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation - Zoom in the Modal */
+    .modal-content,
+    #caption {
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @keyframes zoom {
+        from {
+            transform: scale(0)
+        }
+
+        to {
+            transform: scale(1)
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* 100% Image Width on Smaller Screens */
+    @media only screen and (max-width: 700px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+
 </style>
 
 <script>
@@ -202,11 +299,11 @@
     </section>
 
     <div id="mySidebar" class="sidebar">
-            <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
-            <a href="/admin">Home</a>
-            <a href="/admin/latest">Latest</a>
-            <a href="/admin/pembayaran">Pembayaran</a>
-        </div>
+        <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
+        <a href="/admin">Home</a>
+        <a href="/admin/latest">Latest</a>
+        <a href="/admin/pembayaran">Pembayaran</a>
+    </div>
 
     <div id="main">
         <button class="openbtn" onclick="clickNav()"><i class="fas fa-angle-right"></i></button>
@@ -274,12 +371,23 @@
                             <td>{{$t->phone}}</td>
                             <td>{{$t->address}}</td>
                             <td>{{$t->invoice}}</td>
-                            <td><img src="{{$t->proof_of_payment}}" class="img-thumbnail"></td>
+                            <td><img src="{{$t->proof_of_payment}}" class="img-thumbnail img"
+                                    style="width:100%;max-width:300px" id="img{{$t->id}}"></td>
                             <td><a href="/admin/pembayaran/approve/{{$t->invoice}}"
                                     class="btn btn-primary">Approve</a><br><br>
                                 <a href="/admin/pembayaran/disapprove/{{$t->invoice}}"
                                     class="btn btn-danger">Disapprove</a></td>
                         </tr>
+                        {{-- <input type="hidden" id="id" value="modal{{$t->id}}">
+                        <input type="hidden" id="img" value="img{{$t->id}}">
+                        <input type="hidden" id="modalimg" value="modalimg{{$t->id}}">
+                        <!-- The Modal -->
+                        <div id="modal{{$t->id}}" class="modal">
+                            <!-- The Close Button -->
+                            <span class="close">&times;</span>
+                            <!-- Modal Content (The Image) -->
+                            <img class="modal-content" id="modalimg{{$t->id}}">
+                        </div> --}}
                         @endforeach
                         @else
                         <h3>No Data</h3>

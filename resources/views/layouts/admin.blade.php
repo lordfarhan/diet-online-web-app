@@ -304,6 +304,17 @@ Note
 
 </script>
 
+<script>
+        function AlertDelete() {
+            if (!confirm("Are you sure ?")) {
+                var link = document.getElementById("delete");
+
+                link.setAttribute('href', "/admin");
+                return false;
+            }
+        }
+
+</script>
 <body>
     {{-- NAVBAR --}}
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -367,189 +378,192 @@ Note
 
         <section id="main">
 
-            <form action="/admin/action" method="GET">
-                <div class="container">
-                    <h1>Transactions</h1><br>
-                    <div class="float-left">
-                        <form action="/admin/filter" method="GET">
-                            <select name="filter1">
-                                <option value="0">Choose Filter . . . .</option>
-                                <option value="1">All</option>
-                                <option value="2">Today Batch</option>
-                                <option value="3">Archived</option>
-                            </select>
-                            <select name="filter2">
-                                <option value="0">Choose Filter . . . .</option>
-                                <option value="1">Diet Harian</option>
-                                <option value="2">Diet Khusus</option>
-                                <option value="3">Single Lunch Box</option>
-                                <option value="4">Diet Mayo</option>
-                            </select>
-                            <input type="submit" name="filter" value="Filter">
-                        </form>
-                    </div>
+            <div class="container">
+                <h1>Transactions</h1><br>
+                <a href="/admin/cetak-all" class="btn btn-primary" style="margin-left:10%;">Cetak Semua</a>
+                <a href="/admin/cetak-today-batch" class="btn btn-primary">Cetak Hari Ini</a>
+                <div class="float-left">
+                    <form action="/admin/filter" method="GET">
+                        <select name="filter1">
+                            <option value="0">Choose Filter . . . .</option>
+                            <option value="1">All</option>
+                            <option value="2">Today Batch</option>
+                            <option value="3">Archived</option>
+                        </select>
+                        <select name="filter2">
+                            <option value="0">Choose Filter . . . .</option>
+                            <option value="1">Diet Harian</option>
+                            <option value="2">Diet Khusus</option>
+                            <option value="3">Single Lunch Box</option>
+                            <option value="4">Diet Mayo</option>
+                        </select>
+                        <input type="submit" name="filter" value="Filter">
+                    </form>
+                </div>
+                <form action="/admin/action" method="GET">
                     <div class="kanan">
                         <input type="submit" class="btn btn-primary" value="Update" name="update-btn">
                         <input type="submit" class="btn btn-danger" value="Delete" name="delete-btn">
                     </div>
-                </div>
-                <div></div>
-                <div class="container float-none">
-                    @if (count($transactions)>0)
-                    
-                    <div id="table">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2" scope="col"></th>
-                                    <th rowspan="2" scope="col">ID</th>
-                                    <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
-                                    <th colspan="2" scope="col">Product</th>
-                                    <th colspan="3" scope="col">User</th>
-                                    <th rowspan="2" scope="col">Invoice</th>
-                                    <th rowspan="2" scope="col">Notes</th>
-                                    <th rowspan="2" scope="col">Waktu Pengiriman</th>
-                                    <th rowspan="2" scope="col">Status</th>
-                                    <th colspan="3" rowspan="2" scope="col"></th>
-                                </tr>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Product Price</th>
-                                    <th>User Name</th>
-                                    <th>User Phone</th>
-                                    <th>User Address</th>
-                                <tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td><input type="checkbox" name="uid[]" value="{{$transaction->id}}"></td>
-                                    <td>{{$transaction->id}}</td>
-                                    <td>{{$transaction->date}}</td>
-                                    <td>{{$transaction->product_name}}</td>
-                                    <td>{{$transaction->price}}</td>
-                                    <td>{{$transaction->name}}</td>
-                                    <td>{{$transaction->phone}}</td>
-                                    <td>{{$transaction->address}}</td>
-                                    <td>{{$transaction->invoice}}</td>
-                                    <td>{{$transaction->notes}}</td>
-                                    <td>
-                                        @if ($transaction->times==1)
-                                        Pagi
-                                        @endif
-                                        @if ($transaction->times==2)
-                                        Siang
-                                        @endif
-                                        @if ($transaction->times==3)
-                                        Sore
-                                        @endif
-                                    </td>
-                                    <td>@if ($transaction->status==1)
-                                        Unpaid
-                                        @endif
-                                        @if ($transaction->status==2)
-                                        Paid
-                                        @endif
-                                        @if ($transaction->status==3)
-                                        Done
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="/admin/edit/{{$transaction->id}}" class="btn btn-primary">Update</a>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/delete/{{$transaction->id}}" class="btn btn-danger"
-                                            onclick="AlertDelete()" id="delete">Delete</a>
-                                        <p id="demo"></p>
-                                    </td>
-                                    <script>
-                                        function AlertDelete() {
-                                            if (!confirm("Are you sure ?")) {
-                                                var link = document.getElementById("delete");
+            </div>
+            <div></div>
+            <div class="container float-none">
+                @if (count($transactions)>0)
 
-                                                link.setAttribute('href', "/admin");
-                                                return false;
-                                            }
-                                        }
+                <div id="table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" scope="col"></th>
+                                <th rowspan="2" scope="col">ID</th>
+                                <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
+                                <th colspan="2" scope="col">Product</th>
+                                <th colspan="4" scope="col">User</th>
+                                <th rowspan="2" scope="col">Invoice</th>
+                                <th rowspan="2" scope="col">Notes</th>
+                                <th rowspan="2" scope="col">Waktu Pengiriman</th>
+                                <th rowspan="2" scope="col">Status</th>
+                                <th colspan="4" rowspan="2" scope="col"></th>
+                            </tr>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Product Price</th>
+                                <th>Nama Lengkap</th>
+                                <th>No HP</th>
+                                <th>Alamat</th>
+                                <th>Jenis Kelamin</th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($transactions as $transaction)
+                            <tr>
+                                <td><input type="checkbox" name="uid[]" value="{{$transaction->id}}"></td>
+                                <td>{{$transaction->id}}</td>
+                                <td>{{$transaction->date}}</td>
+                                <td>{{$transaction->product_name}}</td>
+                                <td>{{$transaction->price}}</td>
+                                <td>{{$transaction->name}}</td>
+                                <td>{{$transaction->phone}}</td>
+                                <td>{{$transaction->address}}</td>
+                                <td>
+                                    @if ($transaction->gender==0)
+                                        Laki Laki
+                                    @else
+                                        Perempuan
+                                    @endif
+                                </td>
+                                <td>{{$transaction->invoice}}</td>
+                                <td>{{$transaction->notes}}</td>
+                                <td>
+                                    @if ($transaction->times==1)
+                                    Pagi
+                                    @endif
+                                    @if ($transaction->times==2)
+                                    Siang
+                                    @endif
+                                    @if ($transaction->times==3)
+                                    Sore
+                                    @endif
+                                </td>
+                                <td>@if ($transaction->status==1)
+                                    Unpaid
+                                    @endif
+                                    @if ($transaction->status==2)
+                                    Pending
+                                    @endif
+                                    @if ($transaction->status==3)
+                                    Paid
+                                    @endif
+                                    @if ($transaction->status==3)
+                                    Done
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="/admin/edit/{{$transaction->id}}" class="btn btn-primary">Update</a>
+                                </td>
+                                <td>
+                                    <a href="/admin/delete/{{$transaction->id}}" class="btn btn-danger"
+                                        onclick="AlertDelete()" id="delete">Delete</a>
+                                </td>
+                                <td>
+                                    <a href="/admin/cetak/{{$transaction->id}}" class="btn btn-info">Cetak</a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#modal{{$transaction->id}}">Detail</button>
+                                </td>
+                            </tr>
 
-                                    </script>
-                                    <td>
-                                        <button type="button" class="btn btn-info" data-toggle="modal"
-                                            data-target="#modal{{$transaction->id}}">Detail</button>
-                                    </td>
-                                </tr>
-
-                                <div class="modal fade" id="modal{{$transaction->id}}" tabindex="-1" role="dialog"
-                                    aria-labelledby="label" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="label">Detail</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Transaction : <br>
-                                                Invoice : {{$transaction->invoice}}<br>
-                                                UID : {{$transaction->id}}<br>
-                                                Receipt : 
-                                                @if ($transaction->proof_of_payment==""||$transaction->proof_of_payment==NULL)
-                                                No Picture    
-                                                @else
-                                                <br>
-                                                <img id="proof"
-                                                    src="{{$transaction->proof_of_payment}}"
-                                                    style="max-height:300px;max-width:300px" class="img-fluid"><br>
-                                                @endif 
-                                                Date : {{$transaction->date}}<br>
-                                                Notes : {{$transaction->notes}}<br>
-                                                <br>
-                                                User : <br>
-                                                Name : {{$transaction->name}}<br>
-                                                Address : {{$transaction->address}}<br>
-                                                Phone Number : {{$transaction->phone}}<br>
-                                                Prohibition : {{$transaction->prohibition}}<br>
-                                                <br>
-                                                Product : <br>
-                                                Product Name : {{$transaction->product_name}}<br>
-                                                Product Price : {{$transaction->price}}<br>
-                                                Unique ID : {{$transaction->product_id}}<br>
-                                                <br>
-                                                @if($transaction->product_id=="SP001"||$transaction->product_id=="SP002"||$transaction->product_id=="SP003")
-                                                <?php 
+                            <div class="modal fade" id="modal{{$transaction->id}}" tabindex="-1" role="dialog"
+                                aria-labelledby="label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="label">Detail</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Transaction : <br>
+                                            Invoice : {{$transaction->invoice}}<br>
+                                            UID : {{$transaction->id}}<br>
+                                            Receipt :
+                                            @if($transaction->proof_of_payment==""||$transaction->proof_of_payment==NULL)
+                                            No Picture
+                                            @else
+                                            <br>
+                                            <img id="proof" src="{{$transaction->proof_of_payment}}"
+                                                style="max-height:300px;max-width:300px" class="img-fluid"><br>
+                                            @endif
+                                            Date : {{$transaction->date}}<br>
+                                            Notes : {{$transaction->notes}}<br>
+                                            <br>
+                                            User : <br>
+                                            Name : {{$transaction->name}}<br>
+                                            Address : {{$transaction->address}}<br>
+                                            Phone Number : {{$transaction->phone}}<br>
+                                            Prohibition : {{$transaction->prohibition}}<br>
+                                            <br>
+                                            Product : <br>
+                                            Product Name : {{$transaction->product_name}}<br>
+                                            Product Price : {{$transaction->price}}<br>
+                                            Unique ID : {{$transaction->product_id}}<br>
+                                            <br>
+                                            @if($transaction->product_id=="SP001"||$transaction->product_id=="SP002"||$transaction->product_id=="SP003")
+                                            <?php 
                                                 $results = DashboardController::GetSpecialNotes($transaction->invoice);
                                                 ?>
-                                                @foreach ($results as $result)                                                
-                                                Special Notes : <br>
-                                                Daily Calories : {{$result->daily_calorie}} <br>
-                                                Sickness : {{$result->sickness}}<br>
-                                                Food Type : {{$result->food_type}}<br>
-                                                Diagnose : <img src="{{$result->diagnose}}" class="img-thumbnail img-fluid" style="max-height:300px;max-width:300px"><br>
-                                                @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                            </div>
+                                            @foreach ($results as $result)
+                                            Special Notes : <br>
+                                            Daily Calories : {{$result->daily_calorie}} <br>
+                                            Sickness : {{$result->sickness}}<br>
+                                            Food Type : {{$result->food_type}}<br>
+                                            Diagnose : <img src="{{$result->diagnose}}" class="img-thumbnail img-fluid"
+                                                style="max-height:300px;max-width:300px"><br>
+                                            @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
-                                    {{-- Modal for Image --}}
-                                    {{-- <div id="myModal" class="modal-img">
+                                </div>
+                                {{-- Modal for Image --}}
+                                {{-- <div id="myModal" class="modal-img">
                                         
                                         <span class="close">&times;</span>
                                         
                                         <img class="modal-content" id="img01">
                                     </div> --}}
-                                </div>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="pagination">{{ $transactions->links() }}</div>
-                    </div>
+                            </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="pagination">{{ $transactions->links() }}</div>
                 </div>
+            </div>
             </form>
             @else
             <h1>No Data</h1>
