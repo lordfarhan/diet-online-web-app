@@ -696,58 +696,64 @@ class TransactionFunction
             // 14 : Rendah Serat
             // 15 : Kanker
             $kebutuhanPenyakit = "";
-            switch ($sickness) {
-                case 0:
-                    $kebutuhanPenyakit = "Diabetes Mellitus";
-                    break;
-                case 1:
-                    $kebutuhanPenyakit = "Hipertensi";
-                    break;
-                case 2:
-                    $kebutuhanPenyakit = "Asam Urat";
-                    break;
-                case 3:
-                    $kebutuhanPenyakit = "Stroke";
-                    break;
-                case 4:
-                    $kebutuhanPenyakit = "Jantung";
-                    break;
-                case 5:
-                    $kebutuhanPenyakit = "Hati";
-                    break;
-                case 6:
-                    $kebutuhanPenyakit = "Kolesterol";
-                    break;
-                case 7:
-                    $kebutuhanPenyakit = "Cuci Darah";
-                    break;
-                case 8:
-                    $kebutuhanPenyakit = "Tinggi Energi";
-                    break;
-                case 9:
-                    $kebutuhanPenyakit = "Tinggi Protein";
-                    break;
-                case 10:
-                    $kebutuhanPenyakit = "Tinggi Serat";
-                    break;
-                case 11:
-                    $kebutuhanPenyakit = "Ginjal";
-                    break;
-                case 12:
-                    $kebutuhanPenyakit = "Rendah Energi";
-                    break;
-                case 13:
-                    $kebutuhanPenyakit = "Rendah Protein";
-                    break;
-                case 14:
-                    $kebutuhanPenyakit = "Rendah Serat";
-                    break;
-                case 15:
-                    $kebutuhanPenyakit = "Kanker";
-                    break;
-                default:
-                    $kebutuhanPenyakit = "-";
-                    break;
+            if ($sickness = "") {
+                $kebutuhanPenyakit = "-";
+            } else {
+                $lenght = strlen($sickness);
+                for ($i = 0; $i < $lenght; $i++) {
+                    // $sick = explode("-",$sickness);
+                    $sick = substr($sickness,$i,1);
+                    switch ($sick) {
+                        case 0:
+                            $kebutuhanPenyakit .= "Diabetes Mellitus, ";
+                            break;
+                        case 1:
+                            $kebutuhanPenyakit .= "Hipertensi, ";
+                            break;
+                        case 2:
+                            $kebutuhanPenyakit .= "Asam Urat, ";
+                            break;
+                        case 3:
+                            $kebutuhanPenyakit .= "Stroke, ";
+                            break;
+                        case 4:
+                            $kebutuhanPenyakit .= "Jantung, ";
+                            break;
+                        case 5:
+                            $kebutuhanPenyakit .= "Hati, ";
+                            break;
+                        case 6:
+                            $kebutuhanPenyakit .= "Kolesterol, ";
+                            break;
+                        case 7:
+                            $kebutuhanPenyakit .= "Cuci Darah, ";
+                            break;
+                        case 8:
+                            $kebutuhanPenyakit .= "Tinggi Energi, ";
+                            break;
+                        case 9:
+                            $kebutuhanPenyakit .= "Tinggi Protein, ";
+                            break;
+                        case 10:
+                            $kebutuhanPenyakit .= "Tinggi Serat, ";
+                            break;
+                        case 11:
+                            $kebutuhanPenyakit .= "Ginjal, ";
+                            break;
+                        case 12:
+                            $kebutuhanPenyakit .= "Rendah Energi, ";
+                            break;
+                        case 13:
+                            $kebutuhanPenyakit .= "Rendah Protein, ";
+                            break;
+                        case 14:
+                            $kebutuhanPenyakit .= "Rendah Serat, ";
+                            break;
+                        case 15:
+                            $kebutuhanPenyakit .= "Kanker, ";
+                            break;
+                    }
+                }
             }
 
             //Bentuk Makanan
@@ -950,7 +956,7 @@ class TransactionFunction
                 }
             }
             $stmt = $this->conn->prepare("INSERT INTO `special`(`unique_id`, `sickness`, `daily_calorie`, `food_type`, `diagnose`) VALUES (?,?,?,?,?)");
-            if($stmt!= false){
+            if ($stmt != false) {
                 $stmt->bind_param("sssss", $invoice, $kebutuhanPenyakit, $dailyCalories, $foodForm, $diagnose);
                 if ($stmt->execute()) {
                     $stmt->close();
