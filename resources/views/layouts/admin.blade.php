@@ -380,8 +380,7 @@ Note
 
             <div class="container">
                 <h1>Transactions</h1><br>
-                <a href="/admin/cetak-all" class="btn btn-primary" style="margin-left:10%;">Cetak Semua</a>
-                <a href="/admin/cetak-today-batch" class="btn btn-primary">Cetak Hari Ini</a>
+                <a href="/admin/cetak-today-batch" class="btn btn-primary" style="margin-left:15%;">Cetak Label Hari Ini</a>
                 <div class="float-left">
                     <form action="/admin/filter" method="GET">
                         <select name="filter1">
@@ -397,7 +396,8 @@ Note
                             <option value="3">Single Lunch Box</option>
                             <option value="4">Diet Mayo</option>
                         </select>
-                        <input type="submit" name="filter" value="Filter">
+                        <input type="submit" class="btn btn-secondary" name="filter" value="Filter"><br>
+                        <input type="submit" class="btn btn-primary" name="cetak" value="Cetak Semua">
                     </form>
                 </div>
                 <form action="/admin/action" method="GET">
@@ -474,7 +474,7 @@ Note
                                     @if ($transaction->status==3)
                                     Paid
                                     @endif
-                                    @if ($transaction->status==3)
+                                    @if ($transaction->status==4)
                                     Done
                                     @endif
                                 </td>

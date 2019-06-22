@@ -121,101 +121,8 @@
         padding: 20px;
     }
 
-    /* Modal Image */
-    .img {
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .img:hover {
-        opacity: 0.7;
-    }
-
-    /* The Modal (background) */
-    .modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
-        z-index: 1;
-        /* Sit on top */
-        padding-top: 100px;
-        /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%;
-        /* Full width */
-        height: 100%;
-        /* Full height */
-        overflow: auto;
-        /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0);
-        /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.9);
-        /* Black w/ opacity */
-    }
-
-    /* Modal Content (Image) */
-    .modal-content {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-    }
-
-    /* Caption of Modal Image (Image Text) - Same Width as the Image */
-    #caption {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 700px;
-        text-align: center;
-        color: #ccc;
-        padding: 10px 0;
-        height: 150px;
-    }
-
-    /* Add Animation - Zoom in the Modal */
-    .modal-content,
-    #caption {
-        animation-name: zoom;
-        animation-duration: 0.6s;
-    }
-
-    @keyframes zoom {
-        from {
-            transform: scale(0)
-        }
-
-        to {
-            transform: scale(1)
-        }
-    }
-
-    /* The Close Button */
-    .close {
-        position: absolute;
-        top: 15px;
-        right: 35px;
-        color: #f1f1f1;
-        font-size: 40px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #bbb;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    /* 100% Image Width on Smaller Screens */
-    @media only screen and (max-width: 700px) {
-        .modal-content {
-            width: 100%;
-        }
+    .modal-backdrop {
+        z-index: -1;
     }
 
 </style>
@@ -261,23 +168,6 @@
             document.getElementById("main").style.marginLeft = "250px";
             sidebarOpen = true;
         }
-    }
-
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementById("myImg");
-    var modalImg = document.getElementById("img01");
-    img.onclick = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-    }
-
-    var span = document.getElementsByClassName("close")[0];
-
-    span.onclick = function () {
-        modal.style.display = "none";
     }
 
 </script>
@@ -344,7 +234,6 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th rowspan="2" scope="col"></th>
                             <th rowspan="2" scope="col">ID</th>
                             <th colspan="2" scope="col">Product</th>
                             <th colspan="3" scope="col">User</th>
@@ -355,9 +244,9 @@
                         <tr>
                             <th>Product Name</th>
                             <th>Product Price</th>
-                            <th>User Name</th>
-                            <th>User Phone</th>
-                            <th>User Address</th>
+                            <th>Nama Lengkap</th>
+                            <th>No HP</th>
+                            <th>Alamat</th>
                         <tr>
                     </thead>
                     <tbody>
@@ -378,17 +267,28 @@
                                 <a href="/admin/pembayaran/disapprove/{{$t->invoice}}"
                                     class="btn btn-danger">Disapprove</a></td>
                         </tr>
-                        {{-- <input type="hidden" id="id" value="modal{{$t->id}}">
-                        <input type="hidden" id="img" value="img{{$t->id}}">
-                        <input type="hidden" id="modalimg" value="modalimg{{$t->id}}">
-                        <!-- The Modal -->
-                        <div id="modal{{$t->id}}" class="modal">
-                            <!-- The Close Button -->
-                            <span class="close">&times;</span>
-                            <!-- Modal Content (The Image) -->
-                            <img class="modal-content" id="modalimg{{$t->id}}">
-                        </div> --}}
                         @endforeach
+
+                        {{-- <div class="modal fade" id="modals" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Gambar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="" id="modal-img" width="100%" height="100%" style="z-index:1;">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+
                         @else
                         <h3>No Data</h3>
                         @endif
@@ -397,6 +297,29 @@
             </div>
         </section>
     </div>
+    <div class="modal fade" role="dialog" id="modals">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body">
+                    <img src="" id="modal-img" width="100%" height="100%" style="z-index:1;">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    $(window).on('load', function () {
+        $('.img').on('click', function () {
+            var src = $(this).attr("src");
+            $('#modal-img').attr('src', src);
+            $('#modals').appendTo("body").modal('show');
+        })
+    })
+
+</script>
 
 </html>

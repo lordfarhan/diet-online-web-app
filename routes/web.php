@@ -15,6 +15,14 @@ use App\Http\Controllers\APIController;
 
 Route::get('/admin', 'DashboardController@ViewAdmin');
 
+Route::get('/admin/cetak-all','DashboardController@PrintAll');
+
+Route::get('/admin/cetak-today-batch','DashboardController@PrintLabelToday');
+
+Route::get('/admin/cetak/{id}','DashboardController@PrintLabel');
+
+Route::get('/admin/show-cetak-all','DashboardController@ShowCetak');
+
 Route::get('/admin/pembayaran','DashboardController@ViewPembayaran');
 
 Route::get('/admin/latest',function(){
