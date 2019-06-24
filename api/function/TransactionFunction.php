@@ -696,14 +696,13 @@ class TransactionFunction
             // 14 : Rendah Serat
             // 15 : Kanker
             $kebutuhanPenyakit = "";
-            if ($sickness = "") {
+            if ($sickness == "") {
                 $kebutuhanPenyakit = "-";
             } else {
-                $lenght = strlen($sickness);
+                $sick = explode("-", $sickness);
+                $lenght = count($sick);
                 for ($i = 0; $i < $lenght; $i++) {
-                    // $sick = explode("-",$sickness);
-                    $sick = substr($sickness,$i,1);
-                    switch ($sick) {
+                    switch ((int)$sick[$i]) {
                         case 0:
                             $kebutuhanPenyakit .= "Diabetes Mellitus, ";
                             break;
@@ -755,7 +754,6 @@ class TransactionFunction
                     }
                 }
             }
-
             //Bentuk Makanan
             //0 : Makanan Biasa, 1 : Makanan Lunak, 2 : Makanan Cincang,
             //3 : Makanan Cair, 4 : Makanan Sonde
@@ -978,9 +976,39 @@ class TransactionFunction
         }
     }
 
+    public function CancelUnpaidTransaction($invoice)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM `transactions` WHERE `invoice` = ?");
+        if ($stmt != false) {
+            $stmt->bind_param("s", $invoice);
+            if ($stmt->execute()) {
+                $stmt->close();
+                $stmt = $this->conn->prepare("SELECT * FROM `transactions` WHERE `invoice`=?");
+                if ($stmt != false) {
+                    $stmt->bind_param("s", $invoice);
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result()->fetch_assoc();
+                        if ($result == NULL || $result == "") {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
 
 
-    //Transaksi ada batas jam 5
-    //Realtime jam 5 dihapus semua yang unpaid
-    //Mail(Menyusul)
+
+
+            //Transaksi ada batas jam 5
+            //Realtime jam 5 dihapus semua yang unpaid
+            //Mail(Menyusul)
+        }
+    }
 }
