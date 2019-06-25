@@ -8,17 +8,18 @@
 */
 
 /* For Handphone */
-/* @media (max-width: 575.98px){
+@media (max-width: 575.98px){
     
-} */
+}
 
 /* For Tablet */
-/* @media (max-width: 991.98px){
+@media (max-width: 991.98px){
     
-} */
+}
 
 body {
     font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     background: #f5f5f5;
     position: relative;
     overflow-x:none;
@@ -26,6 +27,7 @@ body {
 
 .highlight {
     font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
     color: #79E000;
 }
 
@@ -79,6 +81,10 @@ body {
     min-height: 305px;
     padding-top: 6.5rem;
     padding-bottom: 5rem;
+}
+
+.desc-img{
+    /* max-width: ; */
 }
 
 #tentukan-paket {

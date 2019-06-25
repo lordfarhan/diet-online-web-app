@@ -105,7 +105,8 @@ body{
         <div class="container">
             <div class="row justify-content-around">
                 <div class="col-lg-5">
-                    <iframe src="https://youtu.be/qir67U2_UsA?list=PLK2o01EsuMU9RsAgCO07RBYOHZzdo2rtY"></iframe>
+                    <img src="{{asset('img/website/desc.png')}}" class="desc-img img-fluid">
+                    {{-- <iframe src="https://youtu.be/qir67U2_UsA?list=PLK2o01EsuMU9RsAgCO07RBYOHZzdo2rtY"></iframe> --}}
                 </div>
                 <div class="col-lg-5">
                     <h3><span class="highlight">Tentang DION</span></h3><br>
