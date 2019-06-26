@@ -173,11 +173,13 @@ class TransactionFunction
                                         $response['error'] = true;
                                         $response['message'] = "Data not inserted";
                                         echo json_encode($response);
+                                        return false;
                                     }
                                 } else {
                                     $response['error'] = true;
                                     $response['message'] = "Post Error";
                                     echo json_encode($response);
+                                    return false;
                                 }
                             }
                         }
@@ -925,7 +927,7 @@ class TransactionFunction
                                 $status = 1;
                                 $proof = " ";
                                 if ($stmt != FALSE) {
-                                    $stmt->bind_param("sssssssssss", $invoice, $product_id, $user_id,$address, $datePesanan, $address, $notes, $j, $proof, $status, $datenow, $datenow);
+                                    $stmt->bind_param("sssssssssss", $invoice, $product_id, $user_id, $address, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
                                     if ($stmt->execute()) {
                                         $stmt->close();
@@ -939,11 +941,13 @@ class TransactionFunction
                                         $response['error'] = true;
                                         $response['message'] = "Data not inserted";
                                         echo json_encode($response);
+                                        return false;
                                     }
                                 } else {
                                     $response['error'] = true;
                                     $response['message'] = "Post Error";
                                     echo json_encode($response);
+                                    return false;
                                 }
                             }
                         }
@@ -959,6 +963,7 @@ class TransactionFunction
                     $response['error'] = true;
                     $response['message'] = "Special notes not inserted";
                     echo json_encode($response);
+                    return false;
                 }
             } else {
                 $response['error'] = true;
