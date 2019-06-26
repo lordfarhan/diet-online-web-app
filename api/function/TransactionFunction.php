@@ -155,9 +155,9 @@ class TransactionFunction
                                 $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
                                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                                 $datenow = date("Y-m-d H:i:s");
-                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, 'address',`date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+                                $stmt = $this->conn->prepare("INSERT INTO transactions(`invoice`, `product_id`, `user_id`, `address`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
-                                $proof = " ";
+                                $proof = "-";
                                 if ($stmt != FALSE) {
                                     $stmt->bind_param("sssssssssss", $invoice, $product_id, $user_id, $address, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
@@ -552,7 +552,7 @@ class TransactionFunction
                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                 $datenow = date("Y-m-d H:i:s");
                 for ($j = 2; $j < 4; $j++) {
-                    $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, 'address',`date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+                    $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `address` ,`date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                     $status = 1;
                     $proof = " ";
                     $product_id = "WL001";
@@ -921,7 +921,7 @@ class TransactionFunction
                                 $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
                                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                                 $datenow = date("Y-m-d H:i:s");
-                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`,'address', `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
+                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `address`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
                                 $proof = " ";
                                 if ($stmt != FALSE) {
