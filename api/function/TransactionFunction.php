@@ -12,7 +12,7 @@ class TransactionFunction
         $this->conn = $this->db->connect();
     }
 
-    public function InsertTransaction($user_id, $product_id, $days, $times, $amount, $notes)
+    public function InsertTransaction($user_id, $product_id, $address, $days, $times, $amount, $notes)
     {
         if ($this->CheckUserUnpaid($user_id)) {
             $response['error'] = true;
@@ -158,11 +158,11 @@ class TransactionFunction
                                 $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
                                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                                 $datenow = date("Y-m-d H:i:s");
-                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, 'address', `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
                                 $proof = " ";
                                 if ($stmt != FALSE) {
-                                    $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
+                                    $stmt->bind_param("sssssssssss", $invoice, $product_id, $user_id, $datePesanan, $address, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
                                     if ($stmt->execute()) {
                                         $stmt->close();
@@ -513,7 +513,7 @@ class TransactionFunction
         return $dailyCalories;
     }
 
-    public function DietMayo($user_id, $notes)
+    public function DietMayo($user_id, $notes, $address)
     {
         if ($this->CheckUserUnpaid($user_id)) {
             $response['error'] = true;
@@ -555,7 +555,7 @@ class TransactionFunction
                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                 $datenow = date("Y-m-d H:i:s");
                 for ($j = 2; $j < 4; $j++) {
-                    $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                    $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`,'address', `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                     $status = 1;
                     $proof = " ";
                     $product_id = "WL001";
@@ -563,7 +563,7 @@ class TransactionFunction
                         $notes = "-";
                     }
                     if ($stmt != false) {
-                        $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
+                        $stmt->bind_param("sssssssssss", $invoice, $product_id, $user_id, $datePesanan,$address, $notes, $j, $proof, $status, $datenow, $datenow);
                         $stmt->execute();
                         $stmt->close();
                         $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE invoice=? AND date=?");
@@ -607,7 +607,7 @@ class TransactionFunction
         }
     }
 
-    public function DietKhusus($user_id, $product_id, $days, $times, $notes, $activity, $sickness, $foodTypes, $diagnose)
+    public function DietKhusus($user_id, $product_id, $days,$address, $times, $notes, $activity, $sickness, $foodTypes, $diagnose)
     {
         if ($this->CheckUserUnpaid($user_id)) {
             $response['error'] = true;
@@ -924,11 +924,11 @@ class TransactionFunction
                                 $dateInput = $tanggalPesanan . "-" . $bulanPesanan . "-" . $tahunPesanan;
                                 $datePesanan = DateTime::createFromFormat('d-m-Y', $dateInput)->format('Y-m-d');
                                 $datenow = date("Y-m-d H:i:s");
-                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`, `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                                $stmt = $this->conn->prepare("INSERT INTO `transactions`(`invoice`, `product_id`, `user_id`, `date`,'address', `notes`, `times`, `proof_of_payment`, `status`, `created_at`, `updated_at`) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
                                 $status = 1;
                                 $proof = " ";
                                 if ($stmt != FALSE) {
-                                    $stmt->bind_param("ssssssssss", $invoice, $product_id, $user_id, $datePesanan, $notes, $j, $proof, $status, $datenow, $datenow);
+                                    $stmt->bind_param("sssssssssss", $invoice, $product_id, $user_id, $datePesanan,$address, $notes, $j, $proof, $status, $datenow, $datenow);
                                     $amount--;
                                     if ($stmt->execute()) {
                                         $stmt->close();

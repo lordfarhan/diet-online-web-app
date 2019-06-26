@@ -6,7 +6,8 @@ $db = new TransactionFunction();
 $response['error'] = false;
 $user_id = $_REQUEST['user_id'];
 $notes = $_REQUEST['notes'];
-$transactions = $db->DietMayo($user_id, $notes);
+$address = $_REQUEST['address'];
+$transactions = $db->DietMayo($user_id, $notes, $address);
 if ($transactions) {
     $user = $db->GetUser($transactions[0]['user_id']);
     $package = $db->GetProduct($transactions[0]['product_id']);
