@@ -6,14 +6,14 @@ require_once(root . '/diet-online-apps-web/api/function/TransactionFunction.php'
 
 $db = new TransactionFunction();
 $response['error'] = false;
-if(isset($_FILES['diagnose'])){
-    $uploadPath = root."/diet-online-apps-web/api/img/diagnose/";
+if (isset($_FILES['diagnose'])) {
+    $uploadPath = root . "/diet-online-apps-web/api/img/diagnose/";
     $uploadUrl = "https://dion.co.id/api/img/diagnose/";
-    
+
     $diagnose = $_FILES['diagnose']['name'];
     $fileInfo = pathinfo($_FILES['diagnose']['name']);
     $extension = $fileInfo['extension'];
-    
+
     $checkFile = true;
 } else {
     $checkFile = false;
@@ -31,13 +31,13 @@ $sickness = $_REQUEST['sickness'];
 $foodType = $_REQUEST['foodType'];
 
 try {
-    if($checkFile){
+    if ($checkFile) {
         $file_url = $uploadUrl . $user_id . '.' . $extension;
         $file_path = $uploadPath . $user_id . '.' . $extension;
         move_uploaded_file($_FILES['diagnose']['tmp_name'], $file_path);
-        $transactions = $db->DietKhusus($user_id, $product_id, $days, $times, $notes, $activity, $sickness, $foodType, $file_url);
+        $transactions = $db->DietKhusus($user_id, $product_id, $days, $address, $times, $notes, $activity, $sickness, $foodType, $file_url);
     } else {
-        $transactions = $db->DietKhusus($user_id, $product_id, $days, $times, $notes, $activity, $sickness, $foodType, $diagnose);
+        $transactions = $db->DietKhusus($user_id, $product_id, $days, $address, $times, $notes, $activity, $sickness, $foodType, $diagnose);
     }
     if ($transactions != false || $transactions != NULL) {
         $user = $db->GetUser($transactions[0]['user_id']);
@@ -54,7 +54,6 @@ try {
     }
 } catch (Exception $e) {
     $response['error'] = true;
-    $response['message'] = "Gagal Insert Gambar". $e->getMessage();
+    $response['message'] = "Gagal Insert Gambar" . $e->getMessage();
     echo json_encode($response);
 }
-

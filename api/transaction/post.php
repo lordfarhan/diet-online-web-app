@@ -17,6 +17,15 @@ if ($amount < 5) {
     echo json_encode($response);
 } else if ($notes == "") {
     $notes = "-";
+    $result = $db->InsertTransaction($user_id, $product_id, $address, $days, $times, $amount, $notes);
+    $user = $db->GetUser($result[0]['user_id']);
+    $package = $db->GetProduct($result[0]['product_id']);
+    $response['message'] = "Success Ordering";
+    $response['transactions'] = $result;
+    $response['user'] = $user;
+    $response['product'] = $package;
+    echo json_encode($response);
+} else if ($notes != "") {
     $result = $db->InsertTransaction($user_id, $product_id, $days, $address, $times, $amount, $notes);
     $user = $db->GetUser($result[0]['user_id']);
     $package = $db->GetProduct($result[0]['product_id']);
@@ -25,17 +34,8 @@ if ($amount < 5) {
     $response['user'] = $user;
     $response['product'] = $package;
     echo json_encode($response);
-} else if($notes!="") {
-    $result = $db->InsertTransaction($user_id, $product_id, $days,$address, $times, $amount, $notes);
-    $user = $db->GetUser($result[0]['user_id']);
-    $package = $db->GetProduct($result[0]['product_id']);
-    $response['message'] = "Success Ordering";
-    $response['transactions'] = $result;
-    $response['user'] = $user;
-    $response['product'] = $package;
-    echo json_encode($response);
 } else {
-    $result = $db->InsertTransaction($user_id, $product_id, $days,$address, $times, $amount, $notes);
+    $result = $db->InsertTransaction($user_id, $product_id, $address, $days, $times, $amount, $notes);
     if ($result) {
         $user = $db->GetUser($result[0]['user_id']);
         $package = $db->GetProduct($result[0]['product_id']);
