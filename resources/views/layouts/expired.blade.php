@@ -231,7 +231,9 @@
 
         <section id="main">
             <div class="container">
-                <h1>Pembayaran</h1>
+                <h1>Expired</h1>
+                <h5>Semua transaksi yang lebih dari 2 hari dan tanpa ada perubahan status akan berpindah ke sini</h5><br>
+                <a href="/admin/delete-all" class="btn btn-danger">Delete</a>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -239,8 +241,8 @@
                             <th colspan="2" scope="col">Product</th>
                             <th colspan="3" scope="col">User</th>
                             <th rowspan="2" scope="col">Invoice</th>
+                            <th rowspan="2" scope="col">Update Terakhir</th>
                             <th rowspan="2" scope="col">Bukti Pembayaran</th>
-                            <th rowspan="2" scope="col"></th>
                         </tr>
                         <tr>
                             <th>Product Name</th>
@@ -261,35 +263,11 @@
                             <td>{{$t->phone}}</td>
                             <td>{{$t->address}}</td>
                             <td>{{$t->invoice}}</td>
+                            <td>{{$t->updated_at}}</td>
                             <td><img src="{{$t->proof_of_payment}}" class="img-thumbnail img"
                                     style="width:100%;max-width:300px" id="img{{$t->id}}"></td>
-                            <td><a href="/admin/pembayaran/approve/{{$t->invoice}}"
-                                    class="btn btn-primary">Approve</a><br><br>
-                                <a href="/admin/pembayaran/disapprove/{{$t->invoice}}"
-                                    class="btn btn-danger">Disapprove</a></td>
                         </tr>
                         @endforeach
-
-                        {{-- <div class="modal fade" id="modals" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Gambar</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="" id="modal-img" width="100%" height="100%" style="z-index:1;">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
                         @else
                         <h3>No Data</h3>
                         @endif

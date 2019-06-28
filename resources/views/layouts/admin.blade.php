@@ -237,6 +237,19 @@ Note
         padding: 20px;
     }
 
+    .openmodal {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        position: fixed;
+        margin-top: 28rem;
+    }
+
+    .button-place {}
+
 </style>
 
 <script>
@@ -305,16 +318,17 @@ Note
 </script>
 
 <script>
-        function AlertDelete() {
-            if (!confirm("Are you sure ?")) {
-                var link = document.getElementById("delete");
+    function AlertDelete() {
+        if (!confirm("Are you sure ?")) {
+            var link = document.getElementById("delete");
 
-                link.setAttribute('href', "/admin");
-                return false;
-            }
+            link.setAttribute('href', "/admin");
+            return false;
         }
+    }
 
 </script>
+
 <body>
     {{-- NAVBAR --}}
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -322,9 +336,9 @@ Note
         <input class="form-control form-control-light w-100" type="text" placeholder="Search" aria-label="Search"
             id="search-box">
         <ul class="navbar-nav px-3">
-            {{-- <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
-          </li> --}}
+            <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/admin/log-out" class="button">Sign out</a>
+          </li>
         </ul>
     </nav>
 
@@ -339,10 +353,86 @@ Note
         <a href="/admin">Home</a>
         <a href="/admin/latest">Latest</a>
         <a href="/admin/pembayaran">Pembayaran</a>
+        {{-- <a href="/admin/expired">Expired</a> --}}
     </div>
 
     <div id="main">
         <button class="openbtn" onclick="clickNav()"><i class="fas fa-angle-right"></i></button>
+        <div class="container" style="margin-right:3rem; margin-left:10rem;">
+            <div class="float-right">
+                <button class="openmodal" data-toggle="modal" data-target="#addtransaction"><i
+                        class="fas fa-plus"></i></button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addtransaction" tabindex="-1" role="dialog" aria-labelledby="addtransaction"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Transaction</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/admin/add-transaction">
+                            <div class="form-group">
+                                <label for="nama">Nama Lengkap :</label>
+                                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama Lengkap">
+                            </div>
+                            <div class="form-group">
+                                <label for="no-hp">No HP :</label>
+                                <input type="text" class="form-control" name="nohp" id="no-hp" placeholder="Masukkan No HP">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Alamat</label>
+                                <input type="text" class="form-control" name="alamat" id="address" placeholder="Masukkan Alamat">
+                            </div>
+                            <div class="form-group">
+                                <label for="jenis-kelamin">Jenis Kelamin : </label><br>
+                                <input type="radio" name="gender" id="jenis-kelamin" value="0"> Wanita <br>
+                                <input type="radio" name="gender" id="jenis-kelamin" value="1"> Pria <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="pesanan">Paket : </label>
+                                <select name="pesanan">
+                                    <option value="-">. . . . . . .</option>
+                                    <option value="DP001">Katering Harian (Paket Personal)</option>
+                                    <option value="DP002">Katering Harian (Paket Family-2)</option>
+                                    <option value="DP003">Katering Harian (Paket Family-3)</option>
+                                    <option value="SL001">Single Lunch Box (Paket Puas Aja)</option>
+                                    <option value="SL002">Single Lunch Box (Paket Puas Banget)</option>
+                                    <option value="SP001">Diet Khusus (Paket Silver)</option>
+                                    <option value="SP002">Diet Khusus (Paket Gold)</option>
+                                    <option value="SP003">Diet Khusus (Paket Platinum)</option>
+                                    <option value="WL001">Weight Loss Diet(Diet Mayo)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dates">Tanggal Pengiriman :</label><br>
+                                <input type="date" name="dates" id="dates" placeholder="Masukkan Tanggal Pengiriman">
+                            </div>
+                            <div class="form-group">
+                                <label for="times">Waktu Pengiriman : </label><br>
+                                <input type="radio" id="times" name="times" value="1">Pagi<br>
+                                <input type="radio" id="times" name="times" value="2">Siang<br>
+                                <input type="radio" id="times" name="times" value="3">Sore<br>
+                            </div>
+                            <div class="form-group">
+                                <label for="keterangan">Keterangan :</label>
+                                <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan">
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <section id="search">
             <div class="container">
                 <h1>Search Result</h1>
@@ -380,7 +470,8 @@ Note
 
             <div class="container">
                 <h1>Transactions</h1><br>
-                <a href="/admin/cetak-today-batch" class="btn btn-primary" style="margin-left:15%;">Cetak Label Hari Ini</a>
+                <a href="/admin/cetak-today-batch" class="btn btn-primary" style="margin-left:15%;">Cetak Label Hari
+                    Ini</a>
                 <div class="float-left">
                     <form action="/admin/filter" method="GET">
                         <select name="filter1">
@@ -409,7 +500,6 @@ Note
             <div></div>
             <div class="container float-none">
                 @if (count($transactions)>0)
-
                 <div id="table">
                     <table class="table table-bordered">
                         <thead>
@@ -447,9 +537,9 @@ Note
                                 <td>{{$transaction->address}}</td>
                                 <td>
                                     @if ($transaction->gender==0)
-                                        Laki Laki
+                                    Laki Laki
                                     @else
-                                        Perempuan
+                                    Perempuan
                                     @endif
                                 </td>
                                 <td>{{$transaction->invoice}}</td>

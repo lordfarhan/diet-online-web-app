@@ -26,11 +26,12 @@ Tambah scrolling animasi
 
     <link rel="shortcut icon" type="image/png" href="{{asset('img/website/bullet.png')}}" />
 
-<style>
-body{
-    overflow-x: hidden;
-}
-</style>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+    </style>
 </head>
 {{-- NAVBAR --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="fixednav">
@@ -82,7 +83,8 @@ body{
                     </span>
                     <h6 class="text-nowrap"><span class="tulisan">Mulai paket dietmu sekarang secara online melalui
                             aplikasi DION</span></h6>
-                    <a href="https://play.google.com/store/apps/details?id=id.havanah.app.dietonline" class="btn bg-dark">
+                    <a href="https://play.google.com/store/apps/details?id=id.havanah.app.dietonline"
+                        class="btn bg-dark">
                         <table style="border:0px;color:white;">
                             <tr>
                                 <th rowspan="2"><i class="fab fa-google-play" style="font-size:28px;"></i></th>
@@ -113,7 +115,8 @@ body{
                     <h6><span class="tulisan">DION merupakan layanan katering online yang menyediakan makanan sehat
                             sesuai dengan kebutuhan
                             kamu. Tanpa harus mengunjungi ahli gizi, kamu dapat memesan makanan sesuai dengan keperluan
-                            dietmu.</span></h6>
+                            dietmu. DION dipersembahkan oleh DIETINDO, layanan katering sehat dan konsultasi gizi. Saat
+                            ini, aplikasi hanya dapat digunakan untuk Kota Malang.</span></h6>
                 </div>
             </div>
         </div>
@@ -228,15 +231,18 @@ body{
             <div class="row justify-content-between">
                 <div class="col-lg-6 footer-left">
                     <ul>
-                        <li><span class="footer-logo"><i class="fab fa-facebook"></i></span> dietonlinemasakini</li>
-                        <li><span class="footer-logo"><i class="fab fa-twitter"></i></span> @dietonlinemasakini</li>
-                        <li><span class="footer-logo"><i class="fab fa-youtube"></i></span> DION - Diet Online</li>
-                        <li><span class="footer-logo"><i class="fab fa-instagram"></i></span> @dietonlinemasakini</li>
+                        <li><span class="footer-logo"><i class="fab fa-facebook"></i></span> dionzamannow</li>
+                        <li><span class="footer-logo"><i class="fas fa-phone"></i></span>085105360671</li>
+                        <li><span class="footer-logo"><i class="fab fa-youtube"></i></span> dionzamannow</li>
+                        <li><span class="footer-logo"><i class="fab fa-instagram"></i></span> @dionzamannow</li>
                     </ul>
                 </div>
                 <div class="col-lg-6 footer-right">
                     <h5 id="atas">Solusi Diet & Obesitas Zaman Now</h5>
-                    <h5 id="tengah"><span id="kiri"><a href="http://dion.co.id/docs/Term%20and%20Condition%20DION.pdf" class="btn btn-info">Term & Condition</a></span> <span id="kanan"><a href="http://dion.co.id/docs/Privacy%20Policies%20DION.pdf" class="btn btn-info">Privacy Policies</a></span></h5>
+                    <h5 id="tengah"><span id="kiri"><a href="http://dion.co.id/docs/Term%20and%20Condition%20DION.pdf"
+                                class="btn btn-info">Term & Condition</a></span> <span id="kanan"><a
+                                href="http://dion.co.id/docs/Privacy%20Policies%20DION.pdf" class="btn btn-info">Privacy
+                                Policies</a></span></h5>
                 </div>
             </div>
             <h6 class="text-center">&copy; 2019 DION - Diet Online</h6>

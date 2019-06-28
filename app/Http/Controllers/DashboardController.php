@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Transaction;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use App\User;
+
 
 class DashboardController extends Controller
 {
@@ -701,10 +703,78 @@ class DashboardController extends Controller
                 ->paginate(20);
 
             $pdf = PDF::loadview('cetak_label_all', ['transactions' => $transactions]);
-            $pdf->setPaper('A4', 'landscape');
+            $pdf->setPaper('A4', 'potrait');
             return $pdf->stream();
         } else {
             return redirect('/admin/login')->with('error', 'You must Login First');
         }
+    }
+
+    public function AddTransaction(Request $request)
+    {
+        $nama = $request->input('nama');
+        $nohp = $request->input('nohp');
+        $alamat = $request->input('alamat');
+        $gender = $request->input('gender');
+        $paket = $request->input('pesanan');
+        $dates = $request->input('dates');
+        $times = $request->input('times');
+        $keterangan = $request->input('keterangan');
+        $birthDate = date('Y-m-d H:i:s');
+        $uid = uniqid();
+
+        $user = new User;
+        $user->unique_id = $uid;
+        $user->name = $nama;
+        $user->nickname = "Bro";
+        $user->phone = $nohp;
+        $user->address = $alamat;
+        $user->birth_date = $birthDate;
+        $user->gender = $gender;
+        $user->city = "Malang";
+        $user->subdistrict = "Lowokwaru";
+        $user->save();
+
+        $transaction = new Transaction;
+        $transaction->invoice = uniqid("INV", false);;
+        $transaction->product_id = $paket;
+        $transaction->user_id = $uid;
+        $transaction->address = $alamat;
+        $transaction->date = $dates;
+        $transaction->times = $times;
+        $transaction->notes = $keterangan;
+        $transaction->status = 3;
+        $transaction->save();
+
+        return redirect("/admin")->with("success", "Transaksi berhasil ditambahkan");
+    }
+
+    public function LogOut(Request $request)
+    {
+        $request->session()->put('login', false);
+        return redirect("/admin/login")->with("error", "You have log out");
+    }
+
+    public function ViewExpired(){
+        $dateNow = date("Y-m-d H:i:s");
+        $transactions = DB::table('transactions')
+        ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'users.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender')
+        ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
+        ->join('users', 'transactions.user_id', '=', 'users.unique_id')
+        ->where('updated_at', '<', $dateNow)
+        ->get();
+    $invoice = "";
+    $index = 0;
+    foreach ($transactions as $t) {
+        if ($invoice == $t->invoice) {
+            continue;
+        } else {
+            $transaction[$index] = $t;
+            $index++;
+        }
+        $invoice = $t->invoice;
+    }
+
+    return view('layouts.expired', ['transaction' => $transaction]);
     }
 }

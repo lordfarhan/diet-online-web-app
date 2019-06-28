@@ -15,6 +15,10 @@ use App\Http\Controllers\APIController;
 
 Route::get('/admin', 'DashboardController@ViewAdmin');
 
+Route::get('/admin/log-out','DashboardController@LogOut');
+
+Route::get('/admin/add-transaction','DashboardController@AddTransaction');
+
 Route::get('/admin/cetak-all','DashboardController@PrintAll');
 
 Route::get('/admin/cetak-today-batch','DashboardController@PrintLabelToday');

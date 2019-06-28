@@ -309,6 +309,7 @@ Note
         <a href="/admin">Home</a>
         <a href="/admin/latest">Latest</a>
         <a href="/admin/pembayaran">Pembayaran</a>
+        {{-- <a href="/admin/expired">Expired</a> --}}
     </div>
 
     <div id="main">
