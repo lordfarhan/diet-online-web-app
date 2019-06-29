@@ -358,7 +358,7 @@ Note
 
     <div id="main">
         <button class="openbtn" onclick="clickNav()"><i class="fas fa-angle-right"></i></button>
-        <div class="container" style="margin-right:3rem; margin-left:10rem;">
+        <div class="container" style="margin-right:3rem; margin-left:4rem;">
             <div class="float-right">
                 <button class="openmodal" data-toggle="modal" data-target="#addtransaction"><i
                         class="fas fa-plus"></i></button>

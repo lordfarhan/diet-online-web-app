@@ -32,6 +32,14 @@ Tambah scrolling animasi
         }
 
     </style>
+
+    <script>
+    var msg = '{{Session::get('msg')}}';
+    var exist = '{{Session::has('msg')}}';
+    if(exist){
+      alert(msg);
+    }
+    </script>
 </head>
 {{-- NAVBAR --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="fixednav">
@@ -55,7 +63,7 @@ Tambah scrolling animasi
                 <a class="nav-link" href="#tim-kami">Tim Kami</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Panduan Aplikasi</a>
+                <a class="nav-link" href="http://dion.co.id/docs/Panduan Aplikasi DION.pdf">Panduan Aplikasi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#hubungi-kami">Hubungi Kami</a>
@@ -191,7 +199,7 @@ Tambah scrolling animasi
             <div class="row justify-content-around">
                 <div class="col-lg-5" id="hubungi">
                     <div class="form">
-                        <form>
+                        <form action="/kirim-tanggapan">
                             <h3><span class="highlight" style="color:black">Hubungi Kami</span></h3>
                             <br><br>
                             <input type="text" name="fullname" class="form-control" placeholder="Nama Lengkap"> <br>

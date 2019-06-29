@@ -19,6 +19,12 @@ Route::get('/admin/log-out','DashboardController@LogOut');
 
 Route::get('/admin/add-transaction','DashboardController@AddTransaction');
 
+Route::get('/kirim-tanggapan','HomeController@KirimTanggapan');
+
+Route::get('/show-email',function(){
+    return view('mails.tanggapan');
+});
+
 Route::get('/admin/cetak-all','DashboardController@PrintAll');
 
 Route::get('/admin/cetak-today-batch','DashboardController@PrintLabelToday');
