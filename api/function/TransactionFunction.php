@@ -7,7 +7,7 @@ class TransactionFunction
 
     function __construct()
     {
-        require_once(root . '/api/config/DB_Connect.php');
+        require_once(root . '/diet-online-apps-web/api/config/DB_Connect.php');
         $this->db = new DB_Connect;
         $this->conn = $this->db->connect();
     }
@@ -780,9 +780,9 @@ class TransactionFunction
 
             if ($product_id == "SP001") {
                 $amount = 18;
-            } else if ($product_id == "SP001") {
+            } else if ($product_id == "SP002") {
                 $amount = 30;
-            } else if ($product_id == "SP001") {
+            } else if ($product_id == "SP003") {
                 $amount = 90;
             }
 
