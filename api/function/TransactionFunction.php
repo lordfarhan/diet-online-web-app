@@ -7,7 +7,7 @@ class TransactionFunction
 
     function __construct()
     {
-        require_once(root . '/diet-online-apps-web/api/config/DB_Connect.php');
+        require_once(root . '/api/config/DB_Connect.php');
         $this->db = new DB_Connect;
         $this->conn = $this->db->connect();
     }
