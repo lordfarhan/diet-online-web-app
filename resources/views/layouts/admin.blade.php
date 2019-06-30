@@ -248,7 +248,10 @@ Note
         margin-top: 28rem;
     }
 
-    .button-place {}
+    #button-right {
+        margin-right: 3rem;
+        /* margin-left: 10rem; */
+    }
 
 </style>
 
@@ -337,8 +340,8 @@ Note
             id="search-box">
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-            <a class="nav-link" href="/admin/log-out" class="button">Sign out</a>
-          </li>
+                <a class="nav-link" href="/admin/log-out" class="button">Sign out</a>
+            </li>
         </ul>
     </nav>
 
@@ -358,7 +361,7 @@ Note
 
     <div id="main">
         <button class="openbtn" onclick="clickNav()"><i class="fas fa-angle-right"></i></button>
-        <div class="container" style="margin-right:3rem; margin-left:4rem;">
+        <div class="container" id="button-right">
             <div class="float-right">
                 <button class="openmodal" data-toggle="modal" data-target="#addtransaction"><i
                         class="fas fa-plus"></i></button>
@@ -379,15 +382,18 @@ Note
                         <form action="/admin/add-transaction">
                             <div class="form-group">
                                 <label for="nama">Nama Lengkap :</label>
-                                <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan nama Lengkap">
+                                <input type="text" class="form-control" name="nama" id="nama"
+                                    placeholder="Masukkan nama Lengkap">
                             </div>
                             <div class="form-group">
                                 <label for="no-hp">No HP :</label>
-                                <input type="text" class="form-control" name="nohp" id="no-hp" placeholder="Masukkan No HP">
+                                <input type="text" class="form-control" name="nohp" id="no-hp"
+                                    placeholder="Masukkan No HP">
                             </div>
                             <div class="form-group">
                                 <label for="address">Alamat</label>
-                                <input type="text" class="form-control" name="alamat" id="address" placeholder="Masukkan Alamat">
+                                <input type="text" class="form-control" name="alamat" id="address"
+                                    placeholder="Masukkan Alamat">
                             </div>
                             <div class="form-group">
                                 <label for="jenis-kelamin">Jenis Kelamin : </label><br>
@@ -421,7 +427,8 @@ Note
                             </div>
                             <div class="form-group">
                                 <label for="keterangan">Keterangan :</label>
-                                <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan">
+                                <input type="text" class="form-control" id="keterangan" name="keterangan"
+                                    placeholder="Masukkan Keterangan">
                             </div>
                     </div>
                     <div class="modal-footer">

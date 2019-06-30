@@ -112,6 +112,13 @@ class DashboardController extends Controller
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('status', '=', '3')
                 ->paginate(20);
+
+                foreach($transactions as $transaction){
+                    $date = $transaction->date;
+                    $strDate = (String)$date;
+                    $transaction->date = date('d-m-Y', strtotime($strDate));
+                }
+                
             return view('layouts.admin', ['transactions' => $transactions]);
         } else {
             return redirect('/admin/login')->with('error', 'You must Login First');
@@ -577,6 +584,12 @@ class DashboardController extends Controller
                 }
             }
 
+            foreach($transactions as $transaction){
+                $date = $transaction->date;
+                $strDate = (String)$date;
+                $transaction->date = date('d-m-Y', strtotime($strDate));
+            }
+
             $pdf = PDF::loadview('cetak_all', ['transactions' => $transactions]);
             $pdf->setPaper('A4', 'landscape');
             return $pdf->stream();
@@ -593,6 +606,12 @@ class DashboardController extends Controller
             ->orderBy('transactions.updated_at', 'desc')
             ->paginate(20);
         // ->all();
+
+        foreach($transactions as $transaction){
+            $date = $transaction->date;
+            $strDate = (String)$date;
+            $transaction->date = date('d-m-Y', strtotime($strDate));
+        }
 
         return view('latest_table')->with('transactions', $transactions);
     }
@@ -635,6 +654,13 @@ class DashboardController extends Controller
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('status', '=', '2')
                 ->get();
+
+                foreach($transactions as $transaction){
+                    $date = $transaction->date;
+                    $strDate = (String)$date;
+                    $transaction->date = date('d-m-Y', strtotime($strDate));
+                }
+
             $invoice = "";
             $index = 0;
             foreach ($transactions as $t) {
@@ -681,6 +707,12 @@ class DashboardController extends Controller
                 ->where('transactions.id', '=', $id)
                 ->get();
 
+                foreach($transactions as $transaction){
+                    $date = $transaction->date;
+                    $strDate = (String)$date;
+                    $transaction->date = date('d-m-Y', strtotime($strDate));
+                }
+            
             $pdf = PDF::loadview('cetak_label', ['transactions' => $transactions]);
             $pdf->setPaper('A4', 'landscape');
             return $pdf->stream();
@@ -701,6 +733,11 @@ class DashboardController extends Controller
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('date', '=', $dateNow)
                 ->paginate(20);
+
+                foreach($transactions as $transaction){
+                    $date = $transaction->date;
+                    $transaction->date = date('d-m-Y',strotime($date));
+                }
 
             $pdf = PDF::loadview('cetak_label_all', ['transactions' => $transactions]);
             $pdf->setPaper('A4', 'potrait');

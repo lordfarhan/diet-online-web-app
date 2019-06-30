@@ -43,7 +43,17 @@
             </tr>
             <tr>
                 <td>Tanggal : </td>
-            <td>{{$transaction->date}}</td>
+            <td>{{$transaction->date}} - 
+            @if ($transaction->times==1)
+                Pagi
+            @endif
+            @if ($transaction->times==2)
+                Siang
+            @endif
+            @if ($transaction->times==3)
+                Malam
+            @endif
+        </td>
             </tr>
         </table>
         @endforeach    
