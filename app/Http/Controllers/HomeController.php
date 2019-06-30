@@ -17,7 +17,7 @@ class HomeController extends Controller
             Mail::send('mails.tanggapan', ['nama' => $fullname,'email'=>$email ,'pesan' => $pesan], function ($message) use ($request)
             {
                 $message->subject("Tanggapan dari Website DION");
-                $message->from('new.akbarsatya@gmail.com', 'Akbar');
+                $message->from('donotreply@dion.co.id', 'Admin');
                 $message->to('customerservice.dion@gmail.com');
             });
             return redirect("/")->with("msg","Tanggapan Berhasil Dikirim");

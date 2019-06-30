@@ -38,9 +38,9 @@
         <div class="content">
             <h4>Tanggapan</h4>
             <h6>
-                {{-- Nama : {{$nama}}<br>
+                Nama : {{$nama}}<br>
                 Email : {{$email}}<br>
-                Pesan : {{$pesan}}<br> --}}
+                Pesan : {{$pesan}}<br>
                 <br>
             </h6>
             <h5>
