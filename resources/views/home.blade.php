@@ -81,7 +81,7 @@ Tambah scrolling animasi
                     <img src="{{asset('img/website/show.png')}}" class="showcase-img img-fluid">
                 </div>
 
-                <div class="col-lg-4" id="isi">
+                <div class="col-lg-4 isi">
                     <img src="{{asset('img/website/bullet.png')}}" class="img-fluid" id="logo-circle"><br>
                     <span class="highlight">
                         <h1>DIET ONLINE</h1>
@@ -92,7 +92,7 @@ Tambah scrolling animasi
                     <h6 class="text-nowrap"><span class="tulisan">Mulai paket dietmu sekarang secara online melalui
                             aplikasi DION</span></h6>
                     <a href="https://play.google.com/store/apps/details?id=id.havanah.app.dietonline"
-                        class="btn bg-dark">
+                        class="btn bg-dark" id="button-gplay">
                         <table style="border:0px;color:white;">
                             <tr>
                                 <th rowspan="2"><i class="fab fa-google-play" style="font-size:28px;"></i></th>
@@ -119,8 +119,8 @@ Tambah scrolling animasi
                     {{-- <iframe src="https://youtu.be/qir67U2_UsA?list=PLK2o01EsuMU9RsAgCO07RBYOHZzdo2rtY"></iframe> --}}
                 </div>
                 <div class="col-lg-5">
-                    <h3><span class="highlight">Tentang DION</span></h3><br>
-                    <h6><span class="tulisan">DION merupakan layanan katering online yang menyediakan makanan sehat
+                    <h3><span class="highlight isi" id="tentang-dion">Tentang DION</span></h3><br>
+                    <h6><span class="tulisan isi">DION merupakan layanan katering online yang menyediakan makanan sehat
                             sesuai dengan kebutuhan
                             kamu. Tanpa harus mengunjungi ahli gizi, kamu dapat memesan makanan sesuai dengan keperluan
                             dietmu. DION dipersembahkan oleh DIETINDO, layanan katering sehat dan konsultasi gizi. Saat
@@ -134,7 +134,7 @@ Tambah scrolling animasi
         <div class="container">
             <div class="row justify-content-around">
                 <div class="col-lg-8">
-                    <h3><span class="highlight">Pilih dari 4 Paket Berbeda</span></h3>
+                    <h3><span class="highlight isi" id="pilih-paket">Pilih dari 4 Paket Berbeda</span></h3>
                     <div class="row">
                         <div class="col">
                             <img src="{{asset('img/website/harian.png')}}" class="foto-menu img-fluid">
@@ -155,7 +155,7 @@ Tambah scrolling animasi
                         <h3><span class="tulisan">Ikuti survei singkat untuk menentukan
                                 paket yang cocok buat kamu</span></h3>
                         <br>
-                        <a href="#" class="btn btn-warning tulisan" style="color:black;">Pilih Paket yang Sesuai</a>
+                        <a href="#" class="btn btn-warning tulisan" style="color:black;" id="button-rekom">Pilih Paket yang Sesuai</a>
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@ Tambah scrolling animasi
 
     <section id="tim-kami">
         <div class="container">
-            <h1><span class="highlight text-center">Tim Kami</span></h1>
+            <h1><span class="highlight" id="tim-kami-text">Tim Kami</span></h1>
             <div class="row justify-content-around d-flex">
                 <div class="col-lg-4 text-center">
                     <img src="{{asset('img/website/Akbar.png')}}" class="foto img-fluid"><br>
@@ -211,33 +211,25 @@ Tambah scrolling animasi
                     </div>
                 </div>
                 <div class="col-lg-5">
-                    <h4><span class="highlight">Mitra DION</span></h4><br>
-                    <p><span class="tulisan">DION merupakan wadah bagi mitra katering sehat untuk menyalurkan paket
+                    <h4><span class="highlight isi" id="mitra">Mitra DION</span></h4><br>
+                    <p><span class="tulisan isi">DION merupakan wadah bagi mitra katering sehat untuk menyalurkan paket
                             mereka. Penyedia makanan
                             dari DION yang pertama adalah PT.DIETINDO. Sementara ini, DION hanya dapat beroperasi di
                             Kota
                             Malang.<br>
                             Untuk Info lebih lanjut mengenai DIETINDO dapat mengunjungi:</span>
                     </p><br>
-                    <img src="{{asset('img/website/dietindo.png')}}" style="margin-right:3rem;"><a
-                        href="http://www.dietindo.com/">http://www.dietindo.com/</a>
+                    <img src="{{asset('img/website/dietindo.png')}}" style="margin-right:2rem;" id="gambar-dietindo"><a
+                        href="http://www.dietindo.com/"><h3>http://www.dietindo.com</h3></a>
                 </div>
             </div>
         </div>
     </section>
 
     <footer>
-        {{-- <div class="footer">
-            <span class="footer-logo"><i class="fab fa-facebook"></i></span>
-            <span class="footer-logo"><i class="fab fa-twitter"></i></span>
-            <span class="footer-logo"><i class="fab fa-youtube"></i></span>
-            <span class="footer-logo"><i class="fab fa-instagram"></i></span>
-            <span class="footer-text">&copy; 2019 DION - Diet Online</span>
-            <span class="float-right footer-text" style="margin-right:3rem;">Solusi Diet & Obesitas Zaman Now</span>
-        </div> --}}
         <div class="footer">
-            <div class="row justify-content-between">
-                <div class="col-lg-6 footer-left">
+            <div class="d-flex">
+                <div class="col-lg-5 footer-left">
                     <ul>
                         <li><span class="footer-logo"><i class="fab fa-facebook"></i></span> dionzamannow</li>
                         <li><span class="footer-logo"><i class="fas fa-phone"></i></span>085105360671</li>
@@ -245,8 +237,8 @@ Tambah scrolling animasi
                         <li><span class="footer-logo"><i class="fab fa-instagram"></i></span> @dionzamannow</li>
                     </ul>
                 </div>
-                <div class="col-lg-6 footer-right">
-                    <h5 id="atas">Solusi Diet & Obesitas Zaman Now</h5>
+                <div class="col-lg-5 footer-right">
+                    <h5 id="atas">Solusi Obesitas & Diet Plan Millenial Zaman Now</h5>
                     <h5 id="tengah"><span id="kiri"><a href="http://dion.co.id/docs/Term%20and%20Condition%20DION.pdf"
                                 class="btn btn-info">Term & Condition</a></span> <span id="kanan"><a
                                 href="http://dion.co.id/docs/Privacy%20Policies%20DION.pdf" class="btn btn-info">Privacy

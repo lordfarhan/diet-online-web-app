@@ -8,15 +8,44 @@
 */
 
 /* For Handphone */
-@media (max-width: 575.98px){
-    
+@media (max-width: 1000px){
+    #showcase .showcase-img {
+        padding-top: 0;
+    }
+    .isi{
+        text-align: center;
+    }
+    #button-gplay{
+        margin-bottom: 3rem;
+    }
+    #button-rekom{
+        margin-bottom: 3rem;
+    }
+    #tim-kami-text{
+        margin-left:37%; 
+    }
+    #pilih-paket{
+        margin-left:28%; 
+    }
+    #tentang-dion{
+        margin-left:35%; 
+    }
+    #hubungi{
+        margin-bottom: 3rem;
+    }
+    #gambar-dietindo{
+        margin-bottom: 1rem;
+    }
+    #mitra{
+        margin-left:42%; 
+    }
 }
 
-/* For Tablet */
-@media (max-width: 991.98px){
-    
+@media(min-width:1048px){
+ #showcase .showcase-img{
+    max-width: 150%;
+ }
 }
-
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
@@ -72,7 +101,6 @@ body {
 }
 
 #showcase .showcase-img {
-    max-width: 500px;
     padding-top: 0;
 }
 
@@ -81,10 +109,6 @@ body {
     min-height: 305px;
     padding-top: 6.5rem;
     padding-bottom: 5rem;
-}
-
-.desc-img{
-    /* max-width: ; */
 }
 
 #tentukan-paket {
