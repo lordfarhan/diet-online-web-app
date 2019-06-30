@@ -1,9 +1,4 @@
 <html>
-{{-- 
-Note :
-Tambah animasi buat pilihan paket, pas diklik langsung tau descripsinya
-Tambah scrolling animasi 
---}}
 
 <head>
     <title>DION</title>
@@ -155,7 +150,7 @@ Tambah scrolling animasi
                         <h3><span class="tulisan">Ikuti survei singkat untuk menentukan
                                 paket yang cocok buat kamu</span></h3>
                         <br>
-                        <a href="#" class="btn btn-warning tulisan" style="color:black;" id="button-rekom">Pilih Paket yang Sesuai</a>
+                        <a href="/rekomendasi-paket" class="btn btn-warning tulisan" style="color:black;" id="button-rekom">Pilih Paket yang Sesuai</a>
                     </div>
                 </div>
             </div>

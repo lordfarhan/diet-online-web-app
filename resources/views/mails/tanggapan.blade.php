@@ -17,11 +17,17 @@
     </script>
 </head>
 
+<style>
+body{
+    color: black;
+}
+</style>
+
 <body>
     <div class="container">
         <div class="greeting">
-            <h5>Assalamualaikum Wr. Wb.</h5>
-            <h5>
+            <h2>Assalamualaikum Wr. Wb.</h2>
+            <h2>
                 <?php
             $hoursNow = date('G');
             if($hoursNow <11){
@@ -32,21 +38,21 @@
                 echo "Selamat Sore";
             }
             ?>
-            </h5><br>
+            </h2>
         </div>
 
         <div class="content">
-            <h4>Tanggapan</h4>
-            <h6>
+            <h2>Tanggapan</h2>
+            <h3>
                 Nama : {{$nama}}<br>
                 Email : {{$email}}<br>
                 Pesan : {{$pesan}}<br>
                 <br>
-            </h6>
-            <h5>
+            </h3>
+            <h2>
                 Terima Kasih<br>
                 Wasallamualaikum Wr. Wb.<br>
-            </h5>
+            </h2>
         </div>
     </div>
 </body>
