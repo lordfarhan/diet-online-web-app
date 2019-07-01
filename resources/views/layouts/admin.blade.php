@@ -11,8 +11,7 @@ Note
     <title>Dashboard Admin for DION</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
@@ -260,34 +259,32 @@ Note
         var auto_refresh = setInterval(function () {
             $('#latest-table').load('/admin/latest').fadeIn("slow");
         }, 500);
-    })
 
-    fetch_customer_data();
-
-    function fetch_customer_data(query = '') {
-        $.ajax({
-            url: "{{ route('search.action') }}",
-            method: 'GET',
-            data: {
-                query: query
-            },
-            dataType: 'json',
-            success: function (data) {
-                $('#search').css("visibility", "visible");
-                $('#search').css("display", "block");
-                $('#search-result').html(data.table_data);
-            }
-        })
-    }
-
-    $(document).on('keyup', '#search-box', function () {
-        let search = $('#search-box').val();
-        if (search == "") {
-            $('#search').css("display", "none");
-            $('#search').css("visibility", "hidden");
+        function fetch_customer_data(query = '') {
+            $.ajax({
+                url: "{{route('search.action')}}",
+                method: 'GET',
+                data: {
+                    query: query
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $('#search').css("visibility", "visible");
+                    $('#search').css("display", "block");
+                    $('#search-result').html(data.table_data);
+                }
+            })
         }
-        var query = $(this).val();
-        fetch_customer_data(query);
+
+        $(document).on('keyup', '#search-box', function () {
+            let search = $('#search-box').val();
+            if (search == "") {
+                $('#search').css("display", "none");
+                $('#search').css("visibility", "hidden");
+            }
+            var query = $(this).val();
+            fetch_customer_data(query);
+        });
     });
 
     let sidebarOpen = false;
@@ -302,20 +299,6 @@ Note
             document.getElementById("main").style.marginLeft = "250px";
             sidebarOpen = true;
         }
-    }
-
-
-    var modal = document.getElementById("myModal");
-
-    var img = document.getElementById("proof");
-    var modalImg = document.getElementById("img01");
-    img.onclick = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-    }
-    var span = document.getElementsByClassName("close")[0];
-    span.onclick = function () {
-        modal.style.display = "none";
     }
 
 </script>
@@ -514,11 +497,11 @@ Note
                                 <th rowspan="2" scope="col"></th>
                                 <th rowspan="2" scope="col">ID</th>
                                 <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
+                                <th rowspan="2" scope="col">Waktu Pengiriman</th>
                                 <th colspan="2" scope="col">Product</th>
                                 <th colspan="4" scope="col">User</th>
                                 <th rowspan="2" scope="col">Invoice</th>
                                 <th rowspan="2" scope="col">Notes</th>
-                                <th rowspan="2" scope="col">Waktu Pengiriman</th>
                                 <th rowspan="2" scope="col">Status</th>
                                 <th colspan="4" rowspan="2" scope="col"></th>
                             </tr>
@@ -537,6 +520,17 @@ Note
                                 <td><input type="checkbox" name="uid[]" value="{{$transaction->id}}"></td>
                                 <td>{{$transaction->id}}</td>
                                 <td>{{$transaction->date}}</td>
+                                <td>
+                                    @if ($transaction->times==1)
+                                    Pagi
+                                    @endif
+                                    @if ($transaction->times==2)
+                                    Siang
+                                    @endif
+                                    @if ($transaction->times==3)
+                                    Sore
+                                    @endif
+                                </td>
                                 <td>{{$transaction->product_name}}</td>
                                 <td>{{$transaction->price}}</td>
                                 <td>{{$transaction->name}}</td>
@@ -551,17 +545,6 @@ Note
                                 </td>
                                 <td>{{$transaction->invoice}}</td>
                                 <td>{{$transaction->notes}}</td>
-                                <td>
-                                    @if ($transaction->times==1)
-                                    Pagi
-                                    @endif
-                                    @if ($transaction->times==2)
-                                    Siang
-                                    @endif
-                                    @if ($transaction->times==3)
-                                    Sore
-                                    @endif
-                                </td>
                                 <td>@if ($transaction->status==1)
                                     Unpaid
                                     @endif
@@ -621,6 +604,8 @@ Note
                                             Address : {{$transaction->address}}<br>
                                             Phone Number : {{$transaction->phone}}<br>
                                             Prohibition : {{$transaction->prohibition}}<br>
+                                            Weight : {{$transaction->weight}}<br>
+                                            Height : {{$transaction->height}}<br>
                                             <br>
                                             Product : <br>
                                             Product Name : {{$transaction->product_name}}<br>
@@ -647,13 +632,6 @@ Note
                                         </div>
                                     </div>
                                 </div>
-                                {{-- Modal for Image --}}
-                                {{-- <div id="myModal" class="modal-img">
-                                        
-                                        <span class="close">&times;</span>
-                                        
-                                        <img class="modal-content" id="img01">
-                                    </div> --}}
                             </div>
                             @endforeach
                         </tbody>

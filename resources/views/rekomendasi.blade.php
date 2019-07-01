@@ -23,9 +23,26 @@
 </head>
 
 <style>
- .text-center{
-     font-size: 30px;
- }
+    @media (max-width: 1048px) {
+        #rekomendasi-carousel {
+            width: 40rem;
+            margin: auto;
+            font-size: 25px;
+        }
+    }
+
+    @media (min-width:1048px) {
+        #rekomendasi-carousel {
+            width: 60rem;
+            margin: auto;
+            font-size: 25px;
+        }
+    }
+
+    .text-center {
+        font-size: 30px;
+    }
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" id="fixednav">
@@ -63,8 +80,7 @@
         <div class="container">
             <h1 class="highlight text-center" style="font-size:40px;">Rekomendasi Paket</h1>
             <form action="/cari-rekomendasi">
-                <div id="rekomendasi-carousel" class="carousel slide" data-ride="carousel" data-interval="false"
-                    style="width: 60rem; margin:auto; font-size:25px;">
+                <div id="rekomendasi-carousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <div class="card">
@@ -98,13 +114,14 @@
                                     </p>
                                     <a href="#rekomendasi-carousel" role="button" data-slide="prev">
                                         <span class="btn btn-primary">Previous</span>
+                                        <input type="submit" name="submit" value="Submit" class="btn btn-primary float-right">
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <input type="submit" name="submit" value="Submit" class="btn btn-primary" style="margin-left:33rem; margin-top:3rem; padding:20px 20px 20px 20px;">
+
             </form>
         </div>
     </section>
