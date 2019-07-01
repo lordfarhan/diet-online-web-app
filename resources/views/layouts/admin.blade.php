@@ -498,16 +498,13 @@ Note
                                 <th rowspan="2" scope="col">ID</th>
                                 <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
                                 <th rowspan="2" scope="col">Waktu Pengiriman</th>
-                                <th colspan="2" scope="col">Product</th>
+                                <th rowspan="2" scope="col">Product Name</th>
                                 <th colspan="4" scope="col">User</th>
-                                <th rowspan="2" scope="col">Invoice</th>
                                 <th rowspan="2" scope="col">Notes</th>
                                 <th rowspan="2" scope="col">Status</th>
                                 <th colspan="4" rowspan="2" scope="col"></th>
                             </tr>
                             <tr>
-                                <th>Product Name</th>
-                                <th>Product Price</th>
                                 <th>Nama Lengkap</th>
                                 <th>No HP</th>
                                 <th>Alamat</th>
@@ -532,7 +529,6 @@ Note
                                     @endif
                                 </td>
                                 <td>{{$transaction->product_name}}</td>
-                                <td>{{$transaction->price}}</td>
                                 <td>{{$transaction->name}}</td>
                                 <td>{{$transaction->phone}}</td>
                                 <td>{{$transaction->address}}</td>
@@ -543,7 +539,6 @@ Note
                                     Perempuan
                                     @endif
                                 </td>
-                                <td>{{$transaction->invoice}}</td>
                                 <td>{{$transaction->notes}}</td>
                                 <td>@if ($transaction->status==1)
                                     Unpaid

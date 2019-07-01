@@ -88,8 +88,8 @@
                                     <h5 class="card-title text-center">Pertanyaan Pertama</h5>
                                     <p class="card-text">
                                         Apakah anda sedang mengidap penyakit yang berhubungan dengan sistem pencernaan tubuh? (Contoh: Diabetes Melitus, gagal ginjal, penyakit hati dan lainnya)<br>
-                                        <input type="radio" name="jawaban1" value="1">Iya<br>
-                                        <input type="radio" name="jawaban1" value="2">Tidak<br>
+                                        <input type="radio" name="jawaban1" value="1" required>Iya<br>
+                                        <input type="radio" name="jawaban1" value="2" required>Tidak<br>
 
                                     </p>
                                     <a href="#rekomendasi-carousel" role="button" data-slide="next">
@@ -104,9 +104,9 @@
                                     <h5 class="card-title text-center">Pertanyaan Kedua</h5>
                                     <p class="card-text">
                                         Apa yang anda harapkan dari pemesanan ini ?<br>
-                                        <input type="radio" name="jawaban2" value="1">Menurunkan berat badan<br>
-                                        <input type="radio" name="jawaban2" value="2">Menginginkan makanan dengan gizi lengkap untuk kegiatan sehari-hari<br>
-                                        <input type="radio" name="jawaban2" value="3">Menginginkan bekal makan siang
+                                        <input type="radio" name="jawaban2" value="1" required>Menurunkan berat badan<br>
+                                        <input type="radio" name="jawaban2" value="2" required>Menginginkan makanan dengan gizi lengkap untuk kegiatan sehari-hari<br>
+                                        <input type="radio" name="jawaban2" value="3" required>Menginginkan bekal makan siang
                                         yang sehat<br>
 
                                     </p>
