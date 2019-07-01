@@ -87,8 +87,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-center">Pertanyaan Pertama</h5>
                                     <p class="card-text">
-                                        Apakah anda sedang mengidap penyakit yang berhubungan dengan sistem pencernaan
-                                        tubuh?<br>
+                                        Apakah anda sedang mengidap penyakit yang berhubungan dengan sistem pencernaan tubuh? (Contoh: Diabetes Melitus, gagal ginjal, penyakit hati dan lainnya)<br>
                                         <input type="radio" name="jawaban1" value="1">Iya<br>
                                         <input type="radio" name="jawaban1" value="2">Tidak<br>
 
@@ -104,18 +103,17 @@
                                 <div class="card-body">
                                     <h5 class="card-title text-center">Pertanyaan Kedua</h5>
                                     <p class="card-text">
-                                        Apa tujuan pemesanan anda?<br>
+                                        Apa yang anda harapkan dari pemesanan ini ?<br>
                                         <input type="radio" name="jawaban2" value="1">Menurunkan berat badan<br>
-                                        <input type="radio" name="jawaban2" value="2">Menginginkan makanan yang gizi
-                                        lengkap untuk kegiatan sehari-hari<br>
+                                        <input type="radio" name="jawaban2" value="2">Menginginkan makanan dengan gizi lengkap untuk kegiatan sehari-hari<br>
                                         <input type="radio" name="jawaban2" value="3">Menginginkan bekal makan siang
                                         yang sehat<br>
 
                                     </p>
                                     <a href="#rekomendasi-carousel" role="button" data-slide="prev">
                                         <span class="btn btn-primary">Previous</span>
-                                        <input type="submit" name="submit" value="Submit" class="btn btn-primary float-right">
                                     </a>
+                                    <input type="submit" name="submit" value="Submit" class="btn btn-primary float-right">
                                 </div>
                             </div>
                         </div>
