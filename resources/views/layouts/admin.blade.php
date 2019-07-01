@@ -613,7 +613,8 @@ Note
                                                 ?>
                                             @foreach ($results as $result)
                                             Special Notes : <br>
-                                            Daily Calories : {{$result->daily_calorie}} <br>
+                                            Activity : {{$result->activity}}<br>
+                                            Daily Calories : {{$result->daily_calorie}} Kkal<br>
                                             Sickness : {{$result->sickness}}<br>
                                             Food Type : {{$result->food_type}}<br>
                                             Diagnose : <img src="{{$result->diagnose}}" class="img-thumbnail img-fluid"
