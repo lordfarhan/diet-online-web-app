@@ -51,7 +51,7 @@
                 Siang
             @endif
             @if ($transaction->times==3)
-                Malam
+                Sore
             @endif
         </td>
             </tr>
