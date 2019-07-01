@@ -701,7 +701,7 @@ class TransactionFunction
                 $sick = explode("-", $sickness);
                 $lenght = count($sick);
                 for ($i = 0; $i < $lenght; $i++) {
-                    switch ((int)$sick[$i]) {
+                    switch ((int) $sick[$i]) {
                         case 0:
                             $kebutuhanPenyakit .= "Diabetes Mellitus, ";
                             break;
@@ -954,9 +954,19 @@ class TransactionFunction
                     }
                 }
             }
-            $stmt = $this->conn->prepare("INSERT INTO `special`(`unique_id`, `sickness`, `daily_calorie`, `food_type`, `diagnose`) VALUES (?,?,?,?,?)");
+            $kegiatan = "";
+            if ($activity == 0) {
+                $kegiatan = "Tidak Bergerak";
+            } else if ($activity == 1) {
+                $kegiatan = "Aktif(Rendah)";
+            } else if ($activity == 2) {
+                $kegiatan = "Aktif";
+            } else if ($activity == 3) {
+                $kegiatan = "Sangat Aktif";
+            }
+            $stmt = $this->conn->prepare("INSERT INTO `special`(`unique_id`, `sickness`, `activity`, `daily_calorie`, `food_type`, `diagnose`) VALUES (?,?,?,?,?,?)");
             if ($stmt != false) {
-                $stmt->bind_param("sssss", $invoice, $kebutuhanPenyakit, $dailyCalories, $foodForm, $diagnose);
+                $stmt->bind_param("ssssss", $invoice, $kebutuhanPenyakit, $kegiatan, $dailyCalories, $foodForm, $diagnose);
                 if ($stmt->execute()) {
                     $stmt->close();
                 } else {
