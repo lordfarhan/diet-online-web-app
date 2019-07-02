@@ -676,13 +676,6 @@ class DashboardController extends Controller
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('status', '=', '2')
                 ->get();
-
-            foreach ($transactions as $transaction) {
-                $date = $transaction->date;
-                $strDate = (string) $date;
-                $transaction->date = date('d-m-Y', strtotime($strDate));
-            }
-
             $invoice = "";
             $index = 0;
             foreach ($transactions as $t) {
@@ -754,6 +747,7 @@ class DashboardController extends Controller
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('date', '=', $dateNow)
+                ->where('status','=','3')
                 ->paginate(20);
 
             foreach ($transactions as $transaction) {
