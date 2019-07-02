@@ -113,6 +113,7 @@ class DashboardController extends Controller
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('status', '=', '3')
                 ->orderBy('date', 'asc')
+                ->orderBy('times', 'asc')
                 ->paginate(20);
 
             foreach ($transactions as $transaction) {
@@ -141,7 +142,7 @@ class DashboardController extends Controller
                         ->where('product_id', '=', 'DP001')
                         ->orWhere('product_id', '=', 'DP002')
                         ->orWhere('product_id', '=', 'DP003')
-                        ->orderBy('date', 'asc')
+                        ->orderBy('date', 'asc')->orderBy('times', 'asc')
                         ->paginate(20);
                     // ->get();
                 } else if ($filter2 == 2) {
@@ -152,7 +153,7 @@ class DashboardController extends Controller
                         ->orWhere('product_id', '=', 'SP001')
                         ->orWhere('product_id', '=', 'SP002')
                         ->orWhere('product_id', '=', 'SP003')
-                        ->orderBy('date', 'asc')
+                        ->orderBy('date', 'asc')->orderBy('times', 'asc')
                         ->paginate(20);
                     // ->get();
                 } else if ($filter2 == 3) {
@@ -162,7 +163,7 @@ class DashboardController extends Controller
                         ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                         ->where('product_id', '=', 'SL001')
                         ->orWhere('product_id', '=', 'SL002')
-                        ->orderBy('date', 'asc')
+                        ->orderBy('date', 'asc')->orderBy('times', 'asc')
                         ->paginate(20);
                     // ->get();
                 } else if ($filter2 == 4) {
@@ -171,7 +172,7 @@ class DashboardController extends Controller
                         ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                         ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                         ->where('product_id', '=', 'WL001')
-                        ->orderBy('date', 'asc')
+                        ->orderBy('date', 'asc')->orderBy('times', 'asc')
                         ->paginate(20);
                     // ->get();
                 } else {
@@ -179,7 +180,7 @@ class DashboardController extends Controller
                         ->select('transactions.id', 'packages.product_name', 'packages.price', 'users.name', 'users.phone', 'transactions.address', 'transactions.invoice', 'transactions.proof_of_payment', 'transactions.times', 'transactions.status', 'transactions.notes', 'transactions.date', 'users.prohibition', 'transactions.product_id', 'users.gender', 'users.weight', 'users.height')
                         ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                         ->join('users', 'transactions.user_id', '=', 'users.unique_id')
-                        ->orderBy('date', 'asc')
+                        ->orderBy('date', 'asc')->orderBy('times', 'asc')
                         ->paginate(20);
                     // ->get();
                 }
@@ -195,7 +196,7 @@ class DashboardController extends Controller
                                 ->where('product_id', '=', 'DP001')
                                 ->orWhere('product_id', '=', 'DP002')
                                 ->orWhere('product_id', '=', 'DP003')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 2) {
@@ -207,7 +208,7 @@ class DashboardController extends Controller
                                 ->orWhere('product_id', '=', 'SP001')
                                 ->orWhere('product_id', '=', 'SP002')
                                 ->orWhere('product_id', '=', 'SP003')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 3) {
@@ -218,7 +219,7 @@ class DashboardController extends Controller
                                 ->where('status', '=', '3')
                                 ->where('product_id', '=', 'SL001')
                                 ->orWhere('product_id', '=', 'SL002')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 4) {
@@ -228,7 +229,7 @@ class DashboardController extends Controller
                                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                                 ->where('status', '=', '3')
                                 ->where('product_id', '=', 'WL001')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else {
@@ -237,7 +238,7 @@ class DashboardController extends Controller
                                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                                 ->where('status', '=', '3')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         }
@@ -257,7 +258,7 @@ class DashboardController extends Controller
                                         ->orWhere('product_id', '=', 'DP002')
                                         ->orWhere('product_id', '=', 'DP003');
                                 })
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 2) { //Khusus
@@ -272,7 +273,7 @@ class DashboardController extends Controller
                                         ->orWhere('product_id', '=', 'SP002')
                                         ->orWhere('product_id', '=', 'SP003');
                                 })
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 3) { //Single Lunch
@@ -286,7 +287,7 @@ class DashboardController extends Controller
                                     $q->where('product_id', '=', 'SL001')
                                         ->orWhere('product_id', '=', 'SL002');
                                 })
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 4) { //Mayo
@@ -297,7 +298,7 @@ class DashboardController extends Controller
                                 ->where('status', '=', '3')
                                 ->where('date', '=', $dateNow)
                                 ->where('product_id', '=', 'WL001')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else {
@@ -307,7 +308,7 @@ class DashboardController extends Controller
                                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                                 ->where('status', '=', '3')
                                 ->where('date', '=', $dateNow)
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         }
@@ -324,7 +325,7 @@ class DashboardController extends Controller
                                         ->orWhere('product_id', '=', 'DP002')
                                         ->orWhere('product_id', '=', 'DP003');
                                 })
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 2) {
@@ -338,7 +339,7 @@ class DashboardController extends Controller
                                         ->orWhere('product_id', '=', 'SP002')
                                         ->orWhere('product_id', '=', 'SP003');
                                 })
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 3) {
@@ -351,7 +352,7 @@ class DashboardController extends Controller
                                     $q->where('product_id', '=', 'SL001')
                                         ->orWhere('product_id', '=', 'SL002');
                                 })
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else if ($filter2 == 4) {
@@ -361,7 +362,7 @@ class DashboardController extends Controller
                                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                                 ->where('status', '=', '4')
                                 ->where('product_id', '=', 'WL001')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         } else {
@@ -370,14 +371,18 @@ class DashboardController extends Controller
                                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                                 ->where('status', '=', '4')
-                                ->orderBy('date','asc')
+                                ->orderBy('date', 'asc')->orderBy('times', 'asc')
                                 ->paginate(20);
                             // ->get();
                         }
                         break;
                 }
             }
-
+            foreach ($transactions as $transaction) {
+                $date = $transaction->date;
+                $strDate = (string) $date;
+                $transaction->date = date('d-m-Y', strtotime($strDate));
+            }
             return view('layouts.admin')->with('transactions', $transactions);
         } else if ($request->has('cetak')) {
             if ($filter1 == 0) {
@@ -747,7 +752,7 @@ class DashboardController extends Controller
                 ->join('packages', 'transactions.product_id', '=', 'packages.unique_id')
                 ->join('users', 'transactions.user_id', '=', 'users.unique_id')
                 ->where('date', '=', $dateNow)
-                ->where('status','=','3')
+                ->where('status', '=', '3')
                 ->paginate(20);
 
             foreach ($transactions as $transaction) {
@@ -777,6 +782,9 @@ class DashboardController extends Controller
         $birthDate = date('Y-m-d H:i:s');
         $uid = uniqid();
 
+        if ($paket == 0) {
+            return redirect("/admin")->with("error", "Pilih Paket yang ingin anda tambahkan");
+        }
         $user = new User;
         $user->unique_id = $uid;
         $user->name = $nama;

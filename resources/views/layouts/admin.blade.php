@@ -380,13 +380,13 @@ Note
                             </div>
                             <div class="form-group">
                                 <label for="jenis-kelamin">Jenis Kelamin : </label><br>
-                                <input type="radio" name="gender" id="jenis-kelamin" value="0"> Wanita <br>
-                                <input type="radio" name="gender" id="jenis-kelamin" value="1"> Pria <br>
+                                <input type="radio" name="gender" id="jenis-kelamin" value="0"> Pria <br>
+                                <input type="radio" name="gender" id="jenis-kelamin" value="1"> Wanita <br>
                             </div>
                             <div class="form-group">
                                 <label for="pesanan">Paket : </label>
                                 <select name="pesanan">
-                                    <option value="-">. . . . . . .</option>
+                                    <option value="0">. . . . . . .</option>
                                     <option value="DP001">Katering Harian (Paket Personal)</option>
                                     <option value="DP002">Katering Harian (Paket Family-2)</option>
                                     <option value="DP003">Katering Harian (Paket Family-3)</option>
