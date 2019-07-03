@@ -306,9 +306,9 @@ Note
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
-        <a href="/admin">Home</a>
-        <a href="/admin/latest">Latest</a>
         <a href="/admin/pembayaran">Pembayaran</a>
+        <a href="/admin">Transaksi</a>
+        <a href="/admin/latest">Latest</a>
         {{-- <a href="/admin/expired">Expired</a> --}}
     </div>
 

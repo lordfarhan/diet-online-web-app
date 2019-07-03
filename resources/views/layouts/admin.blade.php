@@ -1,10 +1,4 @@
 <html>
-{{-- 
-Note
-- Tambah 1 kolom untuk prohibition
-- Rubah Date menjadi Tanggal Pengiriman
-- Semua yang terlihat di dashboard Admin adalah transaksi paid    
-    --}}
 
 <head>
     <?php use \App\Http\Controllers\DashboardController;?>
@@ -24,6 +18,10 @@ Note
 </head>
 
 <style>
+    .paket{
+        font-weight: 700;
+    }
+
     #message {
         margin-top: 3.5rem;
     }
@@ -336,9 +334,9 @@ Note
 
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="clickNav()">&times;</a>
-        <a href="/admin">Home</a>
-        <a href="/admin/latest">Latest</a>
         <a href="/admin/pembayaran">Pembayaran</a>
+        <a href="/admin">Transaksi</a>
+        <a href="/admin/latest">Latest</a>
         {{-- <a href="/admin/expired">Expired</a> --}}
     </div>
 
@@ -386,7 +384,6 @@ Note
                             <div class="form-group">
                                 <label for="pesanan">Paket : </label>
                                 <select name="pesanan">
-                                    <option value="0">. . . . . . .</option>
                                     <option value="DP001">Katering Harian (Paket Personal)</option>
                                     <option value="DP002">Katering Harian (Paket Family-2)</option>
                                     <option value="DP003">Katering Harian (Paket Family-3)</option>
@@ -469,6 +466,7 @@ Note
                             <option value="1">All</option>
                             <option value="2">Today Batch</option>
                             <option value="3">Archived</option>
+                            <option value="4">Tomorrow Batch</option>
                         </select>
                         <select name="filter2">
                             <option value="0">Choose Filter . . . .</option>
@@ -494,28 +492,50 @@ Note
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th rowspan="2" scope="col"></th>
-                                <th rowspan="2" scope="col">ID</th>
-                                <th rowspan="2" scope="col" style="width:50px;">Tanggal Pengiriman</th>
-                                <th rowspan="2" scope="col">Waktu Pengiriman</th>
-                                <th rowspan="2" scope="col">Product Name</th>
-                                <th colspan="4" scope="col">User</th>
-                                <th rowspan="2" scope="col">Notes</th>
-                                <th rowspan="2" scope="col">Status</th>
-                                <th colspan="4" rowspan="2" scope="col"></th>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Product Name</th>
+                                <th style="width:50px;">Tanggal Pengiriman</th>
+                                <th>Waktu Pengiriman</th>
+                                <th>Alamat Pengiriman</th>
+                                <th>Pengguna</th>
+                                <th>Notes</th>
+                                <th>Status</th>
+                                <th scope="col"></th>
                             </tr>
-                            <tr>
-                                <th>Nama Lengkap</th>
-                                <th>No HP</th>
-                                <th>Alamat</th>
-                                <th>Jenis Kelamin</th>
-                            <tr>
                         </thead>
                         <tbody>
                             @foreach ($transactions as $transaction)
                             <tr>
                                 <td><input type="checkbox" name="uid[]" value="{{$transaction->id}}"></td>
                                 <td>{{$transaction->id}}</td>
+                                @if ($transaction->unique_id=="DP001")
+                                <td class="paket" style="background-color:#ffb5b5">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="DP002")
+                                <td class="paket" style="background-color:#fabe54">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="DP003")
+                                <td class="paket" style="background-color:#fffc18">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="SL001")
+                                <td class="paket" style="background-color:#7afb58">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="SL002")
+                                <td class="paket" style="background-color:#488252">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="WL001")
+                                <td class="paket" style="background-color:#68f3d7">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="SP001")
+                                <td class="paket" style="background-color:#3581ff">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="SP002")
+                                <td class="paket" style="background-color:#8b35ff">{{$transaction->product_name}}</td>
+                                @endif
+                                @if ($transaction->unique_id=="SP003")
+                                <td class="paket" style="background-color:#ffffff">{{$transaction->product_name}}</td>
+                                @endif
                                 <td>{{$transaction->date}}</td>
                                 <td>
                                     @if ($transaction->times==1)
@@ -528,11 +548,9 @@ Note
                                     Sore
                                     @endif
                                 </td>
-                                <td>{{$transaction->product_name}}</td>
-                                <td>{{$transaction->name}}</td>
-                                <td>{{$transaction->phone}}</td>
                                 <td>{{$transaction->address}}</td>
-                                <td>
+                                <td>{{$transaction->name}} -
+                                    {{$transaction->phone}} -
                                     @if ($transaction->gender==0)
                                     Laki Laki
                                     @else
@@ -584,13 +602,18 @@ Note
                                             Invoice : {{$transaction->invoice}}<br>
                                             UID : {{$transaction->id}}<br>
                                             Receipt :
-                                            @if($transaction->proof_of_payment==""||$transaction->proof_of_payment==NULL)
+                                            <?php
+                                            $payments = DashboardController::GetPayment($transaction->invoice);
+                                            ?>
+                                            @foreach ($payments as $payment)
+                                            @if($payment->proof_of_payment=="-")
                                             No Picture
                                             @else
                                             <br>
-                                            <img id="proof" src="{{$transaction->proof_of_payment}}"
+                                            <img id="proof" src="{{$payment->proof_of_payment}}"
                                                 style="max-height:300px;max-width:300px" class="img-fluid"><br>
                                             @endif
+                                            @endforeach
                                             Date : {{$transaction->date}}<br>
                                             Notes : {{$transaction->notes}}<br>
                                             <br>
