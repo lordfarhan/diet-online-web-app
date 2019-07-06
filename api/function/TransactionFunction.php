@@ -926,7 +926,6 @@ class TransactionFunction
         }
     }
 
-
     public function UpdateToDone($uid)
     {
         $stmt = $this->conn->prepare("UPDATE transactions SET status=? WHERE id=? ");
@@ -1038,23 +1037,25 @@ class TransactionFunction
     public function FetchAmount($user_id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id = ?");
-        $amount = [0, 0, 0, 0];
+        $amount = [0, 0, 0, 0,0];
         if ($stmt != FALSE) {
             $stmt->bind_param("s", $user_id);
             if ($stmt->execute()) {
                 $transactions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-                $amount[3] = count($transactions);
+                $amount[4] = count($transactions);
                 $stmt->close();
                 if (!$transactions) {
                     return NULL;
                 } else {
-                    for ($i = 0; $i < $amount[3]; $i++) {
+                    for ($i = 0; $i < $amount[4]; $i++) {
                         if ($transactions[$i]['status'] == 1) {
                             $amount[0]++;
                         } else if ($transactions[$i]['status'] == 2) {
                             $amount[1]++;
-                        } else {
+                        } else if($transactions[$i]['status']==3){
                             $amount[2]++;
+                        } else {
+                            $amount[3]++;
                         }
                     }
                     return $amount;
