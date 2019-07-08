@@ -261,35 +261,10 @@
                         </tr>
                     </thead>
                     <tbody id="isi-pembayaran">
-
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
-    <div class="modal fade" role="dialog" id="modals">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="modal-body">
-                    <img src="" id="modal-img" width="100%" height="100%" style="z-index:1;">
-                </div>
-            </div>
-        </div>
-    </div>
 </body>
-
-<script>
-    $(window).on('load', function () {
-        $('.img').on('click', function () {
-            var src = $(this).attr("src");
-            $('#modal-img').attr('src', src);
-            $('#modals').appendTo("body").modal('show');
-        })
-    })
-
-</script>
-
 </html>
