@@ -108,7 +108,7 @@ class TransactionFunction
             $keteranganHari = substr($keteranganHari, 0, strlen($keteranganHari) - 2);
 
             $startHari = $hari;
-            $jam = date('H') + 5 % 24;
+            $jam = date('H');
             $pengali = 0;
             if ($jam >= 17) {
                 if ($startHari + 2 > 7) {
@@ -289,7 +289,8 @@ class TransactionFunction
         } else {
             $invoice = uniqid("INV", false);
             $hariSekarang = date('N') - 1; //0 untuk senin 6 untuk minggu
-            $jamSekarang = date('H') + 7 % 24;
+            $jamSekarang = date('H');
+            echo $jamSekarang;
             $date = date('d');
             $bulan = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
             $bulanSekarang = date('n');
@@ -688,7 +689,8 @@ class TransactionFunction
             $keteranganHari = substr($keteranganHari, 0, strlen($keteranganHari) - 2);
 
             $startHari = $hari;
-            $jam = date('H') + 5 % 24;
+            $jam = date('H');
+            echo $jam;
             $pengali = 0;
             if ($jam >= 17) {
                 if ($startHari + 2 > 7) {
@@ -1037,7 +1039,7 @@ class TransactionFunction
     public function FetchAmount($user_id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM transactions WHERE user_id = ?");
-        $amount = [0, 0, 0, 0,0];
+        $amount = [0, 0, 0, 0, 0];
         if ($stmt != FALSE) {
             $stmt->bind_param("s", $user_id);
             if ($stmt->execute()) {
@@ -1052,7 +1054,7 @@ class TransactionFunction
                             $amount[0]++;
                         } else if ($transactions[$i]['status'] == 2) {
                             $amount[1]++;
-                        } else if($transactions[$i]['status']==3){
+                        } else if ($transactions[$i]['status'] == 3) {
                             $amount[2]++;
                         } else {
                             $amount[3]++;
@@ -1263,5 +1265,22 @@ class TransactionFunction
             //Realtime jam 5 dihapus semua yang unpaid
             //Mail(Menyusul)
         }
+    }
+
+    public function compress_image($source_url, $destination_url, $quality)
+    {
+        $info = getimagesize($source_url);
+
+        if ($info['mime'] == 'image/jpeg')
+            $image = imagecreatefromjpeg($source_url);
+
+        elseif ($info['mime'] == 'image/gif')
+            $image = imagecreatefromgif($source_url);
+
+        elseif ($info['mime'] == 'image/png')
+            $image = imagecreatefrompng($source_url);
+
+        imagejpeg($image, $destination_url, $quality);
+        return $destination_url;
     }
 }
