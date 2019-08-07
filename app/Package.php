@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Package extends Model
 {
     protected $table = 'packages';
 
-    public $PrimaryKey = 'uid';
+    public $primaryKey = 'unique_id';
+
+    public $timestamps = false;
 }
