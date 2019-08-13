@@ -13,4 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('/transaction/harian','APIController@InsertTransaction');
+Route::post('/transaction/harian','APIController@InsertDailyTransaction');
