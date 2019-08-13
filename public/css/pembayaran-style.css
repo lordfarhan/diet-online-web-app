@@ -1,0 +1,8 @@
+#tabel-transaksi{
+    background-color: white;
+    padding: 0.5em;
+}
+
+td, th{
+    text-align: center;
+}

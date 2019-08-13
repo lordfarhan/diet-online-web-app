@@ -1,0 +1,36 @@
+/* Main */
+
+#graph{
+    margin-left: 1em;
+}
+
+#chartContainer{
+    height: 25em;
+}
+
+#jumlah-porsi{
+    margin-top: 2em;
+    margin-left: 1em;
+    padding: 0.5em;
+    background-color: white;
+    border-radius: 5px;   
+}
+
+.judul{
+    margin-bottom: 0.3em;
+}
+
+#jumlah-porsi .list-inline-item{
+    width: 10em;
+    margin-right: 1em;
+}
+
+#active{
+    margin-top: 2em;
+    margin-right: 1em;
+    padding: 0.5em;
+    padding-bottom: 1em;
+    background-color: white;
+    border-radius: 5px;
+    text-align: center;
+}

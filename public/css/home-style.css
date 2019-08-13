@@ -8,50 +8,87 @@
 */
 
 /* For Handphone */
-@media (max-width: 1000px){
-    #showcase .showcase-img {
-        padding-top: 0;
+@media (min-width: 100px) and (max-width: 300px) {
+    h1 {
+        font-size: 7em;
     }
-    .isi{
-        text-align: center;
+
+    h2 {
+        font-size: 6em;
     }
-    #button-gplay{
-        margin-bottom: 3rem;
+
+    h3 {
+        font-size: 5em;
     }
-    #button-rekom{
-        margin-bottom: 3rem;
+
+    h4 {
+        font-size: 4em;
     }
-    #tim-kami-text{
-        margin-left:37%; 
+
+    h5 {
+        font-size: 3em;
     }
-    #pilih-paket{
-        margin-left:28%; 
-    }
-    #tentang-dion{
-        margin-left:35%; 
-    }
-    #hubungi{
-        margin-bottom: 3rem;
-    }
-    #gambar-dietindo{
-        margin-bottom: 1rem;
-    }
-    #mitra{
-        margin-left:42%; 
+
+    h6 {
+        font-size: 2em;
     }
 }
 
-@media(min-width:1048px){
- #showcase .showcase-img{
-    max-width: 150%;
- }
+@media (max-width: 1000px) {
+    #showcase .showcase-img {
+        padding-top: 0;
+    }
+
+    .isi {
+        text-align: center;
+    }
+
+    #button-gplay {
+        margin-bottom: 3rem;
+    }
+
+    #button-rekom {
+        margin-bottom: 3rem;
+    }
+
+    #tim-kami-text {
+        margin-left: 37%;
+    }
+
+    #pilih-paket {
+        margin-left: 28%;
+    }
+
+    #tentang-dion {
+        margin-left: 35%;
+    }
+
+    #hubungi {
+        margin-bottom: 3rem;
+    }
+
+    #gambar-dietindo {
+        margin-bottom: 1rem;
+    }
+
+    #mitra {
+        margin-left: 42%;
+    }
 }
+
+@media(min-width:1048px) {
+    #showcase .showcase-img {
+        max-width: 150%;
+    }
+}
+
+
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     background: #f5f5f5;
     position: relative;
-    overflow-x:none;
+    overflow-x: none;
 }
 
 .highlight {
@@ -168,31 +205,31 @@ body {
     border-radius: 5px;
 }
 
-.footer{
+.footer {
     min-height: 120px;
     padding-top: 1rem;
 }
 
-footer li{
+footer li {
     list-style-type: none;
-    padding-top:0.3rem;
-    font-size:18px;
+    padding-top: 0.3rem;
+    font-size: 18px;
 }
 
-footer .footer-logo{
+footer .footer-logo {
     font-size: 22px;
 }
 
-footer #atas{
-  margin-top:1rem;
-  margin-bottom: 1.5rem;  
+footer #atas {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-footer #tengah{
-    margin-bottom:3rem;
+footer #tengah {
+    margin-bottom: 3rem;
 }
 
-footer #kiri{
+footer #kiri {
     margin-right: 2rem;
 }
 

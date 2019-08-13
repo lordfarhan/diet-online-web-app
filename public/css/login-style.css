@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #ffffff;
+    line-height: 15px;
+    overflow-x: hidden;
+}
+
+.message{
+    margin-top: 1em;
+}
+
+.img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.col-lg-8{
+    width: 30rem;
+}
+
+.logo{
+    width: 15em;
+}
+
+.isi-form{
+    position: fixed;
+    text-align: center;
+    margin-top:5em;
+    margin-left: 5em;
+    width: 20em;
+}
+
+.isian{
+    margin-top: 5rem;
+}
+
+.isi{
+    padding-bottom: 3em;
+}

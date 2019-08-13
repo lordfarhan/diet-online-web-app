@@ -1,7 +1,11 @@
 <html>
 
 <head>
-    <title>DION</title>
+    <title>DION (Diet Online)</title>
+    <meta name="description"
+        content="DION (Diet Online), aplikasi catering online yang bekerja sama dengan DIETINDO untuk memberikan dan menyajikan makanan sehat dan bergizi. Terdapat 4 paket, katering harian, diet khusus, single lunch box, dan weight loss diet">
+    <meta name="keywords"
+        content="diet, Diet, Diet Online, diet online, aplikasi diet, Aplikasi Diet, Aplikasi Android Diet, Dietindo,dietindo, diet mayo, catering online">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -29,11 +33,11 @@
     </style>
 
     <script>
-    var msg = '{{Session::get('msg')}}';
-    var exist = '{{Session::has('msg')}}';
-    if(exist){
-      alert(msg);
-    }
+        var msg = '{{Session::get('msg')}}';
+        var exist = '{{Session::has('msg')}}';
+        if (exist) {
+            alert(msg);
+        }
     </script>
 </head>
 {{-- NAVBAR --}}
@@ -150,7 +154,8 @@
                         <h3><span class="tulisan">Ikuti survei singkat untuk menentukan
                                 paket yang cocok buat kamu</span></h3>
                         <br>
-                        <a href="/rekomendasi-paket" class="btn btn-warning tulisan" style="color:black;" id="button-rekom">Pilih Paket yang Sesuai</a>
+                        <a href="/rekomendasi-paket" class="btn btn-warning tulisan" style="color:black;"
+                            id="button-rekom">Pilih Paket yang Sesuai</a>
                     </div>
                 </div>
             </div>
@@ -215,7 +220,9 @@
                             Untuk Info lebih lanjut mengenai DIETINDO dapat mengunjungi:</span>
                     </p><br>
                     <img src="{{asset('img/website/dietindo.png')}}" style="margin-right:2rem;" id="gambar-dietindo"><a
-                        href="http://www.dietindo.com/"><h3>http://www.dietindo.com</h3></a>
+                        href="http://www.dietindo.com/">
+                        <h3>http://www.dietindo.com</h3>
+                    </a>
                 </div>
             </div>
         </div>

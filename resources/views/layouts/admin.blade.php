@@ -655,7 +655,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="pagination">{{ $transactions->links() }}</div>
                 </div>
             </div>
             </form>
