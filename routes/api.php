@@ -13,10 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/dion/transaction','APIController@InsertTransactions');
-
-Route::put('/dion/transaction','APIController@UpdateStatus');
+Route::post('/transaction/harian','APIController@InsertDailyTransaction');

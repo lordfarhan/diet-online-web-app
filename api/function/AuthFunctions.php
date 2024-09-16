@@ -1,26 +1,28 @@
 <?php
-class AuthFunctions {
+class AuthFunctions
+{
     private $db;
     private $conn;
     //put your code here
     // constructor
-    function __construct() {
+    function __construct()
+    {
 
-        require_once(root.'/api/config/DB_Connect.php'); 
+        require_once(root . '/api/config/DB_Connect.php');
         // connecting to database
         // mengkoneksikan ke
         $this->db = new DB_Connect();
         $this->conn = $this->db->connect();
     }
     // destructor
-    function __destruct() {
-
-    }
+    function __destruct()
+    { }
     /**
      * Storing new user
      * returns user details
      */
-    public function storeUser($username, $email, $password, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender) {
+    public function storeUser($username, $email, $password, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender)
+    {
         $uuid = uniqid();
         $hash = $this->hashSSHA($password);
         $encrypted_password = $hash["encrypted"]; // encrypted password
@@ -58,7 +60,8 @@ class AuthFunctions {
     /**
      * Update user personal info
      */
-    public function updatePersonalInfo($username, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender) {
+    public function updatePersonalInfo($username, $city, $subdistrict, $name, $nickname, $address, $phone, $birthdate, $gender)
+    {
 
         $date = date("Y-m-d H:i:s");
 
@@ -70,13 +73,13 @@ class AuthFunctions {
         // varibel -> ke symbol 's' -> ke symbol '?' (banyak symbol 's' sesuai dengan banyak variabel dan symbol '?')
         $stmt->bind_param("ssssssssss", $city, $subdistrict, $name, $nickname, $address, $phone, $birth_date, $gender, $date, $username);
         $result = $stmt->execute();
-            // if (false === ($stmt = $this->conn->prepare("UPDATE users SET city = ?, subdistrict = ?, name = ?, nickname = ?, address = ?, phone = ?, birth_date = ?, gender = ?, updated_at = ? WHERE username = ?"))) {
-            //     echo 'error preparing statement: ' . $this->conn->error;
-            // } elseif (!$stmt->bind_param("ssssssssss", $city, $subdistrict, $name, $nickname, $address, $phone, $birth_date, $gender, $date, $username)) {
-            //     echo 'error binding params: ' . $stmt->error;
-            // } elseif (!$stmt->execute()) {
-            //     echo 'error executing statement: ' . $stmt->error;
-            // }
+        // if (false === ($stmt = $this->conn->prepare("UPDATE users SET city = ?, subdistrict = ?, name = ?, nickname = ?, address = ?, phone = ?, birth_date = ?, gender = ?, updated_at = ? WHERE username = ?"))) {
+        //     echo 'error preparing statement: ' . $this->conn->error;
+        // } elseif (!$stmt->bind_param("ssssssssss", $city, $subdistrict, $name, $nickname, $address, $phone, $birth_date, $gender, $date, $username)) {
+        //     echo 'error binding params: ' . $stmt->error;
+        // } elseif (!$stmt->execute()) {
+        //     echo 'error executing statement: ' . $stmt->error;
+        // }
         $stmt->close();
         // check for successful store
         // memriksa apakah berhasil didaftarkan
@@ -93,10 +96,11 @@ class AuthFunctions {
     }
 
     /**
-    * Update account info
-    */
+     * Update account info
+     */
 
-    public function updateAccountInfo($old_username, $username, $email, $password) {
+    public function updateAccountInfo($old_username, $username, $email, $password)
+    {
         $date = date("Y-m-d H:i:s");
 
         $stmt = $this->conn->prepare("UPDATE users SET username = ?, email = ?, updated_at = ? WHERE username = ?");
@@ -104,7 +108,7 @@ class AuthFunctions {
 
         $result = $stmt->execute();
         $stmt->close();
-        if($result) {
+        if ($result) {
             $stmt = $this->conn->prepare("SELECT * FROM users WHERE username = ?");
             $stmt->bind_param("s", $username);
             $stmt->execute();
@@ -117,10 +121,11 @@ class AuthFunctions {
     }
 
     /**
-    * Update account info
-    */
+     * Update account info
+     */
 
-    public function updateMedicalInfo($username, $weight, $height, $prohibition) {
+    public function updateMedicalInfo($username, $weight, $height, $prohibition)
+    {
         $date = date("Y-m-d H:i:s");
 
         $stmt = $this->conn->prepare("UPDATE users SET weight = ?, height = ?, prohibition = ?, updated_at = ? WHERE username = ?");
@@ -128,7 +133,7 @@ class AuthFunctions {
 
         $result = $stmt->execute();
         $stmt->close();
-        if($result) {
+        if ($result) {
             $stmt = $this->conn->prepare("SELECT * FROM users WHERE username = ?");
             $stmt->bind_param("s", $username);
             $stmt->execute();
@@ -143,11 +148,12 @@ class AuthFunctions {
     /**
      * Get user by username and password
      */
-    public function getUserByUsernameAndPassword($username, $password) {
+    public function getUserByUsernameAndPassword($username, $password)
+    {
         // memanggil data yang sesuai dengan username
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
-        if ($stmt->execute()){
+        if ($stmt->execute()) {
             //menyiapkan data yg diambil, fetch data
             $user = $stmt->get_result()->fetch_assoc();
             $stmt->close();
@@ -172,7 +178,8 @@ class AuthFunctions {
     /**
      * Check user is existed or not (email)
      */
-    public function isEmailExisted($email) {
+    public function isEmailExisted($email)
+    {
         $stmt = $this->conn->prepare("SELECT email from users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -192,7 +199,8 @@ class AuthFunctions {
     /**
      * Check user is existed or not (username)
      */
-    public function isUsernameExisted($username) {
+    public function isUsernameExisted($username)
+    {
         $stmt = $this->conn->prepare("SELECT username from users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -215,7 +223,8 @@ class AuthFunctions {
      * returns salt and encrypted password
      * tambahan keamanan enkripsi password
      */
-    public function hashSSHA($password) {
+    public function hashSSHA($password)
+    {
         $salt = sha1(rand());
         $salt = substr($salt, 0, 10);
         $encrypted = base64_encode(sha1($password . $salt, true) . $salt);
@@ -228,9 +237,47 @@ class AuthFunctions {
      * returns hash string
      * fungsi untuk memeriksa enkripsi pada saat login
      */
-    public function checkhashSSHA($salt, $password) {
+    public function checkhashSSHA($salt, $password)
+    {
         $hash = base64_encode(sha1($password . $salt, true) . $salt);
         return $hash;
     }
+
+    public function DeleteAccount($user_id)
+    {
+        $stmt = $this->conn->prepare("DELETE FROM `users` WHERE `unique_id`=?");
+        $stmt->bind_param("s", $user_id);
+        if ($stmt != FALSE) {
+            if ($stmt->execute()) {
+                $stmt->close();
+                $stmt = $this->conn->prepare("SELECT * FROM `users` WHERE `unique_id` = ?");
+                $stmt->bind_param("s", $user_id);
+                if ($stmt != false) {
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result()->fetch_assoc();
+                        $stmt->close();
+                        if ($result == NULL) {
+                            return true;
+                        } else {
+                            $response['error'] = true;
+                            $response['message'] = "Terjadi kesalahan dalam menghapus akun";
+                            echo json_encode($response);
+                        }
+                    }
+                } else {
+                    $response['error'] = true;
+                    $response['message'] = "Terjadi kesalahan dalam menghapus akun";
+                    echo json_encode($response);
+                }
+            } else {
+                $response['error'] = true;
+                $response['message'] = "Terjadi kesalahan dalam menghapus akun";
+                echo json_encode($response);
+            }
+        } else {
+            $response['error'] = true;
+            $response['message'] = "Terjadi kesalahan dalam menghapus akun";
+            echo json_encode($response);
+        }
+    }
 }
-?>
